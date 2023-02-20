@@ -1,0 +1,47 @@
+{
+  "name": "philosopher-front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve --port 8081",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test": "vue-cli-service test:unit --watchAll"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "core-js": "^3.4.4",
+    "form-data": "^4.0.0",
+    "lodash": "^4.17.21",
+    "query-string": "^6.14.1",
+    "quill": "^1.3.6",
+    "sockjs-client": "^1.6.0",
+    "stylus": "^0.59.0",
+    "stylus-loader": "^7.1.0",
+    "vue": "^2.6.10",
+    "vue-infinite-loading": "^2.4.5",
+    "vue-quill-editor": "^3.0.6",
+    "vue-router": "^3.1.3",
+    "vuetify": "^2.4.0",
+    "vuex": "^3.1.2",
+    "webstomp-client": "^1.2.6"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.1.0",
+    "@vue/cli-plugin-eslint": "^4.1.0",
+    "@vue/cli-plugin-unit-jest": "^4.1.0",
+    "@vue/cli-service": "^4.1.0",
+    "@vue/eslint-config-prettier": "^5.0.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^5.16.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-vue": "^5.0.0",
+    "prettier": "^1.19.1",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "~2.4.5",
+    "vue-template-compiler": "^2.6.10",
+    "vuetify-loader": "^1.7.0"
+  }
+}
