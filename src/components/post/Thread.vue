@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import qstr from 'query-string';
 import axios from '../../libs/axios.custom';
 
 export default {
@@ -59,45 +58,6 @@ export default {
     page: 1,
     list: [],
   }),
-  methods: {
-    infiniteHandler($state) {
-      axios
-        .get(`/api/comments/thread/${this.id}`, {
-          params: {
-            page: this.page,
-          },
-        })
-        .then(({ data }) => {
-          if (data.hits.length) {
-            this.page += 1;
-            this.list.push(...data.hits);
-            $state.loaded();
-          } else {
-            $state.complete();
-          }
-        });
-    },
-    toModify() {
-      const query = qstr.stringify(this.$route.query);
-      this.$router.push(`/board/${this.id}/modify?${query}`);
-    },
-    async recommend() {
-      try {
-        await axios.post(`/api/recommendations/thread/${this.id}`);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    toList() {
-      this.$router.push({ path: '/threads', query: this.$route.query });
-    },
-  },
-
-  computed: {
-    authorized() {
-      return this.$store.getters.username === this.detail.user.username;
-    },
-  },
+  methods: {},
 };
 </script>
