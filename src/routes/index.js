@@ -16,12 +16,12 @@ const router = new VueRouter({
       component: () => import('@/components/common/Main.vue'),
     },
     {
-      path: '/signup',
+      path: '/sign-up',
       name: 'signup',
       component: () => import('@/components/account/Signup.vue'),
     },
     {
-      path: '/signin',
+      path: '/sign-in',
       name: 'signin',
       component: () => import('@/components/account/Signin.vue'),
     },
@@ -32,7 +32,7 @@ const router = new VueRouter({
       meta: { auth: true },
     },
     {
-      path: '/threads/:id',
+      path: '/comments/thread/:id',
       name: 'Tread',
       component: () => import('@/components/post/Thread.vue'),
       props: true,

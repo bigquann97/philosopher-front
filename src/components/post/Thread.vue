@@ -36,7 +36,117 @@
       </a>
     </div>
     <div class="divider"></div>
-    <Comment></Comment>
+    <div>
+      <div class="col s6 right-align">
+        <div style="text-align: center; margin: 20px auto 20px auto">
+          <v-btn>
+            댓글쓰기
+          </v-btn>
+        </div>
+      </div>
+      <div class="collection">
+        <div
+          tag="a"
+          :to="{ name: 'Comment', params: { id: one.id }, query: query }"
+          class="collection-item row"
+          v-for="one in list"
+          :key="one.id"
+        >
+          <div class="col s7" style="width: 100%">
+            <span style="float: left"># {{ one.commentId }}</span>
+            <span style="float: left; margin: auto 20px">
+              {{ one.nickname }}
+            </span>
+            <span style="float: left">{{ one.createDate }}</span>
+            <div v-for="three in one.mentionedComments" :key="three.id">
+              <v-tooltip top :close-delay="500" :open-delay="300">
+                <template v-slot:activator="{ on }" class="col s8">
+                  <span
+                    @mouseenter="on.mouseenter"
+                    @mouseleave="on.mouseleave"
+                    style="float: left; margin-left: 12px; color: blue; font-size: small"
+                  >
+                    >>{{ three.id }}
+                  </span>
+                </template>
+                <template v-slot:default>
+                  <div style="max-width: 500px">{{ three.content }}</div>
+                </template>
+              </v-tooltip>
+            </div>
+          </div>
+          <div class="col s8" style="width: 100%">
+            <span>{{ one.opinion }}</span>
+          </div>
+          <div
+            v-for="three in one.mentioningComments"
+            :key="three.id"
+            class="col s9"
+            style="width: 100%"
+          >
+            <v-tooltip top :close-delay="500" :open-delay="300">
+              <template v-slot:activator="{ on }">
+                <u
+                  @mouseenter="on.mouseenter"
+                  @mouseleave="on.mouseleave"
+                  style="float: left; color: blue; font-size: small"
+                >
+                  # {{ three.id }}
+                </u>
+              </template>
+              <template v-slot:default>
+                <div style="max-width: 500px">{{ three.content }}</div>
+              </template>
+            </v-tooltip>
+          </div>
+          <div style="float:left; width: 100%" class="col s10">
+            <span>
+              {{ one.content }}
+            </span>
+          </div>
+          <div
+            class="col s11"
+            style="text-align: center; margin-bottom: 20px; width: 100%"
+          >
+            <a>
+              <img
+                src="@/image/like_blue.png"
+                alt=""
+                style="width: 15px"
+                @click="recommend"
+              />
+              <span style="font-size: medium"> {{ one.recommendCount }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row valign-wrapper">
+        <div class="col s6">
+          <ul class="pagination">
+            <li class="waves-effect">
+              <a @click="previous">
+                <i class="material-icons">chevron_left</i>
+              </a>
+            </li>
+            <router-link
+              tag="li"
+              v-for="present in presentedPages"
+              :key="present"
+              active-class="active"
+              :to="fullPath(present + 1)"
+              exact
+            >
+              <a>{{ present + 1 }}</a>
+            </router-link>
+            <li class="waves-effect">
+              <a @click="forward">
+                <i class="material-icons">chevron_right</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -46,16 +156,17 @@ import {
   deleteRecommendThread,
 } from '@/api/recommendation';
 import { fetchThread } from '@/api/thread';
-import Comment from '@/components/post/Comment.vue';
+import qstr from 'query-string';
+import { fetchThreadComment } from '@/api/comment';
+import _ from 'lodash';
 
 export default {
-  components: {
-    Comment,
-  },
+  components: {},
 
   props: ['id'],
 
   async created() {
+    this.beforeLoadPage();
     const threadId = this.$route.params.id;
     const res = await fetchThread(threadId);
     console.log(this.id);
@@ -68,6 +179,11 @@ export default {
       user: {},
     },
     imageUrl: {},
+    pagination: {},
+    search: {},
+    list: [],
+    blockSize: 5,
+    query: {},
   }),
   methods: {
     async recommend() {
@@ -81,6 +197,83 @@ export default {
         this.$router.go(this.$router.currentRoute);
       }
     },
+    beforeLoadPage() {
+      const threadId = this.$route.params.id;
+      const query = { ...this.$route.query };
+      if (query.page === undefined) {
+        query.page = 1;
+        this.$router.push({
+          path: `/comments/thread/${threadId}`,
+          query,
+        });
+      } else {
+        this.loadPage();
+      }
+    },
+
+    async loadPage() {
+      const threadId = this.$route.params.id;
+      const query =
+        this.$route.query.page !== undefined
+          ? qstr.stringify(this.$route.query)
+          : 'page=1';
+      const res = await fetchThreadComment(threadId, query);
+      const result = res.data;
+      console.log(result);
+      this.list = res.data.content;
+      this.pagination = {
+        numberOfElements: res.data.numberOfElements,
+        totalElements: res.data.totalElements,
+        isFirst: res.data.first,
+        isLast: res.data.last,
+        currentPage: res.data.number,
+        totalPages: res.data.totalPages - 1,
+        pageSize: res.data.size,
+      };
+    },
+
+    fullPath(val) {
+      const threadId = this.$route.params.id;
+      const target = _.cloneDeep(this.query);
+      target.page = val;
+      console.log();
+      return { path: `/comments/thread/${threadId}`, query: target };
+    },
+
+    previous() {
+      const page =
+        _.first(this.presentedPages) - 1 < 0 ? 1 : _.first(this.presentedPages);
+      this.$router.push(this.fullPath(page));
+    },
+
+    forward() {
+      const total =
+        this.pagination.totalPages === 1 ? 1 : this.pagination.totalPages;
+      const page =
+        _.last(this.presentedPages) === total
+          ? total + 1
+          : _.last(this.presentedPages) + 2;
+      this.$router.push(this.fullPath(page));
+    },
+  },
+
+  computed: {
+    presentedPages() {
+      const current = this.pagination.currentPage;
+      const blockSize = this.blockSize;
+      const total =
+        this.pagination.totalPages === 0 ? 0 : this.pagination.totalPages - 1;
+
+      const startOfBlock = current - (current % blockSize);
+      const endOfBlock = startOfBlock + blockSize;
+      const complimentedEOB = endOfBlock > total + 2 ? total + 1 : endOfBlock;
+      return _.range(startOfBlock, complimentedEOB);
+    },
+  },
+
+  beforeRouteUpdate(to, from, next) {
+    next();
+    this.beforeLoadPage();
   },
 };
 </script>

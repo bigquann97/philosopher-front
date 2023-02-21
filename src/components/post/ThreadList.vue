@@ -25,7 +25,7 @@
       <div class="collection">
         <router-link
           tag="a"
-          :to="{ name: 'Tread', params: { id: one.id }, query: query }"
+          :to="{ name: 'Tread', params: { id: one.id }, query: { page: 1 } }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
