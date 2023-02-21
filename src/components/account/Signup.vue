@@ -175,7 +175,7 @@ export default {
           age: this.age,
         };
         const { data } = await registerUser(userData);
-        await this.$router.push('/signin');
+        await this.$router.push('/sign-in');
         console.log(data);
         this.logMessageSignup = `${data} 님이 가입되었습니다`;
       } catch (error) {

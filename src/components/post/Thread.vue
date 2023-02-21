@@ -39,11 +39,57 @@
     <div>
       <div class="col s6 right-align">
         <div style="text-align: center; margin: 20px auto 20px auto">
-          <v-btn>
+          <v-btn @click="dialog = true">
             댓글쓰기
           </v-btn>
+          <v-dialog v-model="dialog" width="500px">
+            <v-card height="490">
+              <v-card-title>
+                댓글 쓰기
+              </v-card-title>
+              <v-card-text>
+                <div>
+                  <v-textarea
+                    solo
+                    auto-grow
+                    v-model="opinion"
+                    label="opinion"
+                  ></v-textarea>
+                  <v-textarea
+                    solo
+                    auto-grow
+                    v-model="content"
+                    label="content"
+                  ></v-textarea>
+                  <v-row justify="center" style="margin: 20px">
+                    <v-btn
+                      color="primary"
+                      variant="text"
+                      @click="dialog = false"
+                      style="margin: auto 20px auto auto"
+                    >
+                      닫기
+                    </v-btn>
+                    <v-btn
+                      color="primary"
+                      variant="text"
+                      @click="createComment"
+                      style="margin: auto auto auto 20px"
+                    >
+                      확인
+                    </v-btn>
+                  </v-row>
+                </div>
+              </v-card-text>
+              <v-card-actions>
+                <v-row justify="center"> </v-row>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </div>
       </div>
+    </div>
+    <div>
       <div class="collection">
         <div
           tag="a"
@@ -157,7 +203,7 @@ import {
 } from '@/api/recommendation';
 import { fetchThread } from '@/api/thread';
 import qstr from 'query-string';
-import { fetchThreadComment } from '@/api/comment';
+import { createComment, fetchThreadComment } from '@/api/comment';
 import _ from 'lodash';
 
 export default {
@@ -175,6 +221,9 @@ export default {
     console.log(res);
   },
   data: () => ({
+    content: '',
+    opinion: '',
+    dialog: false,
     detail: {
       user: {},
     },
@@ -186,6 +235,18 @@ export default {
     query: {},
   }),
   methods: {
+    async createComment() {
+      try {
+        await createComment(this.id, {
+          opinion: this.opinion,
+          content: this.content,
+        });
+        this.dialog = false;
+        this.$router.go(this.$router.currentRoute);
+      } catch (error) {
+        console.log(error.response);
+      }
+    },
     async recommend() {
       try {
         const res = await deleteRecommendThread(this.id);
