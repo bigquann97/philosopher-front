@@ -16,11 +16,6 @@ function createInstanceWithAuth(url) {
 }
 
 export const instance = createInstance();
-export const post = createInstanceWithAuth('post');
-
-// 액시오스 초기화 함수
-
-// CREATE - posts
-// POST - posts
-// PUT - posts {id}
-// DELETE - posts {id}
+export const recommendation = createInstanceWithAuth('recommendations');
+export const comment = createInstanceWithAuth('comments');
+export const thread = createInstanceWithAuth('threads');

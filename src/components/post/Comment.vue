@@ -1,43 +1,36 @@
 <template>
   <div>
-    <div class="container">
-      <div class="row valign-wrapper">
-        <div class="col s6">
-          <h1>쓰레드</h1>
-        </div>
-        <div class="col s2"></div>
-        <div class="col s3">
-          <input
-            type="text"
-            class="validate"
-            v-model="search.word"
-            placeholder="검색"
-            style="text-align: center"
-            @keydown.enter="searching"
-          />
-        </div>
-        <div class="col s1">
-          <a class="col s12 waves-effect btn teal lighten-2" @click="searching">
-            <i class="material-icons center">search</i>
-          </a>
+    <div>
+      <div class="col s6 right-align">
+        <div style="text-align: center; margin: 20px auto 20px auto">
+          <v-btn>
+            댓글쓰기
+          </v-btn>
         </div>
       </div>
       <div class="collection">
-        <router-link
+        <div
           tag="a"
-          :to="{ name: 'Tread', params: { id: one.id }, query: query }"
+          :to="{ name: 'Comment', params: { id: one.id }, query: query }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
         >
-          <span class="col s7">
-            <span>{{ one.title }}</span>
-            <span class="red-text"> [ {{ one.commentCount }} ] </span></span
-          >
-          <small class="col s2 center-align">{{ one.nickname }}</small>
+          <div class="col s7">
+            <span style="float: left"># {{ one.commentId }}</span>
+            <span style="float: left; margin: auto 20px">
+              {{ one.nickname }}
+            </span>
+            <span style="float: left">{{ one.createDate }}</span>
+          </div>
+          <span class="col s8">
+            <span>{{ one.opinion }}</span>
+          </span>
+          <span class="col s9">
+            {{ one.content }}
+          </span>
           <small class="col s1 center-align">{{ one.recommendCount }}</small>
-          <small class="col s2 center-align">{{ one.createdDate }}</small>
-        </router-link>
+        </div>
       </div>
       <div class="row valign-wrapper">
         <div class="col s6">
@@ -64,9 +57,6 @@
             </li>
           </ul>
         </div>
-        <div class="col s6 right-align">
-          <router-link to="/posts" class="waves-effect btn">글쓰기</router-link>
-        </div>
       </div>
     </div>
   </div>
@@ -75,8 +65,7 @@
 <script>
 import _ from 'lodash';
 import qstr from 'query-string';
-import { fetchThreadList } from '@/api/thread';
-
+import { fetchThreadComment } from '@/api/comment';
 export default {
   created() {
     this.beforeLoadPage();
@@ -91,31 +80,29 @@ export default {
   }),
 
   methods: {
-    searching() {
-      const keyword = this.search.word.trim();
-      if (keyword !== '') {
-        this.$router.push(`/threads?page=1&${qstr.stringify(this.search)}`);
-      }
-    },
-
     beforeLoadPage() {
+      const threadId = this.$route.params.id;
       this.query = this.$route.query;
       this.search = {
         word: this.query.word !== undefined ? this.query.word : '',
       };
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/threads', query: { page: 1 } });
+        this.$router.push({
+          path: `/comments/thread/${threadId}`,
+          query: { page: 1 },
+        });
       } else {
         this.loadPage();
       }
     },
 
     async loadPage() {
+      const threadId = this.$route.params.id;
       const query =
         this.$route.query.page !== undefined
           ? qstr.stringify(this.$route.query)
           : 'page=1';
-      const res = await fetchThreadList(query);
+      const res = await fetchThreadComment(threadId, query);
       const result = res.data;
       console.log(result);
       this.list = res.data.content;
@@ -131,9 +118,11 @@ export default {
     },
 
     fullPath(val) {
+      const threadId = this.$route.params.id;
       const target = _.cloneDeep(this.query);
       target.page = val;
-      return { path: '/threads', query: target };
+      console.log();
+      return { path: `/comments/thread/${threadId}`, query: target };
     },
 
     previous() {

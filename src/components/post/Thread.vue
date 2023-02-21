@@ -21,43 +21,66 @@
     </div>
     <div class="divider"></div>
     <div class="section">
+      <img :src="imageUrl" alt="" style="max-width: 300px; max-height: 300px" />
       <div>{{ detail.content }}</div>
     </div>
-    <div style="text-align: center; margin-bottom: 20px" @click="recommend">
-      <v-btn>
-        <img src="@/image/thumbs-up.png" alt="" style="width: 35px" />
+    <div style="text-align: center; margin-bottom: 20px">
+      <a>
+        <img
+          src="@/image/like_blue.png"
+          alt=""
+          style="width: 35px"
+          @click="recommend"
+        />
         <span style="font-size: xx-large"> {{ detail.recommendCount }}</span>
-      </v-btn>
+      </a>
     </div>
     <div class="divider"></div>
-    <div v-for="(item, $index) in list" :key="$index">
-      <!-- Hacker News item loop -->
-    </div>
-
-    <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+    <Comment></Comment>
   </div>
 </template>
 
 <script>
-import axios from '../../libs/axios.custom';
+import {
+  createRecommendThread,
+  deleteRecommendThread,
+} from '@/api/recommendation';
+import { fetchThread } from '@/api/thread';
+import Comment from '@/components/post/Comment.vue';
 
 export default {
-  components: {},
+  components: {
+    Comment,
+  },
 
   props: ['id'],
 
   async created() {
-    const res = await axios.get(`/api/threads/${this.id}`);
+    const threadId = this.$route.params.id;
+    const res = await fetchThread(threadId);
+    console.log(this.id);
     this.detail = res.data;
+    this.imageUrl = res.data.images[0];
     console.log(res);
   },
   data: () => ({
     detail: {
       user: {},
     },
-    page: 1,
-    list: [],
+    imageUrl: {},
   }),
-  methods: {},
+  methods: {
+    async recommend() {
+      try {
+        const res = await deleteRecommendThread(this.id);
+        console.log(res);
+        this.$router.go(this.$router.currentRoute);
+      } catch (error) {
+        const res = await createRecommendThread(this.id);
+        console.log(res);
+        this.$router.go(this.$router.currentRoute);
+      }
+    },
+  },
 };
 </script>
