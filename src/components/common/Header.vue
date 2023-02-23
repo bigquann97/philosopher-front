@@ -25,10 +25,10 @@
           </span>
         </li>
         <li v-if="!isUserLogin">
-          <router-link to="/signup">회원 가입</router-link>
+          <router-link to="/sign-up">회원 가입</router-link>
         </li>
         <li v-if="!isUserLogin">
-          <router-link to="/signin">로그인</router-link>
+          <router-link to="/sign-in">로그인</router-link>
         </li>
         <li v-if="isUserLogin">
           <router-link to="/user/modify">정보수정</router-link>

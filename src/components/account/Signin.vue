@@ -1,5 +1,6 @@
 <template>
   <div class="contents">
+    <h1>로그인</h1>
     <div class="form-wrapper form-wrapper-sm">
       <input
         id="email"
