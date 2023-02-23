@@ -20,6 +20,12 @@
       <div>카테고리 : {{ detail.category }}</div>
     </div>
     <div class="divider"></div>
+    <div>
+      <span
+        >1. {{ detail.opinions[0] }} 2.{{ detail.opinions[1] }} 3.
+        {{ detail.opinions[2] }}</span
+      >
+    </div>
     <div class="section">
       <img :src="imageUrl" alt="" style="max-width: 300px; max-height: 300px" />
       <div>{{ detail.content }}</div>
@@ -36,160 +42,146 @@
       </a>
     </div>
     <div class="divider"></div>
-    <div>
-      <div class="col s6 right-align">
-        <div style="text-align: center; margin: 20px auto 20px auto">
-          <v-btn @click="dialog = true">
-            댓글쓰기
-          </v-btn>
-          <v-dialog v-model="dialog" width="500px">
-            <v-card height="490">
-              <v-card-title>
-                댓글 쓰기
-              </v-card-title>
-              <v-card-text>
-                <div>
-                  <v-textarea
-                    solo
-                    auto-grow
-                    v-model="opinion"
-                    label="opinion"
-                  ></v-textarea>
-                  <v-textarea
-                    solo
-                    auto-grow
-                    v-model="content"
-                    label="content"
-                  ></v-textarea>
-                  <v-row justify="center" style="margin: 20px">
-                    <v-btn
-                      color="primary"
-                      variant="text"
-                      @click="dialog = false"
-                      style="margin: auto 20px auto auto"
-                    >
-                      닫기
-                    </v-btn>
-                    <v-btn
-                      color="primary"
-                      variant="text"
-                      @click="createComment"
-                      style="margin: auto auto auto 20px"
-                    >
-                      확인
-                    </v-btn>
-                  </v-row>
-                </div>
-              </v-card-text>
-              <v-card-actions>
-                <v-row justify="center"> </v-row>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </div>
-      </div>
-    </div>
-    <div>
-      <div class="collection">
-        <div
-          tag="a"
-          :to="{ name: 'Comment', params: { id: one.id }, query: query }"
-          class="collection-item row"
-          v-for="one in list"
-          :key="one.id"
+    <div class="section">
+      <div v-show="commentWriteForm">
+        <select class="browser-default" name="opinions" v-model="opinions">
+          <option value=""> 의견을 선택해주세요.</option>
+          <option :value="detail.opinions[0]">
+            {{ detail.opinions[0] }}
+          </option>
+          <option :value="detail.opinions[1]">{{ detail.opinions[1] }}</option>
+          <option :value="detail.opinions[2]">{{ detail.opinions[2] }}</option>
+        </select>
+        <v-textarea
+          solo
+          auto-grow
+          v-model="content"
+          label="여기에 댓글을 입력하세요. #번호로 멘션을 할 수 있습니다."
+        ></v-textarea>
+        <a
+          @click="createComment"
+          class="btn col s2"
+          style="background-color: white; float: right"
+          >확인</a
         >
-          <div class="col s7" style="width: 100%">
-            <span style="float: left"># {{ one.commentId }}</span>
-            <span style="float: left; margin: auto 20px">
-              {{ one.nickname }}
-            </span>
-            <span style="float: left">{{ one.createDate }}</span>
-            <div v-for="three in one.mentionedComments" :key="three.id">
+        <a
+          @click="closeCommentWriteForm"
+          class="btn col s2"
+          style="background-color: white; float:right;"
+          >닫기</a
+        >
+      </div>
+      <a
+        v-show="commentWrite"
+        @click="commentWrite2"
+        class="btn col s2"
+        style="background-color: white; float: right;"
+        >댓글작성</a
+      >
+    </div>
+    <div class="section">
+      <div class="row">
+        <div class="collection">
+          <div
+            tag="a"
+            :to="{ name: 'Comment', params: { id: one.id }, query: query }"
+            class="collection-item row"
+            v-for="one in list"
+            :key="one.id"
+          >
+            <div class="col s1" style="width: 100%">
+              <span style="float: left"># {{ one.commentId }}</span>
+              <span style="float: left; margin: auto 20px">
+                {{ one.nickname }}
+              </span>
+              <span style="float: left">{{ one.createDate }}</span>
+              <div v-for="three in one.mentionedComments" :key="three.id">
+                <v-tooltip top :close-delay="500" :open-delay="300">
+                  <template v-slot:activator="{ on }" class="col s8">
+                    <span
+                      @mouseenter="on.mouseenter"
+                      @mouseleave="on.mouseleave"
+                      style="float: left; margin-left: 12px; color: blue; font-size: small"
+                    >
+                      >>{{ three.id }}
+                    </span>
+                  </template>
+                  <template v-slot:default>
+                    <div style="max-width: 500px">{{ three.content }}</div>
+                  </template>
+                </v-tooltip>
+              </div>
+            </div>
+            <div class="col s2" style="width: 100%">
+              <span>{{ one.opinion }}</span>
+            </div>
+            <div
+              v-for="three in one.mentioningComments"
+              :key="three.id"
+              class="col s3"
+              style="width: 100%"
+            >
               <v-tooltip top :close-delay="500" :open-delay="300">
-                <template v-slot:activator="{ on }" class="col s8">
-                  <span
+                <template v-slot:activator="{ on }">
+                  <u
                     @mouseenter="on.mouseenter"
                     @mouseleave="on.mouseleave"
-                    style="float: left; margin-left: 12px; color: blue; font-size: small"
+                    style="float: left; color: blue; font-size: small"
                   >
-                    >>{{ three.id }}
-                  </span>
+                    # {{ three.id }}
+                  </u>
                 </template>
                 <template v-slot:default>
                   <div style="max-width: 500px">{{ three.content }}</div>
                 </template>
               </v-tooltip>
             </div>
-          </div>
-          <div class="col s8" style="width: 100%">
-            <span>{{ one.opinion }}</span>
-          </div>
-          <div
-            v-for="three in one.mentioningComments"
-            :key="three.id"
-            class="col s9"
-            style="width: 100%"
-          >
-            <v-tooltip top :close-delay="500" :open-delay="300">
-              <template v-slot:activator="{ on }">
-                <u
-                  @mouseenter="on.mouseenter"
-                  @mouseleave="on.mouseleave"
-                  style="float: left; color: blue; font-size: small"
-                >
-                  # {{ three.id }}
-                </u>
-              </template>
-              <template v-slot:default>
-                <div style="max-width: 500px">{{ three.content }}</div>
-              </template>
-            </v-tooltip>
-          </div>
-          <div style="float:left; width: 100%" class="col s10">
-            <span>
-              {{ one.content }}
-            </span>
-          </div>
-          <div
-            class="col s11"
-            style="text-align: center; margin-bottom: 20px; width: 100%"
-          >
-            <a>
-              <img
-                src="@/image/like_blue.png"
-                alt=""
-                style="width: 15px"
-                @click="recommend"
-              />
-              <span style="font-size: medium"> {{ one.recommendCount }}</span>
-            </a>
+            <div style="float:left; width: 100%" class="col s4">
+              <span>
+                {{ one.content }}
+              </span>
+            </div>
+            <div
+              class="col s5"
+              style="text-align: center; margin-bottom: 20px; width: 100%"
+            >
+              <a>
+                <img
+                  src="@/image/like_blue.png"
+                  alt=""
+                  style="width: 15px"
+                  @click="recommend"
+                />
+                <span style="font-size: medium"> {{ one.recommendCount }}</span>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="row valign-wrapper">
-        <div class="col s6">
-          <ul class="pagination">
-            <li class="waves-effect">
-              <a @click="previous">
-                <i class="material-icons">chevron_left</i>
-              </a>
-            </li>
-            <router-link
-              tag="li"
-              v-for="present in presentedPages"
-              :key="present"
-              active-class="active"
-              :to="fullPath(present + 1)"
-              exact
-            >
-              <a>{{ present + 1 }}</a>
-            </router-link>
-            <li class="waves-effect">
-              <a @click="forward">
-                <i class="material-icons">chevron_right</i>
-              </a>
-            </li>
-          </ul>
+        <div class="row valign-wrapper">
+          <div class="col s6">
+            <ul class="pagination">
+              <li class="waves-effect">
+                <a @click="previous">
+                  <i class="material-icons">chevron_left</i>
+                </a>
+              </li>
+              <router-link
+                tag="li"
+                v-for="present in presentedPages"
+                :key="present"
+                active-class="active"
+                :to="fullPath(present + 1)"
+                exact
+              >
+                <a>{{ present + 1 }}</a>
+              </router-link>
+              <li class="waves-effect">
+                <a @click="forward">
+                  <i class="material-icons">chevron_right</i>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -203,7 +195,11 @@ import {
 } from '@/api/recommendation';
 import { fetchThread } from '@/api/thread';
 import qstr from 'query-string';
-import { createComment, fetchThreadComment } from '@/api/comment';
+import {
+  createComment,
+  deleteComment,
+  fetchThreadComment,
+} from '@/api/comment';
 import _ from 'lodash';
 
 export default {
@@ -221,9 +217,16 @@ export default {
     console.log(res);
   },
   data: () => ({
+    comment: '',
+    opinions: '',
     content: '',
     opinion: '',
+    commentWriteForm: false,
+    commentWrite: true,
+    modifyForm: false,
     dialog: false,
+    dialog2: false,
+    check: false,
     detail: {
       user: {},
     },
@@ -235,12 +238,29 @@ export default {
     query: {},
   }),
   methods: {
+    async commentWrite2() {
+      this.commentWriteForm = true;
+      this.commentWrite = false;
+    },
+    async closeCommentWriteForm() {
+      this.commentWriteForm = false;
+      this.commentWrite = true;
+    },
     async createComment() {
       try {
         await createComment(this.id, {
-          opinion: this.opinion,
+          opinion: this.opinions,
           content: this.content,
         });
+        this.dialog = false;
+        this.$router.go(this.$router.currentRoute);
+      } catch (error) {
+        console.log(error.response);
+      }
+    },
+    async deleteComment() {
+      try {
+        await deleteComment(this.id);
         this.dialog = false;
         this.$router.go(this.$router.currentRoute);
       } catch (error) {

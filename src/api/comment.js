@@ -5,5 +5,8 @@ function fetchThreadComment(threadId, query) {
 function createComment(threadId, commentData) {
   return comment.post(`/thread/${threadId}`, commentData);
 }
+function deleteComment(commentId) {
+  return comment.delete(`/${commentId}`);
+}
 
-export { fetchThreadComment, createComment };
+export { fetchThreadComment, createComment, deleteComment };
