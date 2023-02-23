@@ -1,7 +1,12 @@
 <template>
   <div class="contents">
     <h1>내 정보</h1>
-    <div class="form-wrapper form-wrapper-sm">
+    <img
+      :src="user.imageUrl"
+      alt="사용자 프로필 이미지"
+      class="userProfileImage"
+    />
+    <div class="user-info-form">
       <ul>
         <h5>이메일:</h5>
         <li class="list-group-item">{{ user.email }}</li>
@@ -40,4 +45,25 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+h5 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 120px;
+  text-align: left;
+}
+</style>
