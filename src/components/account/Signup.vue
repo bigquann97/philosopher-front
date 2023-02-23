@@ -1,5 +1,6 @@
 <template>
   <div class="contents">
+    <h1>회원가입</h1>
     <div class="form-wrapper form-wrapper-sm">
       <span>이메일</span>
       <input

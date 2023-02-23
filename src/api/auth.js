@@ -10,5 +10,4 @@ function registerUser(userData) {
 function loginUser(userData) {
   return instance.post('/auth/sign-in', userData);
 }
-
 export { registerUser, loginUser };

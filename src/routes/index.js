@@ -38,9 +38,9 @@ const router = new VueRouter({
       props: true,
     },
     {
-      path: '/comments/thread/:id',
-      name: 'Tread',
-      component: () => import('@/components/post/Thread.vue'),
+      path: '/posts',
+      name: 'PostWrite',
+      component: () => import('@/components/post/PostWrite.vue'),
       props: true,
     },
     {

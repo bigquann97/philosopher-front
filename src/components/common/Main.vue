@@ -53,9 +53,9 @@
         <div class="row">
           <router-link
             style="color: black"
-            to="{ name: 'Threads', params: { id: one.id }, query: query }"
+            :to="{ name: 'Thread', params: { id: one.id }, query: { page: 1 } }"
             tag="a"
-            v-for="one in list"
+            v-for="one in list.slice(0, 6)"
             :key="one.id"
           >
             <div class="title">
@@ -172,7 +172,7 @@
 </template>
 <script>
 import qstr from 'query-string';
-import axios from '@/libs/axios.custom';
+import { fetchThreadList } from '@/api/thread';
 
 export default {
   created() {
@@ -189,7 +189,7 @@ export default {
         this.$route.query.page !== undefined
           ? qstr.stringify(this.$route.query)
           : 'page=1';
-      const res = await axios.get(`/api/threads?page${query}`);
+      const res = await fetchThreadList(query);
       console.log(res);
       this.list = res.data.content;
     },
