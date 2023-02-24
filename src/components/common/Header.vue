@@ -31,7 +31,7 @@
           <router-link to="/sign-in">로그인</router-link>
         </li>
         <li v-if="isUserLogin">
-          <router-link to="/user/modify">정보수정</router-link>
+          <router-link to="/accountInfo">정보수정</router-link>
         </li>
         <li v-if="isUserLogin"><a @click="logoutUser">로그아웃</a></li>
       </ul>

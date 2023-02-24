@@ -44,6 +44,12 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: '/accountInfo',
+      name: 'accountInfo',
+      component: () => import('@/components/account/AccountInfo.vue'),
+      props: true,
+    },
+    {
       path: '*',
       component: () => import('@/components/common/NotFoundPage.vue'),
     },
