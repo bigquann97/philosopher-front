@@ -38,6 +38,12 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: '/posts',
+      name: 'PostWrite',
+      component: () => import('@/components/post/PostWrite.vue'),
+      props: true,
+    },
+    {
       path: '/accountInfo',
       name: 'accountInfo',
       component: () => import('@/components/account/AccountInfo.vue'),
@@ -54,14 +60,14 @@ router.beforeEach((to, from, next) => {
   if (to.meta.auth && !store.getters.isLogin) {
     console.log('인증이 필요합니다');
     alert('로그인이 필요합니다.');
-    next('/signin');
+    next('/sign-in');
     return;
   }
   next();
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.path == '/signin' || to.path == '/signup') {
+  if (to.path == '/sign-in' || to.path == '/sign-up') {
     if (store.getters.isLogin) {
       console.log(to.path);
       console.log(to.meta.auth);

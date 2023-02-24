@@ -6,5 +6,16 @@ function createRecommendThread(threadId) {
 function deleteRecommendThread(threadId) {
   return recommendation.delete(`/thread/${threadId}`);
 }
+function createRecommendComment(commentId) {
+  return recommendation.post(`/comment/${commentId}`);
+}
+function deleteRecommendComment(commentId) {
+  return recommendation.delete(`/comment/${commentId}`);
+}
 
-export { createRecommendThread, deleteRecommendThread };
+export {
+  createRecommendThread,
+  deleteRecommendThread,
+  createRecommendComment,
+  deleteRecommendComment,
+};
