@@ -67,9 +67,7 @@
           </ul>
         </div>
         <div class="col s6 right-align">
-          <router-link to="/postWrite" class="waves-effect btn"
-            >글쓰기</router-link
-          >
+          <router-link to="/post" class="waves-effect btn">글쓰기</router-link>
         </div>
       </div>
     </div>
