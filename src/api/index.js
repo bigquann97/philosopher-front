@@ -20,3 +20,4 @@ export const recommendation = createInstanceWithAuth('recommendations');
 export const comment = createInstanceWithAuth('comments');
 export const thread = createInstanceWithAuth('threads');
 export const account = createInstanceWithAuth('accounts');
+export const post = createInstanceWithAuth('posts');

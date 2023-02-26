@@ -8,7 +8,7 @@
       </a>
       <ul class="hide-on-med-and-down">
         <li>
-          <a>게시물</a>
+          <a href="/posts">게시물</a>
         </li>
         <li>
           <a href="/threads">쓰레드</a>
