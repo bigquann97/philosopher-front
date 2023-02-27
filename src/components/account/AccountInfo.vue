@@ -1,11 +1,22 @@
 <template>
   <div class="user-info-contents">
     <h1>내 정보</h1>
-    <img
-      :src="user.imageUrl"
-      alt="사용자 프로필 이미지"
-      class="userProfileImage"
-    />
+    <div class="profile-image-container">
+      <img
+        :src="user.imageUrl"
+        alt="사용자 프로필 이미지"
+        class="userProfileImage"
+      />
+      <input
+        type="file"
+        ref="fileInput"
+        style="display: none"
+        @change="onImageSelected"
+      />
+      <button class="btn btn-primary" @click="openFileInput">
+        프로필 사진 변경
+      </button>
+    </div>
     <div class="user-info-form">
       <ul>
         <h5 class="user-info-title">이메일:</h5>
@@ -22,9 +33,8 @@
     </div>
   </div>
 </template>
-
 <script>
-import { myAccountInfo } from '@/api/account';
+import { myAccountInfo, profileImageUpdate } from '@/api/account';
 
 export default {
   data() {
@@ -41,10 +51,28 @@ export default {
       console.log(res);
       this.user = res.data;
     },
+    async updateProfileImage(formData) {
+      try {
+        const response = await profileImageUpdate(formData);
+        console.log(response);
+        await this.loadPage(); // 사용자 정보 다시 불러오기
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    openFileInput() {
+      this.$refs.fileInput.click();
+    },
+    async onImageSelected(event) {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append('image', file);
+      const res = await this.updateProfileImage(formData);
+      console.log(res);
+    },
   },
 };
 </script>
-
 <style scoped>
 .user-info-contents {
   display: flex;
@@ -54,12 +82,27 @@ export default {
   margin: 2rem;
 }
 
+.profile-image-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
 .userProfileImage {
   width: 150px;
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 1rem;
+}
+
+.btn {
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.btn:hover + .userProfileImage {
+  opacity: 0.7;
 }
 
 .user-info-form {

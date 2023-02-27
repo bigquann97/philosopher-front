@@ -4,6 +4,9 @@ import { account } from '@/api/index';
 function myAccountInfo() {
   return account.get();
 }
+function profileImageUpdate(formData) {
+  return account.patch('/image', formData);
+}
 
 const token = localStorage.getItem('token');
 
@@ -20,4 +23,4 @@ account
     console.error(error);
   });
 
-export { myAccountInfo };
+export { myAccountInfo, profileImageUpdate };
