@@ -44,6 +44,12 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: '/post/:id',
+      name: 'Post',
+      component: () => import('@/components/post/Post.vue'),
+      props: true,
+    },
+    {
       path: '/post',
       name: 'PostWrite',
       component: () => import('@/components/post/PostWrite.vue'),

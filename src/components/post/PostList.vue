@@ -24,7 +24,7 @@
       <div class="collection">
         <router-link
           tag="a"
-          :to="{ name: 'Post', params: { id: one.id }, query: { page: 0 } }"
+          :to="{ name: 'Post', params: { id: one.id }, query: { page: 1 } }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
@@ -106,7 +106,7 @@ export default {
         word: this.query.word !== undefined ? this.query.word : '',
       };
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/posts', query: { page: 0 } });
+        this.$router.push({ path: '/posts', query: { page: 1 } });
       } else {
         this.loadPage();
       }
