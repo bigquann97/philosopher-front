@@ -1,7 +1,7 @@
 <template>
   <div class="user-info-contents">
     <h1>내 정보</h1>
-    <div class="profile-image-container">
+    <div class="profile-image-container" @click="openFileInput">
       <img
         :src="user.imageUrl"
         alt="사용자 프로필 이미지"
@@ -13,9 +13,6 @@
         style="display: none"
         @change="onImageSelected"
       />
-      <button class="btn btn-primary" @click="openFileInput">
-        프로필 사진 변경
-      </button>
     </div>
     <div class="user-info-form">
       <ul>
@@ -29,6 +26,15 @@
         <li class="list-group-item">{{ user.age }}</li>
         <h5 class="user-info-title">내 상태:</h5>
         <li class="list-group-item">{{ user.userStatus }}</li>
+        <router-link to="/myPosts" class="list-group-item"
+          >내가 작성한 게시물 보기</router-link
+        >
+        <router-link to="/myComments" class="list-group-item"
+          >내가 쓴 댓글 보기</router-link
+        >
+        <router-link to="/myRecommendedContent" class="list-group-item"
+          >추천한 컨텐츠</router-link
+        >
       </ul>
     </div>
   </div>
@@ -82,23 +88,11 @@ export default {
   margin: 2rem;
 }
 
-.profile-image-container {
-  position: relative;
-  margin-bottom: 1rem;
-}
-
 .userProfileImage {
   width: 150px;
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-}
-
-.btn {
-  position: absolute;
-  bottom: -0.5rem;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .btn:hover + .userProfileImage {
@@ -110,6 +104,18 @@ export default {
   border: 1px solid #ddd;
   padding: 1rem;
   border-radius: 0.5rem;
+}
+
+.user-info-form li {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.list-group-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .user-info-title {
@@ -124,5 +130,14 @@ export default {
   border: none;
   border-bottom: 1px solid #ddd;
   word-break: break-all;
+}
+.profile-image-container {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.userProfileImage:hover {
+  opacity: 0.7;
+  transition: all 0.3s ease-in-out;
 }
 </style>

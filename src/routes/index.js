@@ -56,6 +56,21 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: '/myPosts',
+      name: 'MyPosts',
+      component: () => import('@/components/account/MyPosts.vue'),
+    },
+    {
+      path: '/myComments',
+      name: 'MyComments',
+      component: () => import('@/components/account/MyComment.vue'),
+    },
+    {
+      path: '/myRecommendedContent',
+      name: 'MyRecommendedContent',
+      component: () => import('@/components/account/MyRecommendedContent.vue'),
+    },
+    {
       path: '*',
       component: () => import('@/components/common/NotFoundPage.vue'),
     },
