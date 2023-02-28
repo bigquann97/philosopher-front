@@ -71,6 +71,16 @@ const router = new VueRouter({
       component: () => import('@/components/account/MyRecommendedContent.vue'),
     },
     {
+      path: '/updateNickname',
+      name: 'UpdateNickname',
+      component: () => import('@/components/account/UpdateNickname.vue'),
+    },
+    {
+      path: '/updatePassword',
+      name: 'UpdatePassword',
+      component: () => import('@/components/account/UpdatePassword.vue'),
+    },
+    {
       path: '*',
       component: () => import('@/components/common/NotFoundPage.vue'),
     },

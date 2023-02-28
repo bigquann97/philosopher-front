@@ -19,7 +19,17 @@
         <h5 class="user-info-title">이메일:</h5>
         <li class="list-group-item">{{ user.email }}</li>
         <h5 class="user-info-title">닉네임:</h5>
-        <li class="list-group-item">{{ user.nickname }}</li>
+        <li class="list-group-item">
+          {{ user.nickname
+          }}<router-link to="/updateNickname" class="list-update-item"
+            >닉네임 변경하기</router-link
+          >
+        </li>
+        <li class="list-group-item">
+          <router-link to="/updatePassword" class="list-update-item"
+            >비밀번호 변경하기</router-link
+          >
+        </li>
         <h5 class="user-info-title">성별:</h5>
         <li class="list-group-item">{{ user.gender }}</li>
         <h5 class="user-info-title">나이:</h5>
@@ -131,6 +141,10 @@ export default {
   border-bottom: 1px solid #ddd;
   word-break: break-all;
 }
+.list-update-item {
+  font-size: 15px;
+}
+
 .profile-image-container {
   margin-bottom: 10px;
   cursor: pointer;
