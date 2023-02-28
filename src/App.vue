@@ -28,6 +28,7 @@ export default {
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css');
 @import url('https://cdn.rawgit.com/hiun/NanumSquare/master/nanumsquare.css');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
  {
   font-size: 1em;
