@@ -20,6 +20,18 @@ export function modifyAccountNickname(nickname) {
       console.error(error);
     });
 }
+// 비밀번호 변경 API
+export function modifyAccountPassword(password) {
+  const nicknameObj = { password: String(password) }; // String() 메소드를 사용하여 입력된 nickname 값을 문자열로 변환
+  return account
+    .patch('/password/modify', nicknameObj)
+    .then(response => {
+      return response.data.password.toString();
+    })
+    .catch(error => {
+      console.error(error);
+    });
+}
 
 // 본인이 작성한 게시물 조회
 function getMyPosts(query) {
