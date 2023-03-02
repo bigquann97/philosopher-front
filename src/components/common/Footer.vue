@@ -9,3 +9,22 @@
     </div>
   </footer>
 </template>
+
+<style>
+@import '/css/reset.css';
+@import '/css/common.css';
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+footer *,
+footer *:before,
+footer *:after {
+  box-sizing: inherit;
+  font-family: 'pretendard', Arial, Helvetica, sans-serif;
+}
+
+footer .footer_container img {
+  width: 59px;
+  height: 60px;
+  border-radius: 50%;
+}
+</style>
