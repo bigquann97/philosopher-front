@@ -36,7 +36,7 @@
       <div class="navbar">
         <ul>
           <li v-if="isUserLogin" style="color: black;">
-            <span style="font-size: 17px"
+            <span style="font-size: 15px"
               >{{ $store.state.username }} 님 반갑습니다.
             </span>
           </li>
@@ -134,7 +134,7 @@ header .menu ul {
 
 header .menu li a {
   white-space: nowrap;
-  font-size: 19px;
+  font-size: 16px;
   text-decoration: none;
   color: #111111;
   padding: 0 20px;
@@ -156,7 +156,7 @@ header .navbar ul {
 
 header .navbar li a {
   white-space: nowrap;
-  font-size: 19px;
+  font-size: 16px;
   margin-right: 10px;
   text-decoration: none;
   color: dodgerblue;

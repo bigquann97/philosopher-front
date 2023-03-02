@@ -248,7 +248,8 @@ export default {
 
 .board-name h3 {
   margin-left: 30px;
-  font-size: 21px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .main_title {
@@ -259,7 +260,7 @@ export default {
   margin-left: 15px;
   margin-right: 15px;
   padding-bottom: 10px;
-  font-size: 18px;
+  font-size: 16px;
   border-bottom: 1px solid rgb(211, 211, 211);
 }
 
