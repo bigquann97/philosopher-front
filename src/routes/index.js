@@ -74,6 +74,7 @@ const router = new VueRouter({
       path: '/updateNickname',
       name: 'UpdateNickname',
       component: () => import('@/components/account/UpdateNickname.vue'),
+      props: true,
     },
     {
       path: '/updatePassword',
