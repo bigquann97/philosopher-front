@@ -226,6 +226,8 @@ export default {
 .signup_title h2 {
   margin-top: 5px;
   margin-bottom: 0;
+  font-size: 25px;
+  font-weight: bold;
 }
 
 .signup_title p {
