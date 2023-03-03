@@ -33,7 +33,7 @@ const router = new VueRouter({
     },
     {
       path: '/comments/thread/:id',
-      name: 'Tread',
+      name: 'Thread',
       component: () => import('@/components/post/Thread.vue'),
       props: true,
     },
@@ -41,6 +41,12 @@ const router = new VueRouter({
       path: '/posts',
       name: 'PostList',
       component: () => import('@/components/post/PostList.vue'),
+      props: true,
+    },
+    {
+      path: '/post/:id',
+      name: 'Post',
+      component: () => import('@/components/post/Post.vue'),
       props: true,
     },
     {

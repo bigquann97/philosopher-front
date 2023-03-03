@@ -1,121 +1,138 @@
 <template>
-  <div class="contents">
-    <h1>회원가입</h1>
-    <div class="form-wrapper form-wrapper-sm">
-      <span>이메일</span>
-      <input
-        id="email"
-        name="email"
-        type="text"
-        class="validate"
-        v-model="email"
-        placeholder="email@email.com"
-      />
-      <div style="text-align: center">
-        <v-btn
-          color="success"
-          class="mr-4"
-          @click="sendVerificationMail((Loading = true))"
-        >
-          이메일 인증하기
-        </v-btn>
-        <v-dialog v-model="Loading" width="500px">
-          <v-card height="420">
-            <LoadingSpinner v-if="isLoading"></LoadingSpinner>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="dialog" width="500px">
-          <v-card height="420">
-            <v-card-title>
-              이메일 인증
-            </v-card-title>
-            <v-card-text>
-              <div>
-                <div style="margin: 20px auto">
-                  <p style="text-align: center">
-                    {{ email }} (으)로 보내드린 인증코드를 확인해 주세요.
-                  </p>
-                  <p style="text-align: center">
-                    개인정보 보호를 위해 인증코드는 3분 간 유효합니다.
-                  </p>
-                  <p style="text-align: center">
-                    인증코드를 못 받으셨나요?<a @click="sendVerificationMail">
-                      다시 받기</a
-                    >
-                  </p>
-                </div>
-                <input
-                  id="verificationCode"
-                  name="verificationCode"
-                  type="text"
-                  class="validate"
-                  v-model="verificationCode"
-                  placeholder="인증코드 입력"
-                />
-                <v-row justify="center" style="margin: 20px">
-                  <v-btn
-                    color="primary"
-                    variant="text"
-                    @click="dialog = false"
-                    style="margin: auto 20px auto auto"
-                  >
-                    닫기
-                  </v-btn>
-                  <v-btn
-                    color="primary"
-                    variant="text"
-                    @click="verifyEmail"
-                    style="margin: auto auto auto 20px"
-                  >
-                    확인
-                  </v-btn>
-                </v-row>
-              </div>
-            </v-card-text>
-            <p class="log">{{ logMessage }}</p>
-            <v-card-actions>
-              <v-row justify="center"> </v-row>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+  <div class="wrapper">
+    <section>
+      <div class="signup_title">
+        <img class="signup_logo" src="@/image/logo.png" alt="logo" />
+        <h2>우리 모두 철학자</h2>
+        <p>나만의 철학적인 질문을 모두와 함께 공유하는 토론의 장</p>
       </div>
-      <span>비밀번호</span>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        class="validate"
-        v-model="password"
-        placeholder="비밀번호"
-      />
-      <span>닉네임</span>
-      <input
-        id="nickname"
-        name="nickname"
-        type="text"
-        class="validate"
-        v-model="nickname"
-        placeholder="nickname"
-      />
-      <span>나이</span>
-      <input v-model="age" placeholder="나이" />
-      <span>성별</span>
-      <select class="browser-default" name="gender" v-model="gender">
-        <option value=""> ===========성별 선택===========</option>
-        <option value="MALE">남자</option>
-        <option value="FEMALE">여자</option>
-      </select>
-      <p class="log">{{ logMessageSignup }}</p>
-      <div style="text-align: center">
-        <v-btn color="error" class="mr-4" href="/main">
-          뒤로가기
-        </v-btn>
+      <div class="form-wrapper">
+        <form>
+          <legend>회원가입에 필요한 정보를 입력해주세요.</legend>
 
-        <v-btn color="success" class="mr-4" type="submit" @click="submitForm">
-          회원가입
-        </v-btn>
+          <label>이메일</label>
+          <input
+            id="email"
+            name="email"
+            type="text"
+            class="validate"
+            v-model="email"
+            placeholder="email@email.com"
+          />
+          <div style="text-align: center">
+            <v-btn
+              color="success"
+              class="button_success"
+              @click="sendVerificationMail((Loading = true))"
+            >
+              이메일 인증하기
+            </v-btn>
+            <v-dialog v-model="Loading" width="500px">
+              <v-card height="420">
+                <LoadingSpinner v-if="isLoading"></LoadingSpinner>
+              </v-card>
+            </v-dialog>
+            <v-dialog v-model="dialog" width="500px">
+              <v-card height="420">
+                <v-card-title>
+                  이메일 인증
+                </v-card-title>
+                <v-card-text>
+                  <div>
+                    <div style="margin: 20px auto">
+                      <p style="text-align: center">
+                        {{ email }} (으)로 보내드린 인증코드를 확인해 주세요.
+                      </p>
+                      <p style="text-align: center">
+                        개인정보 보호를 위해 인증코드는 3분 간 유효합니다.
+                      </p>
+                      <p style="text-align: center">
+                        인증코드를 못 받으셨나요?<a
+                          @click="sendVerificationMail"
+                        >
+                          다시 받기</a
+                        >
+                      </p>
+                    </div>
+                    <input
+                      id="verificationCode"
+                      name="verificationCode"
+                      type="text"
+                      class="validate"
+                      v-model="verificationCode"
+                      placeholder="인증코드 입력"
+                    />
+                    <v-row justify="center" style="margin: 20px">
+                      <v-btn
+                        color="primary"
+                        variant="text"
+                        @click="dialog = false"
+                        style="margin: auto 20px auto auto"
+                      >
+                        닫기
+                      </v-btn>
+                      <v-btn
+                        color="primary"
+                        variant="text"
+                        @click="verifyEmail"
+                        style="margin: auto auto auto 20px"
+                      >
+                        확인
+                      </v-btn>
+                    </v-row>
+                  </div>
+                </v-card-text>
+                <p class="log">{{ logMessage }}</p>
+                <v-card-actions>
+                  <v-row justify="center"> </v-row>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </div>
+          <label>비밀번호</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            class="validate"
+            v-model="password"
+            placeholder="비밀번호"
+          />
+          <label>닉네임</label>
+          <input
+            id="nickname"
+            name="nickname"
+            type="text"
+            class="validate"
+            v-model="nickname"
+            placeholder="nickname"
+          />
+          <label>나이</label>
+          <input v-model="age" placeholder="나이" />
+          <label>성별</label>
+          <select class="browser-default" name="gender" v-model="gender">
+            <option value=""> ===========성별 선택===========</option>
+            <option value="MALE">남자</option>
+            <option value="FEMALE">여자</option>
+          </select>
+          <p class="log">{{ logMessageSignup }}</p>
+          <div class="buttons">
+            <v-btn color="error" class="button_error" href="/main">
+              뒤로가기
+            </v-btn>
+
+            <v-btn
+              color="success"
+              class="button_success"
+              type="submit"
+              @click="submitForm"
+            >
+              회원가입
+            </v-btn>
+          </div>
+        </form>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -189,4 +206,119 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.wrapper {
+  width: 60%;
+  margin: 0 auto;
+  padding: 1em;
+}
+
+.signup_title {
+  text-align: center;
+}
+
+.signup_logo {
+  width: 60px;
+  border-radius: 50%;
+  margin-top: 90px;
+}
+
+.signup_title h2 {
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.signup_title p {
+  font-size: 1rem;
+  margin: 8px 0 0;
+}
+
+.form-wrapper {
+  /* border-top: 1px solid gray; */
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  border-bottom: 0px;
+  margin-top: 50px;
+  display: flex;
+  flex-flow: row wrap;
+  box-shadow: none;
+}
+
+legend {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+label {
+  font-size: 1rem;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.form-wrapper input,
+select {
+  font-size: 0.9rem;
+  width: 100%;
+  margin: auto;
+  border: 1px solid rgba(107, 114, 128, 0.298);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 15px;
+}
+
+.form-wrapper input {
+  font-size: 0.9rem;
+  width: 100%;
+  margin: auto;
+  border: 1px solid rgba(107, 114, 128, 0.298);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 15px;
+}
+
+.form-wrapper .browser-default {
+  font-size: 0.9rem;
+  width: 100%;
+  margin: auto;
+  border: 1px solid rgba(107, 114, 128, 0.298);
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 15px;
+  -webkit-appearance: auto;
+}
+
+.form-wrapper .button_success {
+  background-color: dodgerblue;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: auto;
+}
+
+.form-wrapper .button_error {
+  background-color: #ff5252;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: auto;
+}
+
+button:hover {
+  background-color: rgb(16, 108, 199);
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+</style>
