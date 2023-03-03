@@ -64,7 +64,7 @@
       </div>
       <div class="second-row">
         <div class="board1">
-          <div class="board-name"><h3>HOTTEST THREAD</h3></div>
+          <div class="board-name"><h3>HOT THREADS</h3></div>
           <div class="row">
             <router-link
               style="color: black"
