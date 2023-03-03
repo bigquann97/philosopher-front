@@ -9,7 +9,7 @@
         <p class="form-wrapper3">
           <a href="/terms">서비스 이용약관</a>
           &#183;
-          <a href="/main">개인정보 처리방침</a>
+          <a href="/privacy">개인정보 처리방침</a>
         </p>
       </div>
     </div>
