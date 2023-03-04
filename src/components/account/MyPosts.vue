@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row s1">
         <div class="col s3">
-          게시물
+          내가 작성한 게시물
         </div>
         <div class="col s3 offset-s5">
           <input
@@ -21,150 +21,116 @@
           </a>
         </div>
       </div>
-      <div class="collection">
+      <div class="collection" ref="commentList">
         <router-link
           tag="a"
-          :to="{ name: 'MyPosts', params: { id: one.id }, query: { page: 0 } }"
+          :to="{
+            name: 'MyComments',
+            params: { id: one.id },
+            query: { page: 0 },
+          }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
         >
-          <span class="col s6">
-            <span>[{{ one.category }}]</span>
-            <span>{{ one.title }}</span>
-          </span>
-          <small class="col s2 center-align">{{ one.nickname }}</small>
+          <span class="col s6">{{ [one.title] }}</span>
+          <span class="col s6">{{ one.content }}</span>
         </router-link>
-      </div>
-      <div class="row valign-wrapper">
-        <div class="col s6">
-          <ul class="pagination">
-            <li class="waves-effect">
-              <a @click="previous">
-                <i class="material-icons">chevron_left</i>
-              </a>
-            </li>
-            <router-link
-              tag="li"
-              v-for="present in presentedPages"
-              :key="present"
-              active-class="active"
-              :to="fullPath(present + 1)"
-              exact
-            >
-              <a>{{ present + 1 }}</a>
-            </router-link>
-            <li class="waves-effect">
-              <a @click="forward">
-                <i class="material-icons">chevron_right</i>
-              </a>
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   </div>
 </template>
-
 <script>
-import _ from 'lodash';
-import qstr from 'query-string';
 import { getMyPosts } from '@/api/account';
-
 export default {
-  created() {
-    this.beforeLoadPage();
-    this.loadPage();
+  name: 'MyComments',
+  data() {
+    return {
+      list: [],
+      search: {
+        word: '',
+      },
+      pagination: {
+        page: parseInt(this.$route.query.page) || 0,
+        size: 10,
+        totalElements: 0,
+        totalPages: 0,
+        presentationSize: 5,
+      },
+      loading: false,
+    };
   },
-
-  data: () => ({
-    pagination: {},
-    search: {},
-    list: [],
-    blockSize: 5,
-    query: {},
-  }),
-
-  methods: {
-    searching() {
-      const keyword = this.search.word.trim();
-      if (keyword !== '') {
-        this.$router.push(`/myPosts?page=1&${qstr.stringify(this.search)}`);
-      }
-    },
-
-    beforeLoadPage() {
-      this.query = this.$route.query;
-      this.search = {
-        word: this.query.word !== undefined ? this.query.word : '',
-      };
-      if (this.query.page === undefined) {
-        this.$router.push({ path: '/myPosts', query: { page: 0 } });
-      } else {
+  mounted() {
+    this.loadPage();
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+  watch: {
+    $route(to, from) {
+      console.log('이전 라우트', from);
+      console.log('새 라우트', to);
+      if (to.query.page !== from.query.page) {
         this.loadPage();
       }
     },
-
-    async loadPage() {
-      const query =
-        this.$route.query.page !== undefined
-          ? qstr.stringify(this.$route.query)
-          : 'page=1';
-      const res = await getMyPosts(query);
-      const result = res.data;
-      console.log(result);
-      this.list = result.content;
-      this.pagination = {
-        numberOfElements: res.data.numberOfElements,
-        totalElements: res.data.totalElements,
-        isFirst: res.data.first,
-        isLast: res.data.last,
-        currentPage: res.data.number,
-        totalPages: res.data.totalPages - 1,
-        pageSize: res.data.size,
-      };
-    },
-
-    fullPath(val) {
-      const target = _.cloneDeep(this.query);
-      target.page = val;
-      return { path: '/myPosts', query: target };
-    },
-
-    previous() {
-      const page =
-        _.first(this.presentedPages) - 1 < 0 ? 1 : _.first(this.presentedPages);
-      this.$router.push(this.fullPath(page));
-    },
-
-    forward() {
-      const total =
-        this.pagination.totalPages === 1 ? 1 : this.pagination.totalPages;
-      const page =
-        _.last(this.presentedPages) === total
-          ? total + 1
-          : _.last(this.presentedPages) + 2;
-      this.$router.push(this.fullPath(page));
-    },
   },
-
   computed: {
     presentedPages() {
-      const current = this.pagination.currentPage + 1;
-      const blockSize = this.blockSize;
-      const total =
-        this.pagination.totalPages === 0 ? 0 : this.pagination.totalPages - 1;
-
-      const startOfBlock = current - (current % blockSize);
-      const endOfBlock = startOfBlock + blockSize;
-      const complimentedEOB = endOfBlock > total + 2 ? total + 2 : endOfBlock;
-      return _.range(startOfBlock, complimentedEOB);
+      let from =
+          this.pagination.page - Math.floor(this.pagination.presentationSize / 2);
+      from = Math.max(from, 0);
+      const to = from + this.pagination.presentationSize;
+      return Array.from(
+          { length: this.pagination.totalPages },
+          (el, index) => index,
+      )
+      .slice(from, to)
+      .filter(el => el >= 0);
     },
   },
-
-  beforeRouteUpdate(to, from, next) {
-    next();
-    this.beforeLoadPage();
+  methods: {
+    loadPage() {
+      this.loading = true;
+      getMyPosts({
+        params: { page: this.pagination.page, size: this.pagination.size },
+      })
+      .then(response => {
+        const data = response.data;
+        this.list = data.content;
+        this.pagination.totalElements = data.totalElements;
+        this.pagination.totalPages = Math.ceil(
+            data.totalElements / this.pagination.size,
+        );
+      })
+      .finally(() => {
+        this.loading = false;
+      });
+    },
+    handleScroll() {
+      if (
+          window.innerHeight + window.pageYOffset >=
+          document.documentElement.offsetHeight - 1 &&
+          !this.loading
+      ) {
+        if (this.pagination.page + 1 < this.pagination.totalPages) {
+          this.pagination.page++;
+          this.loadPage();
+        }
+      }
+    },
+    searching() {
+      this.pagination.page = 0;
+      this.loadPage();
+    },
   },
 };
 </script>
+
+<style>
+.s1 {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+</style>
