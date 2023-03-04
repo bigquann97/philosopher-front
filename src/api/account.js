@@ -38,6 +38,10 @@ function getMyPosts(query) {
   return account.get('/posts', `?${query}`);
 }
 
+export function getMyComments(query) {
+  return account.get('/comments', `?${query}`);
+}
+
 const token = localStorage.getItem('token');
 
 account

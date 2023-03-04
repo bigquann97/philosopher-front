@@ -45,6 +45,9 @@
         <router-link to="/myRecommendedContent" class="list-group-item"
           >추천한 컨텐츠</router-link
         >
+        <router-link to="/myNotification" class="list-group-item"
+          >받은 알람</router-link
+        >
       </ul>
     </div>
   </div>
