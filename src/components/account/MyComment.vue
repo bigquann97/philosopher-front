@@ -33,8 +33,8 @@
           v-for="one in list"
           :key="one.id"
         >
+          <span class="col s6">{{ [one.title] }}</span>
           <span class="col s6">{{ one.content }}</span>
-          <small class="col s2 center-align">{{ one.nickname }}</small>
         </router-link>
       </div>
       <div class="row valign-wrapper">
@@ -93,8 +93,9 @@ export default {
     $route(to, from) {
       console.log('이전 라우트', from);
       console.log('새 라우트', to);
-      this.loadPage();
-      this.loadPage();
+      if (to.query.page !== from.query.page) {
+        this.loadPage();
+      }
     },
   },
   computed: {
