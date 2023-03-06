@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row valign-wrapper">
         <div class="col s6">
-          <h1>쓰레드</h1>
+          <h1>아카이브</h1>
         </div>
         <div class="col s2"></div>
         <div class="col s3">
@@ -25,7 +25,7 @@
       <div class="collection">
         <router-link
           tag="a"
-          :to="{ name: 'Thread', params: { id: one.id }, query: { page: 1 } }"
+          :to="{ name: 'Archive', params: { id: one.id }, query: { page: 1 } }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
@@ -64,9 +64,6 @@
             </li>
           </ul>
         </div>
-        <div class="col s6 right-align">
-          <router-link to="/posts" class="waves-effect btn">글쓰기</router-link>
-        </div>
       </div>
     </div>
   </div>
@@ -75,7 +72,7 @@
 <script>
 import _ from 'lodash';
 import qstr from 'query-string';
-import { fetchThreadList } from '@/api/thread';
+import { fetchArchiveList } from '@/api/archive';
 
 export default {
   created() {
@@ -94,7 +91,9 @@ export default {
     searching() {
       const keyword = this.search.word.trim();
       if (keyword !== '') {
-        this.$router.push(`/threads?page=1&${qstr.stringify(this.search)}`);
+        this.$router.push(
+          `/threads/archived?page=1&${qstr.stringify(this.search)}`,
+        );
       }
     },
 
@@ -104,7 +103,7 @@ export default {
         word: this.query.word !== undefined ? this.query.word : '',
       };
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/threads', query: { page: 1 } });
+        this.$router.push({ path: '/threads/archived', query: { page: 1 } });
       } else {
         this.loadPage();
       }
@@ -115,7 +114,7 @@ export default {
         this.$route.query.page !== undefined
           ? qstr.stringify(this.$route.query)
           : 'page=1';
-      const res = await fetchThreadList(query);
+      const res = await fetchArchiveList(query);
       const result = res.data;
       console.log(result);
       this.list = res.data.content;
@@ -133,7 +132,7 @@ export default {
     fullPath(val) {
       const target = _.cloneDeep(this.query);
       target.page = val;
-      return { path: '/threads', query: target };
+      return { path: '/threads/archived', query: target };
     },
 
     previous() {
