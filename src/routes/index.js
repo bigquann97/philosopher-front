@@ -62,6 +62,42 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: '/myPosts',
+      name: 'MyPosts',
+      component: () => import('@/components/account/MyPosts.vue'),
+    },
+    {
+      path: '/myComments',
+      name: 'MyComments',
+      component: () => import('@/components/account/MyComment.vue'),
+    },
+    {
+      path: '/recommendedPosts',
+      name: 'RecommendedPosts',
+      component: () => import('@/components/account/RecommendedPosts.vue'),
+    },
+    {
+      path: '/recommendedComments',
+      name: 'RecommendedComments',
+      component: () => import('@/components/account/RecommendedComments.vue'),
+    },
+    {
+      path: '/recommendedThreads',
+      name: 'RecommendedThreads',
+      component: () => import('@/components/account/RecommendedThreads.vue'),
+    },
+    {
+      path: '/updateNickname',
+      name: 'UpdateNickname',
+      component: () => import('@/components/account/UpdateNickname.vue'),
+      props: true,
+    },
+    {
+      path: '/updatePassword',
+      name: 'UpdatePassword',
+      component: () => import('@/components/account/UpdatePassword.vue'),
+    },
+    {
       path: '*',
       component: () => import('@/components/common/NotFoundPage.vue'),
     },
