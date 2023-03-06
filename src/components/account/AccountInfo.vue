@@ -36,15 +36,37 @@
         <li class="list-group-item">{{ user.age }}</li>
         <h5 class="user-info-title">내 상태:</h5>
         <li class="list-group-item">{{ user.userStatus }}</li>
-        <router-link to="/myPosts" class="list-group-item"
-          >내가 작성한 게시물 보기</router-link
-        >
-        <router-link to="/myComments" class="list-group-item"
-          >내가 쓴 댓글 보기</router-link
-        >
-        <router-link to="/myRecommendedContent" class="list-group-item"
-          >추천한 컨텐츠</router-link
-        >
+        <h5 class="user-info-title">내가 작성한 컨텐츠</h5>
+        <div class="d-flex flex-wrap">
+          <div class="p-2 flex-grow-1">
+            <router-link to="/myPosts" class="list-group-item"
+              >게시글</router-link
+            >
+          </div>
+          <div class="p-2 flex-grow-1">
+            <router-link to="/myComments" class="list-group-item"
+              >댓글</router-link
+            >
+          </div>
+        </div>
+        <h5 class="user-info-title">내가 추천한 컨텐츠</h5>
+        <div class="d-flex flex-wrap">
+          <div class="p-2 flex-grow-1">
+            <router-link to="/recommendedPosts" class="list-group-item"
+              >게시글</router-link
+            >
+          </div>
+          <div class="p-2 flex-grow-1">
+            <router-link to="/recommendedThreads" class="list-group-item"
+              >쓰레드</router-link
+            >
+          </div>
+          <div class="p-2 flex-grow-1">
+            <router-link to="/recommendedComments" class="list-group-item"
+              >댓글</router-link
+            >
+          </div>
+        </div>
         <router-link to="/myNotification" class="list-group-item"
           >받은 알람</router-link
         >

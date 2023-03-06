@@ -98,19 +98,19 @@
           <div class="board-name"><h3>ARCHIVED</h3></div>
           <div class="row">
             <router-link
-                style="color: black"
-                :to="{
+              style="color: black"
+              :to="{
                 name: 'Thread',
                 params: { id: archivedThread.id },
                 query: { page: 1 },
               }"
-                tag="a"
-                v-for="archivedThread in list4.slice(0, 6)"
-                :key="archivedThread.id"
+              tag="a"
+              v-for="archivedThread in list4.slice(0, 6)"
+              :key="archivedThread.id"
             >
               <div class="main_title">
                 <span
-                ><span>[{{ archivedThread.category }}]</span>
+                  ><span>[{{ archivedThread.category }}]</span>
                   {{ archivedThread.title }}
                   <span class="red-text">
                     [ {{ archivedThread.commentCount }} ]

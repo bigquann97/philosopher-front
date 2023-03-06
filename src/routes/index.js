@@ -72,9 +72,19 @@ const router = new VueRouter({
       component: () => import('@/components/account/MyComment.vue'),
     },
     {
-      path: '/myRecommendedContent',
-      name: 'MyRecommendedContent',
-      component: () => import('@/components/account/MyRecommendedContent.vue'),
+      path: '/recommendedPosts',
+      name: 'RecommendedPosts',
+      component: () => import('@/components/account/RecommendedPosts.vue'),
+    },
+    {
+      path: '/recommendedComments',
+      name: 'RecommendedComments',
+      component: () => import('@/components/account/RecommendedComments.vue'),
+    },
+    {
+      path: '/recommendedThreads',
+      name: 'RecommendedThreads',
+      component: () => import('@/components/account/RecommendedThreads.vue'),
     },
     {
       path: '/updateNickname',

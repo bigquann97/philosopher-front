@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row s1">
         <div class="col s3">
-          작성한 댓글
+          추천한 게시물
         </div>
         <div class="col s3 offset-s5"></div>
         <div class="col s1"></div>
@@ -17,8 +17,15 @@
           :key="one.id"
         >
           <span class="col s6">
-            <span>[{{ one.content }}]</span>
+            <span>[{{ one.category }}]</span>
+            <span>{{ one.title }}</span>
           </span>
+          <small class="col s2 center-align">{{ one.nickname }}</small>
+          <small class="col s2 center-align">
+            <i class="material-icons center">thumb_up</i
+            >{{ one.recommendCount }}</small
+          >
+          <small class="col s2 center-align">{{ one.createdDate }}</small>
         </router-link>
       </div>
       <div class="row valign-wrapper">
@@ -57,7 +64,7 @@
 <script>
 import _ from 'lodash';
 import qstr from 'query-string';
-import { getMyComments } from '@/api/account';
+import { getRecommendedPosts } from '@/api/account';
 
 export default {
   created() {
@@ -75,7 +82,7 @@ export default {
     beforeLoadPage() {
       this.query = this.$route.query;
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/myComments', query: { page: 1 } });
+        this.$router.push({ path: '/recommendedPosts', query: { page: 1 } });
       } else {
         this.loadPage();
       }
@@ -86,7 +93,7 @@ export default {
         this.$route.query.page !== undefined
           ? qstr.stringify(this.$route.query)
           : 'page=1';
-      const res = await getMyComments(query);
+      const res = await getRecommendedPosts(query);
       const result = res.data;
       this.list = result.content;
       this.pagination = {
@@ -103,7 +110,7 @@ export default {
     fullPath(val) {
       const target = _.cloneDeep(this.query);
       target.page = val;
-      return { path: '/myComments', query: target };
+      return { path: '/recommendedPosts', query: target };
     },
 
     previous() {

@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row s1">
         <div class="col s3">
-          작성한 댓글
+          게시물
         </div>
         <div class="col s3 offset-s5"></div>
         <div class="col s1"></div>
@@ -11,13 +11,17 @@
       <div class="collection">
         <router-link
           tag="a"
-          :to="{ name: 'MyPosts', params: { id: one.id }, query: { page: 1 } }"
+          :to="{
+            name: 'recommendedComments',
+            params: { id: one.id },
+            query: { page: 1 },
+          }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
         >
           <span class="col s6">
-            <span>[{{ one.content }}]</span>
+            <span>{{ one.content }}</span>
           </span>
         </router-link>
       </div>
@@ -57,7 +61,7 @@
 <script>
 import _ from 'lodash';
 import qstr from 'query-string';
-import { getMyComments } from '@/api/account';
+import { getRecommendedComments } from '@/api/account';
 
 export default {
   created() {
@@ -66,6 +70,7 @@ export default {
 
   data: () => ({
     pagination: {},
+    search: {},
     list: [],
     blockSize: 5,
     query: {},
@@ -75,7 +80,7 @@ export default {
     beforeLoadPage() {
       this.query = this.$route.query;
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/myComments', query: { page: 1 } });
+        this.$router.push({ path: '/recommendedComments', query: { page: 1 } });
       } else {
         this.loadPage();
       }
@@ -86,7 +91,7 @@ export default {
         this.$route.query.page !== undefined
           ? qstr.stringify(this.$route.query)
           : 'page=1';
-      const res = await getMyComments(query);
+      const res = await getRecommendedComments(query);
       const result = res.data;
       this.list = result.content;
       this.pagination = {
@@ -103,7 +108,7 @@ export default {
     fullPath(val) {
       const target = _.cloneDeep(this.query);
       target.page = val;
-      return { path: '/myComments', query: target };
+      return { path: '/recommendedComments', query: target };
     },
 
     previous() {

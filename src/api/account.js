@@ -35,11 +35,23 @@ export function modifyAccountPassword(password) {
 
 // 본인이 작성한 게시물 조회
 function getMyPosts(query) {
-  return account.get('/posts', `?${query}`);
+  return account.get('/posts' + `?${query}`);
 }
 
 export function getMyComments(query) {
-  return account.get('/comments', `?${query}`);
+  return account.get('/comments' + `?${query}`);
+}
+
+export function getRecommendedPosts(query) {
+  return account.get('/recommend/post' + `?${query}`);
+}
+
+export function getRecommendedComments(query) {
+  return account.get('/recommend/comment' + `?${query}`);
+}
+
+export function getRecommendedThreads(query) {
+  return account.get('/recommend/thread' + `?${query}`);
 }
 
 const token = localStorage.getItem('token');
