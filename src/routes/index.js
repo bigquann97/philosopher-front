@@ -101,6 +101,14 @@ const router = new VueRouter({
       path: '*',
       component: () => import('@/components/common/NotFoundPage.vue'),
     },
+    {
+      path: '/terms',
+      component: () => import('@/components/common/Terms.vue'),
+    },
+    {
+      path: '/privacy',
+      component: () => import('@/components/common/Privacy.vue'),
+    },
   ],
 });
 
