@@ -24,10 +24,10 @@
             >
           </li>
           <li>
-            <router-link
-              to="/"
-              style="border-right: 1px solid rgb(211, 211, 211)"
-              >아카이브</router-link
+            <a
+              href="/threads/archived"
+              v-bind:style="{ 'border-right': '1px solid rgb(211, 211, 211)' }"
+              >아카이브</a
             >
           </li>
           <li><a href="#">신고</a></li>
