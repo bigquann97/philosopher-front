@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AdminHeader />
     <div class="container">
       <div class="row valign-wrapper">
         <div class="col s6">
@@ -23,20 +24,23 @@
         </div>
       </div>
       <div class="collection">
+        <div class="row">
+          <span class="col s2 center-align"> 게시물 번호 </span>
+          <span class="col s2 center-align"> 신고자 </span>
+          <span class="col s2 center-align"> 카테고리 </span>
+          <span class="col s6 center-align"> 내용 </span>
+        </div>
         <router-link
           tag="a"
-          :to="{ name: 'Thread', params: { id: one.id }, query: { page: 1 } }"
+          :to="{ name: 'Tread', params: { id: one.id }, query: { page: 1 } }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
         >
-          <span class="col s7">
-            <span>{{ one.title }}</span>
-            <span class="red-text"> [ {{ one.commentCount }} ] </span></span
-          >
-          <small class="col s2 center-align">{{ one.nickname }}</small>
-          <small class="col s1 center-align">{{ one.recommendCount }}</small>
-          <small class="col s2 center-align">{{ one.createdDate }}</small>
+          <span class="col s2 center-align"> {{ one.threadId }} </span>
+          <span class="col s2 center-align">{{ one.reporter }}</span>
+          <span class="col s2 center-align"> {{ one.category }} </span>
+          <span class="col s6 center-align">{{ one.content }}</span>
         </router-link>
       </div>
       <div class="row valign-wrapper">
@@ -75,11 +79,15 @@
 <script>
 import _ from 'lodash';
 import qstr from 'query-string';
-import { fetchThreadList } from '@/api/thread';
+import { reportThreads } from '@/api/admin';
+import AdminHeader from '@/components/admin/AdminHeader.vue';
 
 export default {
   created() {
     this.beforeLoadPage();
+  },
+  components: {
+    AdminHeader,
   },
 
   data: () => ({
@@ -94,7 +102,9 @@ export default {
     searching() {
       const keyword = this.search.word.trim();
       if (keyword !== '') {
-        this.$router.push(`/threads?page=1&${qstr.stringify(this.search)}`);
+        this.$router.push(
+          `/admin/reports/threads?page=1&${qstr.stringify(this.search)}`,
+        );
       }
     },
 
@@ -104,7 +114,10 @@ export default {
         word: this.query.word !== undefined ? this.query.word : '',
       };
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/threads', query: { page: 1 } });
+        this.$router.push({
+          path: '/admin/reports/threads',
+          query: { page: 1 },
+        });
       } else {
         this.loadPage();
       }
@@ -115,7 +128,7 @@ export default {
         this.$route.query.page !== undefined
           ? qstr.stringify(this.$route.query)
           : 'page=1';
-      const res = await fetchThreadList(query);
+      const res = await reportThreads(query);
       const result = res.data;
       console.log(result);
       this.list = res.data.content;
@@ -133,7 +146,7 @@ export default {
     fullPath(val) {
       const target = _.cloneDeep(this.query);
       target.page = val;
-      return { path: '/threads', query: target };
+      return { path: '/admin/reports/threads', query: target };
     },
 
     previous() {

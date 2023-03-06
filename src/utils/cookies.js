@@ -5,6 +5,9 @@ function saveAuthToCookie(value) {
 function saveUserToCookie(value) {
   document.cookie = `user=${value}`;
 }
+function saveUserRoleToCookie(value) {
+  document.cookie = `userRole=${value}`;
+}
 
 function getAuthFromCookie() {
   return document.cookie.replace(
@@ -19,6 +22,12 @@ function getUserFromCookie() {
     '$1',
   );
 }
+function getUserRoleFromCookie() {
+  return document.cookie.replace(
+    /(?:(?:^|.*;\s*)user\s*=\s*([^;]*).*$)|^.*$/,
+    '$1',
+  );
+}
 
 function deleteCookie(value) {
   //https://cusmaker.tistory.com/151 path 값을 주지 않아서 다른 path에서 쿠키가 삭제 안됐다
@@ -28,7 +37,9 @@ function deleteCookie(value) {
 export {
   saveAuthToCookie,
   saveUserToCookie,
+  saveUserRoleToCookie,
   getAuthFromCookie,
   getUserFromCookie,
+  getUserRoleFromCookie,
   deleteCookie,
 };

@@ -1,61 +1,50 @@
 <template>
   <div style="margin-bottom: 69px;">
     <header>
-      <div class="company-name">
-        <a href="/main">
-          <img src="@/image/logo.png" alt="logo" />
-          <span>우리 모두 철학자</span>
-        </a>
-      </div>
       <div class="menu">
         <ul>
           <li>
             <a
-              href="/posts"
+              href="/admin/accounts"
               v-bind:style="{ 'border-right': '1px solid rgb(211, 211, 211)' }"
-              >게시물</a
+              >회원관리</a
             >
           </li>
           <li>
             <a
-              href="/threads"
+              href="/admin/reports/posts"
               v-bind:style="{ 'border-right': '1px solid rgb(211, 211, 211)' }"
-              >쓰레드</a
+              >게시물 신고</a
             >
           </li>
           <li>
             <router-link
-              to="/"
+              to="/admin/reports/threads"
               style="border-right: 1px solid rgb(211, 211, 211)"
-              >아카이브</router-link
+              >쓰레드 신고</router-link
             >
           </li>
-          <li v-if="isAdmin">
+          <li>
             <router-link
-              to="/admin/accounts"
+              to="/admin/reports/comments"
               style="border-right: 1px solid rgb(211, 211, 211)"
-              >어드민 페이지</router-link
+              >댓글 신고</router-link
             >
           </li>
-        </ul>
-      </div>
-      <div class="navbar">
-        <ul>
-          <li v-if="isUserLogin" style="color: black;">
-            <span style="font-size: 15px"
-              >{{ $store.state.username }} 님 반갑습니다.
-            </span>
+          <li>
+            <router-link
+              to="/admin/thread"
+              style="border-right: 1px solid rgb(211, 211, 211)"
+              >쓰레드 관리</router-link
+            >
           </li>
-          <li v-if="!isUserLogin">
-            <router-link to="/sign-up">회원 가입</router-link>
+          <li>
+            <router-link
+              to="/admin/thread/archived"
+              style="border-right: 1px solid rgb(211, 211, 211)"
+              >아카이브 관리</router-link
+            >
           </li>
-          <li v-if="!isUserLogin">
-            <router-link to="/sign-in">로그인</router-link>
-          </li>
-          <li v-if="isUserLogin">
-            <router-link to="/accountInfo">정보수정</router-link>
-          </li>
-          <li v-if="isUserLogin"><a @click="logoutUser">로그아웃</a></li>
         </ul>
       </div>
     </header>
@@ -72,18 +61,13 @@ export default {
     isUserLogin() {
       return this.$store.getters.isLogin;
     },
-    isAdmin() {
-      return this.$store.getters.isAdmin;
-    },
   },
   methods: {
     logoutUser() {
       this.$store.commit('clearUsername');
       this.$store.commit('clearToken');
-      this.$store.commit('clearUserRole');
       deleteCookie('token');
       deleteCookie('user');
-      deleteCookie('userRole');
       this.$router.push('/main');
     },
   },

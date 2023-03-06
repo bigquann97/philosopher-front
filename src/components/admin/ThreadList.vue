@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AdminHeader />
     <div class="container">
       <div class="row valign-wrapper">
         <div class="col s6">
@@ -23,20 +24,27 @@
         </div>
       </div>
       <div class="collection">
+        <div class="row">
+          <span class="col s2 center-align"> 닉네임 </span>
+          <span class="col s2 center-align"> 카테고리 </span>
+          <span class="col s2 center-align"> 제목 </span>
+          <span class="col s3 center-align"> 내용 </span>
+          <span class="col s1 center-align"> 추천수 </span>
+          <span class="col s2 center-align"> 상태 </span>
+        </div>
         <router-link
           tag="a"
-          :to="{ name: 'Thread', params: { id: one.id }, query: { page: 1 } }"
+          :to="{ name: 'Tread', params: { id: one.id }, query: { page: 1 } }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
         >
-          <span class="col s7">
-            <span>{{ one.title }}</span>
-            <span class="red-text"> [ {{ one.commentCount }} ] </span></span
-          >
-          <small class="col s2 center-align">{{ one.nickname }}</small>
-          <small class="col s1 center-align">{{ one.recommendCount }}</small>
-          <small class="col s2 center-align">{{ one.createdDate }}</small>
+          <span class="col s2 center-align"> {{ one.nickname }} </span>
+          <span class="col s2 center-align">{{ one.category }}</span>
+          <span class="col s2 center-align"> {{ one.title }} </span>
+          <span class="col s3 center-align">{{ one.content }}</span>
+          <span class="col s1 center-align">{{ one.recommendCount }}</span>
+          <span class="col s2 center-align">{{ one.location }}</span>
         </router-link>
       </div>
       <div class="row valign-wrapper">
@@ -75,11 +83,15 @@
 <script>
 import _ from 'lodash';
 import qstr from 'query-string';
-import { fetchThreadList } from '@/api/thread';
+import { fetchThreadList } from '@/api/admin';
+import AdminHeader from '@/components/admin/AdminHeader.vue';
 
 export default {
   created() {
     this.beforeLoadPage();
+  },
+  components: {
+    AdminHeader,
   },
 
   data: () => ({
@@ -94,7 +106,9 @@ export default {
     searching() {
       const keyword = this.search.word.trim();
       if (keyword !== '') {
-        this.$router.push(`/threads?page=1&${qstr.stringify(this.search)}`);
+        this.$router.push(
+          `/admin/thread?page=1&${qstr.stringify(this.search)}`,
+        );
       }
     },
 
@@ -104,7 +118,10 @@ export default {
         word: this.query.word !== undefined ? this.query.word : '',
       };
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/threads', query: { page: 1 } });
+        this.$router.push({
+          path: '/admin/thread',
+          query: { page: 1 },
+        });
       } else {
         this.loadPage();
       }
@@ -133,7 +150,7 @@ export default {
     fullPath(val) {
       const target = _.cloneDeep(this.query);
       target.page = val;
-      return { path: '/threads', query: target };
+      return { path: '/admin/thread', query: target };
     },
 
     previous() {

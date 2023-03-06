@@ -44,6 +44,36 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: '/admin',
+      name: 'Admin',
+      component: () => import('@/components/admin/AdminHeader.vue'),
+    },
+    {
+      path: '/admin/accounts',
+      name: 'AccountList',
+      component: () => import('@/components/admin/AccountList.vue'),
+    },
+    {
+      path: '/admin/reports/posts',
+      name: 'reportPostList',
+      component: () => import('@/components/admin/PostReportList.vue'),
+    },
+    {
+      path: '/admin/reports/threads',
+      name: 'reportThreadList',
+      component: () => import('@/components/admin/ThreadReportList.vue'),
+    },
+    {
+      path: '/admin/reports/comments',
+      name: 'reportCommentList',
+      component: () => import('@/components/admin/CommentReportList.vue'),
+    },
+    {
+      path: '/admin/thread',
+      name: 'ThreadListManage',
+      component: () => import('@/components/admin/ThreadList.vue'),
+    },
+    {
       path: '/post/:id',
       name: 'Post',
       component: () => import('@/components/post/Post.vue'),
