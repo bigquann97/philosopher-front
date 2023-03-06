@@ -3,30 +3,23 @@
     <div class="container">
       <div class="row s1">
         <div class="col s3">
-          작성한 게시물
+          받은 알람
         </div>
         <div class="col s3 offset-s5"></div>
         <div class="col s1"></div>
       </div>
       <div class="collection">
-        <router-link
-          tag="a"
-          :to="{ name: 'Post', params: { id: one.id }, query: { page: 1 } }"
+        <div
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
+          @click.prevent
         >
           <span class="col s6">
-            <span>[{{ one.category }}]</span>
-            <span>{{ one.title }}</span>
+            <span>[{{ one.redirectUrl }}] </span>
+            <span>{{ one.message }}</span>
           </span>
-          <small class="col s2 center-align">{{ one.nickname }}</small>
-          <small class="col s2 center-align">
-            <i class="material-icons center">thumb_up</i
-            >{{ one.recommendCount }}</small
-          >
-          <small class="col s2 center-align">{{ one.createdDate }}</small>
-        </router-link>
+        </div>
       </div>
       <div class="row valign-wrapper">
         <div class="col s6">
@@ -64,7 +57,7 @@
 <script>
 import _ from 'lodash';
 import qstr from 'query-string';
-import { getMyPosts } from '@/api/account';
+import { getNotification } from '@/api/notifications';
 
 export default {
   created() {
@@ -82,7 +75,7 @@ export default {
     beforeLoadPage() {
       this.query = this.$route.query;
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/myPosts', query: { page: 1 } });
+        this.$router.push({ path: '/myNotification', query: { page: 1 } });
       } else {
         this.loadPage();
       }
@@ -93,7 +86,7 @@ export default {
         this.$route.query.page !== undefined
           ? qstr.stringify(this.$route.query)
           : 'page=1';
-      const res = await getMyPosts(query);
+      const res = await getNotification(query);
       const result = res.data;
       this.list = result.content;
       this.pagination = {
@@ -110,7 +103,7 @@ export default {
     fullPath(val) {
       const target = _.cloneDeep(this.query);
       target.page = val;
-      return { path: '/myPosts', query: target };
+      return { path: '/myNotification', query: target };
     },
 
     previous() {
