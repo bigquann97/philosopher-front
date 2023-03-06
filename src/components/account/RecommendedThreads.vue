@@ -11,7 +11,7 @@
       <div class="collection">
         <router-link
           tag="a"
-          :to="{ name: 'MyPosts', params: { id: one.id }, query: { page: 1 } }"
+          :to="{ name: 'Thread', params: { id: one.id }, query: { page: 1 } }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"

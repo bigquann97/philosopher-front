@@ -98,6 +98,11 @@ const router = new VueRouter({
       component: () => import('@/components/account/UpdatePassword.vue'),
     },
     {
+      path: '/myNotification',
+      name: 'MyNotification',
+      component: () => import('@/components/account/MyNotification.vue'),
+    },
+    {
       path: '*',
       component: () => import('@/components/common/NotFoundPage.vue'),
     },

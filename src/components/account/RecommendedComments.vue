@@ -3,27 +3,23 @@
     <div class="container">
       <div class="row s1">
         <div class="col s3">
-          게시물
+          추천한 댓글
         </div>
         <div class="col s3 offset-s5"></div>
         <div class="col s1"></div>
       </div>
       <div class="collection">
-        <router-link
-          tag="a"
-          :to="{
-            name: 'recommendedComments',
-            params: { id: one.id },
-            query: { page: 1 },
-          }"
+        <div
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
+          @click.prevent
         >
           <span class="col s6">
+            <span>[{{ one.title }}] </span>
             <span>{{ one.content }}</span>
           </span>
-        </router-link>
+        </div>
       </div>
       <div class="row valign-wrapper">
         <div class="col s6">
@@ -70,7 +66,6 @@ export default {
 
   data: () => ({
     pagination: {},
-    search: {},
     list: [],
     blockSize: 5,
     query: {},

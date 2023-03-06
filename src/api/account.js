@@ -54,6 +54,10 @@ export function getRecommendedThreads(query) {
   return account.get('/recommend/thread' + `?${query}`);
 }
 
+export function getNotification(query) {
+  return account.get('/recommend/thread' + `?${query}`);
+}
+
 const token = localStorage.getItem('token');
 
 account
