@@ -18,6 +18,7 @@
           />
           <span class="edit-profile-text">프로필 사진 변경하기</span>
         </div>
+        <small>프로필 사진을 클릭하시면 변경하실 수 있습니다.</small>
       </div>
       <div class="user-info-item">
         <span class="user-info-label">이메일:</span>
