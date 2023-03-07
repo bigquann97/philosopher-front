@@ -261,4 +261,67 @@ export default {
   margin-bottom: 30px;
   width: 100%;
 }
+
+@media (max-width: 1390px) {
+  body {
+    width: 90%;
+  }
+  header {
+    width: 90%;
+  }
+  .menu li a {
+    padding: 0 10px;
+  }
+  .navbar li a {
+    font-size: 1.1rem;
+    margin-right: 10px;
+    padding: 6px 6px;
+  }
+}
+
+@media (min-width: 931px) {
+  .menu ul li a.menu-icon {
+    display: none;
+  }
+  .dropdown li:not(:last-child) {
+    border-right: 1px solid rgb(211, 211, 211);
+  }
+}
+
+@media (max-width: 930px) {
+  .company-name a span {
+    display: none;
+  }
+  .first-row {
+    flex-direction: column;
+  }
+  .second-row {
+    flex-direction: column;
+  }
+  .board1 {
+    margin-bottom: 50px;
+  }
+  .board1,
+  .board2 {
+    padding: 0;
+  }
+  .menu ul li.dropdown li {
+    display: block;
+  }
+  .menu ul li ul.dropdown {
+    background-color: white;
+    position: absolute;
+    z-index: 999;
+    display: none;
+    padding: 0;
+    margin: 0;
+  }
+  .menu ul li a:hover {
+    background-color: white;
+    color: dodgerblue;
+  }
+  .menu ul li:hover ul.dropdown {
+    display: block;
+  }
+}
 </style>
