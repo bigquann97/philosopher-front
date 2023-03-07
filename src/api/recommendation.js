@@ -12,10 +12,18 @@ function createRecommendComment(commentId) {
 function deleteRecommendComment(commentId) {
   return recommendation.delete(`/comment/${commentId}`);
 }
+function createRecommendPost(postId) {
+  return recommendation.post(`/post/${postId}`);
+}
+function deleteRecommendPost(postId) {
+  return recommendation.delete(`/post/${postId}`);
+}
 
 export {
   createRecommendThread,
   deleteRecommendThread,
   createRecommendComment,
   deleteRecommendComment,
+  createRecommendPost,
+  deleteRecommendPost,
 };

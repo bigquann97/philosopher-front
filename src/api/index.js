@@ -25,3 +25,4 @@ export const admin = createInstanceWithAuth('admin');
 export const archive = createInstanceWithAuth('threads/archived');
 export const notifications = createInstanceWithAuth('notifications');
 export const rank = createInstanceWithAuth('rank');
+export const report = createInstanceWithAuth('reports');
