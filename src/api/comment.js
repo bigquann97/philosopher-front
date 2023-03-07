@@ -13,4 +13,14 @@ function deleteComment(commentId) {
   return comment.delete(`/${commentId}`);
 }
 
-export { fetchThreadComment, createComment, deleteComment, modifyComment };
+function fetchFavComment(threadId) {
+  return comment.get(`/favorite/${threadId}`);
+}
+
+export {
+  fetchThreadComment,
+  createComment,
+  deleteComment,
+  modifyComment,
+  fetchFavComment,
+};
