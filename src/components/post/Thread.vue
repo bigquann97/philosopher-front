@@ -73,6 +73,55 @@
           >취소</a
         >
       </div>
+    </div>
+    <div class="section">
+      <div class="row">
+        <div class="collection">
+          <h5>댓글 통계 📊</h5>
+          <hr />
+
+          <h5>Top 3 베스트 댓글 💡</h5>
+          <hr />
+          <div
+            tag="a"
+            :to="{ name: 'Favorite', params: { id: fav.id } }"
+            class="collection-item row"
+            v-for="fav in favs"
+            :key="fav.id"
+          >
+            <div class="col s1" style="width: 100%">
+              <span style="float: left"
+                ><img src="@/image/best.png" alt="" style="width: 30px"
+              /></span>
+              <span style="float: left; margin: auto 10px"># {{ fav.id }}</span>
+              <span style="float: left; margin: auto 20px">
+                {{ fav.nickname }}
+              </span>
+              <span style="float: left; margin: auto 20px">{{
+                fav.createDate
+              }}</span>
+              <span style="float: left; font-size: medium">
+                <img src="@/image/like_blue.png" alt="" style="width: 15px" />
+                {{ fav.likeCount }}
+              </span>
+            </div>
+            <div>
+              <div class="col s2" style="width: 100%">
+                <span style="color: #0f5132; font-weight: bold">의견: </span>
+                <span>{{ fav.opinion }}</span>
+              </div>
+              <div style="float:left; width: 100%" class="col s4">
+                <span style="color: #0f5132; font-weight: bold">내용: </span>
+                <span>
+                  {{ fav.content }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
       <a
         v-if="commentWriteButton"
         @click="openCommentWriteForm"
@@ -84,51 +133,8 @@
     <div class="section">
       <div class="row">
         <div class="collection">
-          <h5>댓글 통계 📊</h5>
-          <hr>
-
-          <h5>Top 3 베스트 댓글 💡</h5>
-          <hr>
-          <div
-            tag="a"
-            :to="{ name: 'Favorite', params: { id: fav.id } }"
-            class="collection-item row"
-            v-for="fav in favs"
-            :key="fav.id"
-          >
-            <div class="col s1" style="width: 100%">
-              <span style='float: left'><img src='@/image/best.png' alt = "" style='width: 30px'></span>
-              <span style="float: left; margin: auto 10px"># {{ fav.id }}</span>
-              <span style="float: left; margin: auto 20px">
-                {{ fav.nickname }}
-              </span>
-              <span style="float: left; margin: auto 20px">{{ fav.createDate }}</span>
-              <span style="float: left; font-size: medium">
-                <img src="@/image/like_blue.png" alt="" style="width: 15px" />
-                {{ fav.likeCount }}
-              </span>
-            </div>
-            <div>
-              <div class="col s2" style="width: 100%">
-                <span>의견: </span>
-                <span>{{ fav.opinion }}</span>
-              </div>
-              <div style="float:left; width: 100%" class="col s4">
-                <span>내용: </span>
-                <span>
-                  {{ fav.content }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="section">
-      <div class="row">
-        <div class="collection">
           <h5>댓글 목록</h5>
-          <hr>
+          <hr />
           <div
             tag="a"
             :to="{ name: 'Comment', params: { id: one.id }, query: query }"
