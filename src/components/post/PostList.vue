@@ -185,6 +185,7 @@ export default {
 }
 
 .board-name {
+  width: 160%;
   margin-left: 30px;
   margin-top: 30px;
 }

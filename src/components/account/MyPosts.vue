@@ -160,6 +160,7 @@ export default {
 }
 
 .board {
+  width: 160%;
   margin-top: 30px;
   margin-left: 30px;
 }
