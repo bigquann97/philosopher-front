@@ -149,6 +149,7 @@ export default {
 </script>
 <style>
 .board {
+  width: 160%;
   margin-left: 30px;
   margin-top: 30px;
 }
