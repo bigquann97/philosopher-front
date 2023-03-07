@@ -3,7 +3,9 @@
     <div class="container">
       <div class="row s1">
         <div class="col s3">
-          작성한 댓글
+          <h5 class="board">
+            <b>작성한 댓글</b>
+          </h5>
         </div>
         <div class="col s3 offset-s5"></div>
         <div class="col s1"></div>
@@ -47,7 +49,9 @@
           </ul>
         </div>
         <div class="col s6 right-align">
-          <router-link to="/post" class="waves-effect btn">글쓰기</router-link>
+          <router-link to="/post" class="waves-effect btn blue lighten-5"
+            >글쓰기</router-link
+          >
         </div>
       </div>
     </div>
@@ -143,4 +147,13 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+* {
+  color: black;
+}
+
+.board {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+</style>

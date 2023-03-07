@@ -50,7 +50,7 @@ export default {
 </script>
 <style scoped>
 .updateBtn {
-  background-color: blue;
+  background-color: rgb(25, 118, 210);
   color: #fff;
   border: none;
   padding: 10px;
