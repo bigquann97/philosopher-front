@@ -42,6 +42,13 @@
               <li><a href="#">신고</a></li>
             </ul>
           </li>
+          <li v-if="isAdmin">
+            <router-link
+              to="/admin/accounts"
+              style="border-right: 1px solid rgb(211, 211, 211)"
+              >어드민 페이지</router-link
+            >
+          </li>
         </ul>
       </div>
       <div class="navbar">
@@ -77,13 +84,18 @@ export default {
     isUserLogin() {
       return this.$store.getters.isLogin;
     },
+    isAdmin() {
+      return this.$store.getters.isAdmin;
+    },
   },
   methods: {
     logoutUser() {
       this.$store.commit('clearUsername');
       this.$store.commit('clearToken');
+      this.$store.commit('clearUserRole');
       deleteCookie('token');
       deleteCookie('user');
+      deleteCookie('userRole');
       this.$router.push('/main');
     },
   },

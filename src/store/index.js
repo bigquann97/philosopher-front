@@ -3,7 +3,9 @@ import Vuex from 'vuex';
 import {
   getAuthFromCookie,
   getUserFromCookie,
+  getUserRoleFromCookie,
   saveAuthToCookie,
+  saveUserRoleToCookie,
   saveUserToCookie,
 } from '@/utils/cookies';
 import { loginUser } from '@/api/auth';
@@ -14,10 +16,14 @@ export default new Vuex.Store({
   state: {
     username: getUserFromCookie() || '',
     token: getAuthFromCookie() || '',
+    userRole: getUserRoleFromCookie() || '',
   },
   getters: {
     isLogin(state) {
       return state.username !== '';
+    },
+    isAdmin(state) {
+      return state.userRole === 'ROLE_ADMIN';
     },
   },
   mutations: {
@@ -33,6 +39,12 @@ export default new Vuex.Store({
     clearToken(state) {
       state.token = '';
     },
+    setUserRole(state, userRole) {
+      state.userRole = userRole;
+    },
+    clearUserRole(state) {
+      state.userRole = '';
+    },
   },
   actions: {
     async LOGIN({ commit }, userData) {
@@ -40,8 +52,10 @@ export default new Vuex.Store({
       console.log(data);
       commit('setToken', data.accessToken);
       commit('setUsername', data.nickname);
+      commit('setUserRole', data.userRole);
       saveAuthToCookie(data.accessToken);
       saveUserToCookie(data.nickname);
+      saveUserRoleToCookie(data.userRole);
       return data;
     },
   },
