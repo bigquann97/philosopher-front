@@ -74,6 +74,7 @@
     </div>
     <div class="divider"></div>
     <div>
+      <div>의견 목록 :</div>
       <div v-if="detail.opinions[0] !== ''">
         <div>{{ detail.opinions[0] }}</div>
       </div>
@@ -153,8 +154,12 @@
           >
             <option value=""> 카테고리를 선택해주세요.</option>
             <option :value="1">철학</option>
-            <option :value="2">인문</option>
-            <option :value="3">연애</option>
+            <option :value="2">논쟁</option>
+            <option :value="3">예술</option>
+            <option :value="4">공상</option>
+            <option :value="5">사회</option>
+            <option :value="6">경제</option>
+            <option :value="7">연애</option>
           </select>
         </div>
         <div class="row">
@@ -224,7 +229,7 @@ export default {
     logMessageSignup: '',
     postEditForm: false,
     postDeleteForm: false,
-    fileName: '첨부파일',
+    fileName: '첨부파일은 최대 3개까지 입니다.',
     article: {
       title: '',
       content: '',

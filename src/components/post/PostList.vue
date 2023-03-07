@@ -43,7 +43,9 @@
           </div>
           <div v-if="one.status === 'ACTIVE'">
             <span class="col s6">
-              <span>[{{ one.category }}]</span>
+              <span style="color: deepskyblue; margin-right: 5px"
+                >[{{ one.category }}]</span
+              >
               <span>{{ one.title }}</span>
             </span>
             <small class="col s2 center-align">{{ one.nickname }}</small>

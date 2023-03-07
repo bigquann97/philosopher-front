@@ -32,13 +32,35 @@
     </div>
     <div class="divider"></div>
     <div>
-      <span
-        >1. {{ detail.opinions[0] }} 2.{{ detail.opinions[1] }} 3.
-        {{ detail.opinions[2] }}</span
-      >
+      <div>의견 목록 :</div>
+      <div v-if="detail.opinions[0] !== ''">
+        <div>{{ detail.opinions[0] }}</div>
+      </div>
+      <div v-if="detail.opinions[1] !== ''">
+        <div>{{ detail.opinions[1] }}</div>
+      </div>
+      <div v-if="detail.opinions[2] !== ''">
+        <div>{{ detail.opinions[2] }}</div>
+      </div>
+      <div v-if="detail.opinions[3] !== ''">
+        <div>{{ detail.opinions[3] }}</div>
+      </div>
+      <div v-if="detail.opinions[4] !== ''">
+        <div>{{ detail.opinions[4] }}</div>
+      </div>
     </div>
     <div class="section">
       <img :src="imageUrl" alt="" style="max-width: 300px; max-height: 300px" />
+      <img
+        :src="imageUrl1"
+        alt=""
+        style="max-width: 300px; max-height: 300px"
+      />
+      <img
+        :src="imageUrl2"
+        alt=""
+        style="max-width: 300px; max-height: 300px"
+      />
       <div>{{ detail.content }}</div>
     </div>
     <div style="text-align: center; margin-bottom: 1px">
@@ -62,6 +84,8 @@
           </option>
           <option :value="detail.opinions[1]">{{ detail.opinions[1] }}</option>
           <option :value="detail.opinions[2]">{{ detail.opinions[2] }}</option>
+          <option :value="detail.opinions[3]">{{ detail.opinions[3] }}</option>
+          <option :value="detail.opinions[4]">{{ detail.opinions[4] }}</option>
         </select>
         <v-textarea
           solo
@@ -82,6 +106,15 @@
           >취소</a
         >
       </div>
+    </div>
+    <div class="section">
+      <a
+        v-if="commentWriteButton"
+        @click="openCommentWriteForm"
+        class="btn col s2"
+        style="background-color: white; float: right;"
+        >댓글작성</a
+      >
     </div>
     <div class="section">
       <div class="row">
@@ -131,15 +164,6 @@
       </div>
     </div>
     <div class="section">
-      <a
-        v-if="commentWriteButton"
-        @click="openCommentWriteForm"
-        class="btn col s2"
-        style="background-color: white; float: right;"
-        >댓글작성</a
-      >
-    </div>
-    <div class="section">
       <div class="row">
         <div class="collection">
           <h5>댓글 목록</h5>
@@ -152,10 +176,10 @@
             :key="one.id"
           >
             <div v-if="one.status === 'DELETED'" style="margin-left: 10px">
-              삭제된 쓰레드 입니다.
+              삭제된 댓글 입니다.
             </div>
             <div v-if="one.status === 'BLINDED'" style="margin-left: 10px">
-              블라인드 처리된 쓰레드 입니다.
+              블라인드 처리된 댓글 입니다.
             </div>
             <div v-if="one.status === 'ACTIVE'">
               <div class="col s1" style="width: 100%">
@@ -266,6 +290,12 @@
                   }}</option>
                   <option :value="detail.opinions[2]">{{
                     detail.opinions[2]
+                  }}</option>
+                  <option :value="detail.opinions[3]">{{
+                    detail.opinions[3]
+                  }}</option>
+                  <option :value="detail.opinions[4]">{{
+                    detail.opinions[4]
                   }}</option>
                 </select>
                 <v-textarea

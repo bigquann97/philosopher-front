@@ -48,17 +48,15 @@
                   >아카이브</a
                 >
               </li>
-              <li><a href="#">신고</a></li>
+              <li v-if="isAdmin">
+                <router-link
+                  to="/admin/accounts"
+                  style="border-right: 1px solid rgb(211, 211, 211)"
+                  >어드민 페이지</router-link
+                >
+              </li>
             </ul>
           </li>
-          <li v-if="isAdmin">
-            <router-link
-              to="/admin/accounts"
-              style="border-right: 1px solid rgb(211, 211, 211)"
-              >어드민 페이지</router-link
-            >
-          </li>
-          <li><a href="#">신고</a></li>
         </ul>
       </div>
       <div class="navbar">

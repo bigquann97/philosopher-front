@@ -30,8 +30,12 @@
       >
         <option value=""> 카테고리를 선택해주세요.</option>
         <option :value="1">철학</option>
-        <option :value="2">인문</option>
-        <option :value="3">연애</option>
+        <option :value="2">논쟁</option>
+        <option :value="3">예술</option>
+        <option :value="4">공상</option>
+        <option :value="5">사회</option>
+        <option :value="6">경제</option>
+        <option :value="7">연애</option>
       </select>
     </div>
     <div class="row">
@@ -125,9 +129,15 @@
           placeholder="첨부파일"
         />
         <label for="file">파일찾기</label>
-        <input type="file" id="file" ref="file" @change="handleFileChange" />
+        <input
+          type="file"
+          id="file"
+          ref="file"
+          @change="handleFileChange"
+          multiple
+        />
       </div>
-      <input type="file" id="input-file" style="display: none" />
+      <input type="file" id="input-file" style="display: none" multiple />
     </div>
     <div class="row center">
       <a class="btn blue lighten-5" @click="write">작성 완료</a>&nbsp;&nbsp;
@@ -148,7 +158,7 @@ export default {
     title4: false,
     title5: false,
     addButton: true,
-    fileName: '첨부파일',
+    fileName: '첨부파일은 최대 3개까지 입니다.',
     article: {
       title: '',
       content: '',
@@ -168,13 +178,16 @@ export default {
       this.title5 = true;
       this.addButton = false;
     },
-    handleFileChange(event) {
-      const file = event.target.files[0];
-      this.fileName = file.name;
+    handleFileChange() {
+      const files = this.$refs.file.files;
+      this.files = files;
+      this.fileName = '';
+      for (let i = 0; i < files.length; i++) {
+        this.fileName += files[i].name + ' ';
+      }
     },
     async write() {
       try {
-        const file = this.$refs.file.files[0];
         const formData = new FormData();
         const postData = {
           title: this.article.title,
@@ -182,7 +195,9 @@ export default {
           category: this.article.category,
           opinions: this.article.opinions,
         };
-        formData.append('image', file);
+        for (let i = 0; i < this.files.length; i++) {
+          formData.append('image', this.files[i]);
+        }
         const json = JSON.stringify(postData);
         const blob = new Blob([json], { type: 'application/json' });
         formData.append('dto', blob);
