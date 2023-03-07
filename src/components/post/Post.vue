@@ -1,6 +1,15 @@
 <template>
   <div class="container">
     <div class="section">
+      <div class="col s6">
+        <h5 class="board-name">
+          <b class="board-title">게시물</b>
+          <small
+            >추천 수 5 이상이면 의견을 나눌 수 있습니다. 여러분의 생각을
+            펼쳐보세요!</small
+          >
+        </h5>
+      </div>
       <h5>
         <b>
           {{ detail.title }}
@@ -95,10 +104,10 @@
       />
       <div>{{ detail.content }}</div>
     </div>
-    <div style="text-align: center; margin-bottom: 20px">
+    <div style="text-align: center; margin-bottom: 1px">
       <a>
         <img
-          src="@/image/like_blue.png"
+          src="@/image/like.png"
           alt=""
           style="width: 35px"
           @click="recommendPost"
@@ -347,5 +356,18 @@ export default {
   padding: 0;
   overflow: hidden;
   border: 0;
+}
+.board-name {
+  width: 160%;
+}
+.board-title {
+  color: #6aafe6;
+  text-shadow: 1px 1px gray;
+  font-size: 30px;
+}
+.board-name small {
+  color: gray;
+  font-size: 12px; /* 작은 글씨의 글자 크기 */
+  margin-left: 5px; /* 게시물과 작은 글씨 사이의 간격 */
 }
 </style>
