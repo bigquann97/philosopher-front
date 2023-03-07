@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="container">
-      <div class="row s1">
+      <div class="row valign-wrapper">
         <div class="col s3">
-          게시물
+          <h5>
+            <b>게시물</b>
+          </h5>
         </div>
         <div class="col s3 offset-s5">
           <input
@@ -16,7 +18,7 @@
           />
         </div>
         <div class="col s1">
-          <a class="col s12 waves-effect btn teal lighten-5" @click="searching">
+          <a class="col s12 waves-effect btn blue lighten-5" @click="searching">
             <i class="material-icons center">search</i>
           </a>
         </div>
@@ -67,7 +69,9 @@
           </ul>
         </div>
         <div class="col s6 right-align">
-          <router-link to="/post" class="waves-effect btn">글쓰기</router-link>
+          <router-link to="/post" class="waves-effect btn blue lighten-5"
+            >글쓰기</router-link
+          >
         </div>
       </div>
     </div>
@@ -176,6 +180,10 @@ export default {
 };
 </script>
 <style>
+* {
+  color: black;
+}
+
 @media (max-width: 1640px) {
   .navbar ul li span {
     display: none;
