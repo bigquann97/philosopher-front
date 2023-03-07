@@ -4,7 +4,11 @@
       <div class="row valign-wrapper">
         <div class="col s6">
           <h5 class="board-name">
-            <b>쓰레드</b>
+            <b class="board-title">쓰레드</b>
+            <small
+              >일정 시간이 지나면 닫히는 토론장입니다. 다른 사람들과 의견을
+              나눠보세요!</small
+            >
           </h5>
         </div>
         <div class="col s2"></div>
@@ -184,8 +188,16 @@ export default {
 
 .board-name {
   width: 160%;
-  margin-left: 30px;
-  margin-top: 30px;
+}
+.board-title {
+  color: #6aafe6;
+  text-shadow: 1px 1px gray;
+  font-size: 30px;
+}
+.board-name small {
+  color: gray;
+  font-size: 12px; /* 작은 글씨의 글자 크기 */
+  margin-left: 5px; /* 게시물과 작은 글씨 사이의 간격 */
 }
 
 @media (max-width: 1640px) {

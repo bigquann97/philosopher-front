@@ -86,7 +86,7 @@ const router = new VueRouter({
       component: () => import('@/components/admin/ThreadList.vue'),
     },
     {
-      path: '/post/:id',
+      path: '/posts/:id',
       name: 'Post',
       component: () => import('@/components/post/Post.vue'),
       props: true,

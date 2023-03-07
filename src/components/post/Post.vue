@@ -1,6 +1,15 @@
 <template>
   <div class="container">
     <div class="section">
+      <div class="col s6">
+        <h5 class="board-name">
+          <b class="board-title">게시물</b>
+          <small
+            >추천 수 5 이상이면 의견을 나눌 수 있습니다. 여러분의 생각을
+            펼쳐보세요!</small
+          >
+        </h5>
+      </div>
       <h5>
         <b>
           {{ detail.title }}
@@ -88,12 +97,17 @@
         alt=""
         style="max-width: 300px; max-height: 300px"
       />
+      <img
+        :src="imageUrl2"
+        alt=""
+        style="max-width: 300px; max-height: 300px"
+      />
       <div>{{ detail.content }}</div>
     </div>
-    <div style="text-align: center; margin-bottom: 20px">
+    <div style="text-align: center; margin-bottom: 1px">
       <a>
         <img
-          src="@/image/like_blue.png"
+          src="@/image/like.png"
           alt=""
           style="width: 35px"
           @click="recommendPost"
@@ -101,12 +115,100 @@
         <span style="font-size: xx-large"> {{ detail.recommendCount }}</span>
       </a>
     </div>
+    <div
+      v-if="$store.state.username === detail.nickname"
+      style="text-align: center; margin-bottom: 20px"
+    >
+      <a class="btn col s2" style="background-color: white;" @click="modifyPost"
+        >수정</a
+      >
+      <a class="btn col s2" style="background-color: white;" @click="deletePost"
+        >삭제</a
+      >
+    </div>
+    <v-dialog v-model="postDeleteForm" width="350">
+      <v-card height="130">
+        <v-card-text
+          class="row center"
+          style="font-size: large; padding-top: 20px"
+        >
+          <span>정말 삭제하시겠습니까?</span>
+        </v-card-text>
+        <div class="row center">
+          <a class="btn blue lighten-5" @click="confirmDelete">확인</a
+          >&nbsp;&nbsp;
+          <a class="btn grey lighten-2" @click="cancel">취소</a>
+        </div>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="postEditForm" width="800">
+      <v-card height="530" width="798">
+        <div class="row">
+          <label style="color: black; font-weight: 500">카테고리</label>
+          <select
+            class="browser-default"
+            name="category"
+            v-model="article.category"
+            style="border: 1px solid black; border-radius: 10px"
+          >
+            <option value=""> 카테고리를 선택해주세요.</option>
+            <option :value="1">철학</option>
+            <option :value="2">인문</option>
+            <option :value="3">연애</option>
+          </select>
+        </div>
+        <div class="row">
+          <label style="color: black; font-weight: 500">제목</label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            class="validate"
+            v-model="article.title"
+            placeholder=" 제목을 입력해주세요."
+            style="border: 1px solid black; border-radius: 10px"
+          />
+        </div>
+        <div class="row">
+          <v-textarea
+            auto-grow
+            v-model="article.content"
+            placeholder="내용을 입력해 주세요."
+            style="border: 1px solid black; border-radius: 10px; margin: auto"
+          >
+          </v-textarea>
+        </div>
+        <div class="row">
+          <div class="filebox">
+            <input
+              class="upload-name col s11 offset-s1"
+              :value="fileName"
+              placeholder="첨부파일"
+            />
+            <label for="file">파일찾기</label>
+            <input
+              type="file"
+              id="file"
+              ref="file"
+              @change="handleFileChange"
+              multiple
+            />
+          </div>
+          <input type="file" id="input-file" style="display: none" multiple />
+        </div>
+        <div class="row center">
+          <a class="btn blue lighten-5" @click="modify">수정 완료</a
+          >&nbsp;&nbsp;
+          <a class="btn grey lighten-2" @click="cancel">취소</a>
+        </div>
+      </v-card>
+    </v-dialog>
     <div class="divider"></div>
   </div>
 </template>
 
 <script>
-import { fetchPost } from '@/api/post';
+import { fetchPost, modifyPost, deletePost } from '@/api/post';
 import { createRecommendPost, deleteRecommendPost } from '@/api/recommendation';
 import { reportPost } from '@/api/report';
 
@@ -120,17 +222,75 @@ export default {
     content: '',
     category: '',
     logMessageSignup: '',
+    postEditForm: false,
+    postDeleteForm: false,
+    fileName: '첨부파일',
+    article: {
+      title: '',
+      content: '',
+      opinions: [],
+      category: '',
+    },
   }),
   async created() {
-    const postId = this.$route.params.id;
-    const res = await fetchPost(postId);
-    console.log(this.id);
-    this.detail = res.data;
-    this.imageUrl = res.data.images[0];
-    this.imageUrl1 = res.data.images[1];
-    console.log(res);
+    try {
+      const postId = this.$route.params.id;
+      const res = await fetchPost(postId);
+      console.log(this.id);
+      this.detail = res.data;
+      this.imageUrl = res.data.images[0];
+      this.imageUrl1 = res.data.images[1];
+      this.imageUrl2 = res.data.images[2];
+      console.log(res);
+    } catch (error) {
+      alert(error.response.data.message);
+      await this.$router.push('/posts');
+    }
   },
   methods: {
+    handleFileChange() {
+      const files = this.$refs.file.files;
+      this.files = files;
+      this.fileName = '';
+      for (let i = 0; i < files.length; i++) {
+        this.fileName += files[i].name + ' ';
+      }
+    },
+    async confirmDelete() {
+      try {
+        const res = await deletePost(this.id);
+        console.log(res);
+        await this.$router.push('/posts');
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async modify() {
+      try {
+        const formData = new FormData();
+        const postData = {
+          title: this.article.title,
+          content: this.article.content,
+          categoryId: this.article.category,
+        };
+        for (let i = 0; i < this.files.length; i++) {
+          formData.append('image', this.files[i]);
+        }
+        const json = JSON.stringify(postData);
+        const blob = new Blob([json], { type: 'application/json' });
+        formData.append('dto', blob);
+        console.log(this.id);
+        const res = await modifyPost(this.id, formData);
+        console.log(res);
+        this.$router.go(this.$router.currentRoute);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    cancel() {
+      this.postEditForm = false;
+      this.postDeleteForm = false;
+    },
     async report() {
       this.dialog = true;
     },
@@ -160,6 +320,54 @@ export default {
     async closeReportForm() {
       this.dialog = false;
     },
+    async modifyPost() {
+      this.postEditForm = true;
+    },
+    async deletePost() {
+      this.postDeleteForm = true;
+    },
   },
 };
 </script>
+<style scoped>
+.filebox .upload-name {
+  display: inline-block;
+  height: 40px;
+  padding: 0 10px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 78%;
+  color: #999999;
+}
+.filebox label {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #fff;
+  vertical-align: middle;
+  background-color: #999999;
+  cursor: pointer;
+  height: 40px;
+  margin-left: 10px;
+}
+.filebox input[type='file'] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+.board-name {
+  width: 160%;
+}
+.board-title {
+  color: #6aafe6;
+  text-shadow: 1px 1px gray;
+  font-size: 30px;
+}
+.board-name small {
+  color: gray;
+  font-size: 12px; /* 작은 글씨의 글자 크기 */
+  margin-left: 5px; /* 게시물과 작은 글씨 사이의 간격 */
+}
+</style>
