@@ -10,7 +10,7 @@ function reportPosts() {
 function reportThreads() {
   return admin.get('/reports/threads');
 }
-function reportComment() {
+function reportComments() {
   return admin.get('/reports/comments');
 }
 function fetchThreadList() {
@@ -20,6 +20,6 @@ export {
   listAccount,
   reportPosts,
   reportThreads,
-  reportComment,
+  reportComments,
   fetchThreadList,
 };

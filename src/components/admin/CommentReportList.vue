@@ -87,7 +87,7 @@
 <script>
 import _ from 'lodash';
 import qstr from 'query-string';
-import { reportComment } from '@/api/admin';
+import { reportComments } from '@/api/admin';
 import AdminHeader from '@/components/admin/AdminHeader.vue';
 
 export default {
@@ -136,7 +136,7 @@ export default {
         this.$route.query.page !== undefined
           ? qstr.stringify(this.$route.query)
           : 'page=1';
-      const res = await reportComment(query);
+      const res = await reportComments(query);
       const result = res.data;
       console.log(result);
       this.list = res.data.content;
