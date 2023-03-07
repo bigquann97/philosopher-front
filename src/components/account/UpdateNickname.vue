@@ -10,6 +10,8 @@
           v-model="newNickname"
           class="nickname-input"
         />
+      </div>
+      <div class="nickname-container">
         <button @click="changeNickname" class="updateBtn">변경</button>
       </div>
     </div>
@@ -55,12 +57,11 @@ export default {
 };
 </script>
 <style scoped>
-.user-info-heading {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 30px;
-}
 .user-info-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   max-width: 800px;
   margin: 0 auto;
   padding: 30px;
@@ -68,6 +69,12 @@ export default {
   font-size: 18px;
   line-height: 1.5;
   color: #333;
+}
+
+.user-info-heading {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
 }
 .nickname-container {
   display: flex;
@@ -99,6 +106,7 @@ export default {
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 .success-message {
