@@ -25,7 +25,12 @@
 
       <p class="log">{{ logMessage }}</p>
       <div style="text-align: center">
-        <v-btn color="success" class="mr-4" type="submit" @click="submitForm">
+        <v-btn
+          color="blue lighten-4"
+          class="mr-4"
+          type="submit"
+          @click="submitForm"
+        >
           로그인
         </v-btn>
       </div>

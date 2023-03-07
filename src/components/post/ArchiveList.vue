@@ -1,32 +1,43 @@
 <template>
   <div>
     <div class="container">
-      <div class="row s1">
-        <div class="col s3">
-          <h5 class="board">
-            <b>추천한 게시물</b>
+      <div class="row valign-wrapper">
+        <div class="col s6">
+          <h5 class="board-name">
+            <b>아카이브</b>
           </h5>
         </div>
-        <div class="col s3 offset-s5"></div>
-        <div class="col s1"></div>
+        <div class="col s2"></div>
+        <div class="col s3">
+          <input
+            type="text"
+            class="validate"
+            v-model="search.word"
+            placeholder="검색"
+            style="text-align: center"
+            @keydown.enter="searching"
+          />
+        </div>
+        <div class="col s1">
+          <a class="col s12 waves-effect btn blue lighten-5" @click="searching">
+            <i class="material-icons center">search</i>
+          </a>
+        </div>
       </div>
       <div class="collection">
         <router-link
           tag="a"
-          :to="{ name: 'Post', params: { id: one.id }, query: { page: 1 } }"
+          :to="{ name: 'Archive', params: { id: one.id }, query: { page: 1 } }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
         >
-          <span class="col s6">
-            <span>[{{ one.category }}]</span>
+          <span class="col s7">
             <span>{{ one.title }}</span>
-          </span>
-          <small class="col s2 center-align">{{ one.nickname }}</small>
-          <small class="col s2 center-align">
-            <i class="material-icons center">thumb_up</i
-            >{{ one.recommendCount }}</small
+            <span class="red-text"> [ {{ one.commentCount }} ] </span></span
           >
+          <small class="col s2 center-align">{{ one.nickname }}</small>
+          <small class="col s1 center-align">{{ one.recommendCount }}</small>
           <small class="col s2 center-align">{{ one.createdDate }}</small>
         </router-link>
       </div>
@@ -55,11 +66,6 @@
             </li>
           </ul>
         </div>
-        <div class="col s6 right-align">
-          <router-link to="/post" class="waves-effect btn blue lighten-5"
-            >글쓰기</router-link
-          >
-        </div>
       </div>
     </div>
   </div>
@@ -68,7 +74,7 @@
 <script>
 import _ from 'lodash';
 import qstr from 'query-string';
-import { getRecommendedPosts } from '@/api/account';
+import { fetchArchiveList } from '@/api/archive';
 
 export default {
   created() {
@@ -77,16 +83,29 @@ export default {
 
   data: () => ({
     pagination: {},
+    search: {},
     list: [],
     blockSize: 5,
     query: {},
   }),
 
   methods: {
+    searching() {
+      const keyword = this.search.word.trim();
+      if (keyword !== '') {
+        this.$router.push(
+          `/threads/archived?page=1&${qstr.stringify(this.search)}`,
+        );
+      }
+    },
+
     beforeLoadPage() {
       this.query = this.$route.query;
+      this.search = {
+        word: this.query.word !== undefined ? this.query.word : '',
+      };
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/recommendedPosts', query: { page: 1 } });
+        this.$router.push({ path: '/threads/archived', query: { page: 1 } });
       } else {
         this.loadPage();
       }
@@ -97,24 +116,25 @@ export default {
         this.$route.query.page !== undefined
           ? qstr.stringify(this.$route.query)
           : 'page=1';
-      const res = await getRecommendedPosts(query);
+      const res = await fetchArchiveList(query);
       const result = res.data;
-      this.list = result.content;
+      console.log(result);
+      this.list = res.data.content;
       this.pagination = {
-        numberOfElements: result.numberOfElements,
-        totalElements: result.totalElements,
-        isFirst: result.first,
-        isLast: result.last,
-        currentPage: result.number,
-        totalPages: result.totalPages - 1,
-        pageSize: result.size,
+        numberOfElements: res.data.numberOfElements,
+        totalElements: res.data.totalElements,
+        isFirst: res.data.first,
+        isLast: res.data.last,
+        currentPage: res.data.number,
+        totalPages: res.data.totalPages - 1,
+        pageSize: res.data.size,
       };
     },
 
     fullPath(val) {
       const target = _.cloneDeep(this.query);
       target.page = val;
-      return { path: '/recommendedPosts', query: target };
+      return { path: '/threads/archived', query: target };
     },
 
     previous() {
@@ -155,8 +175,88 @@ export default {
 };
 </script>
 <style>
-.board {
+* {
+  color: black;
+}
+
+.board-name {
   margin-left: 30px;
   margin-top: 30px;
+}
+
+@media (max-width: 1640px) {
+  .navbar ul li span {
+    display: none;
+  }
+}
+
+@media (max-width: 1390px) {
+  body {
+    width: 90%;
+  }
+  header {
+    width: 90%;
+  }
+  .menu li a {
+    padding: 0 10px;
+  }
+  .navbar li a {
+    font-size: 1.1rem;
+    margin-right: 10px;
+    padding: 6px 6px;
+  }
+}
+
+@media (min-width: 931px) {
+  .menu ul li a.menu-icon {
+    display: none;
+  }
+  .dropdown li:not(:last-child) {
+    border-right: 1px solid rgb(211, 211, 211);
+  }
+}
+
+@media (max-width: 930px) {
+  .company-name a span {
+    display: none;
+  }
+  .first-row {
+    flex-direction: column;
+  }
+  .second-row {
+    flex-direction: column;
+  }
+  .board1 {
+    margin-bottom: 50px;
+  }
+  .board1,
+  .board2 {
+    padding: 0;
+  }
+  .menu ul li.dropdown li {
+    display: block;
+  }
+  .menu ul li ul.dropdown {
+    background-color: white;
+    position: absolute;
+    z-index: 999;
+    display: none;
+    padding: 0;
+    margin: 0;
+  }
+  .menu ul li a:hover {
+    background-color: white;
+    color: dodgerblue;
+  }
+  .menu ul li:hover ul.dropdown {
+    display: block;
+  }
+}
+
+@media (max-width: 420px) {
+  .menu ul {
+    margin-right: 100px;
+    width: 20%;
+  }
 }
 </style>

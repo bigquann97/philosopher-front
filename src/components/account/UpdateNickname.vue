@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label for="nickname-input">닉네임: </label>
+    <label for="nickname-input" color="black">닉네임: </label>
     <input type="text" id="nickname-input" v-model="newNickname" />
     <button @click="changeNickname" class="updateBtn">변경</button>
     <div v-if="nicknameChanged">닉네임이 변경되었습니다.</div>
@@ -33,7 +33,7 @@ export default {
 
 <style scoped>
 .updateBtn {
-  background-color: blue;
+  background-color: rgb(25, 118, 210);
   color: #fff;
   border: none;
   padding: 10px;

@@ -45,43 +45,6 @@
     </div>
     <div class="divider"></div>
     <div class="section">
-      <div v-if="commentWriteForm">
-        <select class="browser-default" name="opinions" v-model="opinions">
-          <option value=""> 의견을 선택해주세요.</option>
-          <option :value="detail.opinions[0]">
-            {{ detail.opinions[0] }}
-          </option>
-          <option :value="detail.opinions[1]">{{ detail.opinions[1] }}</option>
-          <option :value="detail.opinions[2]">{{ detail.opinions[2] }}</option>
-        </select>
-        <v-textarea
-          solo
-          auto-grow
-          v-model="content"
-          label="여기에 댓글을 입력하세요. #번호로 멘션을 할 수 있습니다."
-        ></v-textarea>
-        <a
-          @click="createComment"
-          class="btn col s2"
-          style="background-color: white; float: right"
-          >확인</a
-        >
-        <a
-          @click="closeCommentWriteForm"
-          class="btn col s2"
-          style="background-color: white; float:right;"
-          >취소</a
-        >
-      </div>
-      <a
-        v-if="commentWriteButton"
-        @click="openCommentWriteForm"
-        class="btn col s2"
-        style="background-color: white; float: right;"
-        >댓글작성</a
-      >
-    </div>
-    <div class="section">
       <div class="row">
         <div class="collection">
           <div
@@ -169,67 +132,10 @@
                 <div
                   class="card-action right-align"
                   v-if="$store.state.username === one.nickname"
-                >
-                  <div>
-                    <a
-                      @click="commentEdit(one.commentId)"
-                      class="btn col s2"
-                      style="background-color: white; float: right;"
-                    >
-                      댓글수정</a
-                    >
-                    <a
-                      @click="deleteComment(one.commentId)"
-                      class="btn col s2"
-                      style="background-color: white; float: right;"
-                      >댓글삭제</a
-                    >
-                  </div>
-                </div>
+                ></div>
               </div>
             </div>
           </div>
-          <v-dialog v-model="commentEditForm" width="800">
-            <v-card height="350">
-              <div class="section">
-                <select
-                  class="browser-default"
-                  name="modifyOpinions"
-                  v-model="modifyOpinions"
-                >
-                  <option value=""> 의견을 선택해주세요.</option>
-                  <option :value="detail.opinions[0]">
-                    {{ detail.opinions[0] }}
-                  </option>
-                  <option :value="detail.opinions[1]">{{
-                    detail.opinions[1]
-                  }}</option>
-                  <option :value="detail.opinions[2]">{{
-                    detail.opinions[2]
-                  }}</option>
-                </select>
-                <v-textarea
-                  v-model="modifyContent"
-                  height="200"
-                  solo
-                  auto-grow
-                  label="여기에 수정할 댓글을 입력하세요. #번호로 멘션을 할 수 있습니다."
-                ></v-textarea>
-                <a
-                  @click="modifyComment"
-                  class="btn col s2"
-                  style="background-color: white; float: right"
-                  >확인</a
-                >
-                <a
-                  @click="closeCommentEditForm"
-                  class="btn col s2"
-                  style="background-color: white; float:right;"
-                  >취소</a
-                >
-              </div>
-            </v-card>
-          </v-dialog>
         </div>
         <div class="row valign-wrapper">
           <div class="col s6">
@@ -269,14 +175,9 @@ import {
   deleteRecommendComment,
   deleteRecommendThread,
 } from '@/api/recommendation';
-import { fetchThread } from '@/api/thread';
+import { fetchArchive } from '@/api/archive';
 import qstr from 'query-string';
-import {
-  createComment,
-  deleteComment,
-  fetchThreadComment,
-  modifyComment,
-} from '@/api/comment';
+import { fetchThreadComment } from '@/api/comment';
 import _ from 'lodash';
 
 export default {
@@ -285,7 +186,7 @@ export default {
   async created() {
     this.beforeLoadPage();
     const threadId = this.$route.params.id;
-    const res = await fetchThread(threadId);
+    const res = await fetchArchive(threadId);
     console.log(this.id);
     this.detail = res.data;
     this.imageUrl = res.data.images[0];
@@ -326,57 +227,6 @@ export default {
     query: {},
   }),
   methods: {
-    async commentEdit(commentId) {
-      this.editCommentId = commentId;
-      this.commentEditForm = true;
-    },
-    async closeCommentEditForm() {
-      this.commentEditForm = false;
-    },
-    async openCommentWriteForm() {
-      this.commentWriteForm = true;
-      this.commentWriteButton = false;
-    },
-    async closeCommentWriteForm() {
-      this.commentWriteForm = false;
-      this.commentWriteButton = true;
-    },
-    async createComment() {
-      try {
-        await createComment(this.id, {
-          opinion: this.opinions,
-          content: this.content,
-        });
-        this.dialog = false;
-        this.$router.go(this.$router.currentRoute);
-      } catch (error) {
-        console.log(error.response);
-      }
-    },
-    async deleteComment(commentId) {
-      try {
-        await deleteComment(commentId);
-        this.$router.go(this.$router.currentRoute);
-        this.dialog = false;
-        console.log();
-      } catch (error) {
-        console.log(error.response);
-      }
-    },
-    async modifyComment() {
-      try {
-        const commentId = this.editCommentId;
-        await modifyComment(commentId, {
-          opinion: this.modifyOpinions,
-          content: this.modifyContent,
-        });
-        this.$router.go(this.$router.currentRoute);
-        this.dialog = false;
-        console.log();
-      } catch (error) {
-        console.log(error.response);
-      }
-    },
     async recommendComment(commentId) {
       try {
         const res = await createRecommendComment(commentId);

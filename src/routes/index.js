@@ -38,10 +38,52 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: '/threads/archived',
+      name: 'ArchiveList',
+      component: () => import('@/components/post/ArchiveList.vue'),
+      meta: { auth: true },
+    },
+    {
+      path: '/comments/archive/:id',
+      name: 'Archive',
+      component: () => import('@/components/post/Archive.vue'),
+      props: true,
+    },
+    {
       path: '/posts',
       name: 'PostList',
       component: () => import('@/components/post/PostList.vue'),
       props: true,
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: () => import('@/components/admin/AdminHeader.vue'),
+    },
+    {
+      path: '/admin/accounts',
+      name: 'AccountList',
+      component: () => import('@/components/admin/AccountList.vue'),
+    },
+    {
+      path: '/admin/reports/posts',
+      name: 'reportPostList',
+      component: () => import('@/components/admin/PostReportList.vue'),
+    },
+    {
+      path: '/admin/reports/threads',
+      name: 'reportThreadList',
+      component: () => import('@/components/admin/ThreadReportList.vue'),
+    },
+    {
+      path: '/admin/reports/comments',
+      name: 'reportCommentList',
+      component: () => import('@/components/admin/CommentReportList.vue'),
+    },
+    {
+      path: '/admin/thread',
+      name: 'ThreadListManage',
+      component: () => import('@/components/admin/ThreadList.vue'),
     },
     {
       path: '/post/:id',
