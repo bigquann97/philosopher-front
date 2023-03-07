@@ -130,8 +130,7 @@
                 <div
                   class="card-action right-align"
                   v-if="$store.state.username === one.nickname"
-                >
-                </div>
+                ></div>
               </div>
             </div>
           </div>
@@ -176,9 +175,7 @@ import {
 } from '@/api/recommendation';
 import { fetchArchive } from '@/api/archive';
 import qstr from 'query-string';
-import {
-  fetchThreadComment,
-} from '@/api/comment';
+import { fetchThreadComment } from '@/api/comment';
 import _ from 'lodash';
 
 export default {
