@@ -21,7 +21,7 @@
           />
           <div style="text-align: center">
             <v-btn
-              color="success"
+              color="blue lighten-4"
               class="button_success"
               @click="sendVerificationMail((Loading = true))"
             >
@@ -64,7 +64,7 @@
                     />
                     <v-row justify="center" style="margin: 20px">
                       <v-btn
-                        color="primary"
+                        color="blue lighten-5"
                         variant="text"
                         @click="dialog = false"
                         style="margin: auto 20px auto auto"
@@ -72,7 +72,7 @@
                         닫기
                       </v-btn>
                       <v-btn
-                        color="primary"
+                        color="blue lighten-3"
                         variant="text"
                         @click="verifyEmail"
                         style="margin: auto auto auto 20px"
@@ -117,12 +117,12 @@
           </select>
           <p class="log">{{ logMessageSignup }}</p>
           <div class="buttons">
-            <v-btn color="error" class="button_error" href="/main">
+            <v-btn color="grey-lighten-2" class="button_error" href="/main">
               뒤로가기
             </v-btn>
 
             <v-btn
-              color="success"
+              color="blue lighten-3"
               class="button_success"
               type="submit"
               @click="submitForm"
@@ -293,22 +293,21 @@ select {
 
 .form-wrapper .button_success {
   background-color: dodgerblue;
-  color: white;
+  color: black;
   border: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 0.5rem 1rem;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
   margin: auto;
 }
 
 .form-wrapper .button_error {
-  background-color: #ff5252;
-  color: white;
+  color: black;
   border: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 0.5rem 1rem;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
   margin: auto;
 }
