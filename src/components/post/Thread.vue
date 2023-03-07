@@ -151,11 +151,11 @@
             v-for="one in list"
             :key="one.id"
           >
-            <div v-if="one.status === 'DELETED'">
-              삭제된 댓글 입니다.
+            <div v-if="one.status === 'DELETED'" style="margin-left: 10px">
+              삭제된 쓰레드 입니다.
             </div>
-            <div v-if="one.status === 'BLINDED'">
-              블라인드 처리된 댓글 입니다.
+            <div v-if="one.status === 'BLINDED'" style="margin-left: 10px">
+              블라인드 처리된 쓰레드 입니다.
             </div>
             <div v-if="one.status === 'ACTIVE'">
               <div class="col s1" style="width: 100%">

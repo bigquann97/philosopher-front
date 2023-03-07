@@ -35,16 +35,24 @@
           v-for="one in list"
           :key="one.id"
         >
-          <span class="col s6">
-            <span>[{{ one.category }}]</span>
-            <span>{{ one.title }}</span>
-          </span>
-          <small class="col s2 center-align">{{ one.nickname }}</small>
-          <small class="col s2 center-align">
-            <i class="material-icons center">thumb_up</i
-            >{{ one.recommendCount }}</small
-          >
-          <small class="col s2 center-align">{{ one.createdDate }}</small>
+          <div v-if="one.status === 'DELETED'" style="margin-left: 10px">
+            삭제된 게시글 입니다.
+          </div>
+          <div v-if="one.status === 'BLINDED'" style="margin-left: 10px">
+            블라인드 처리된 게시글 입니다.
+          </div>
+          <div v-if="one.status === 'ACTIVE'">
+            <span class="col s6">
+              <span>[{{ one.category }}]</span>
+              <span>{{ one.title }}</span>
+            </span>
+            <small class="col s2 center-align">{{ one.nickname }}</small>
+            <small class="col s2 center-align">
+              <i class="material-icons center">thumb_up</i
+              >{{ one.recommendCount }}</small
+            >
+            <small class="col s2 center-align">{{ one.createdDate }}</small>
+          </div>
         </router-link>
       </div>
       <div class="row valign-wrapper">
