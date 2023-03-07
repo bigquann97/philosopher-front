@@ -38,6 +38,11 @@
     </div>
     <div class="section">
       <img :src="imageUrl" alt="" style="max-width: 300px; max-height: 300px" />
+      <img
+        :src="imageUrl1"
+        alt=""
+        style="max-width: 300px; max-height: 300px"
+      />
       <div>{{ detail.content }}</div>
     </div>
     <div style="text-align: center; margin-bottom: 20px">
@@ -67,6 +72,7 @@ export default {
     console.log(this.id);
     this.detail = res.data;
     this.imageUrl = res.data.images[0];
+    this.imageUrl1 = res.data.images[1];
     console.log(res);
   },
   data: () => ({

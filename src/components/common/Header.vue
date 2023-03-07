@@ -14,6 +14,15 @@
             <ul class="dropdown">
               <li>
                 <a
+                  href="/rank"
+                  v-bind:style="{
+                    'border-right': '1px solid rgb(211, 211, 211)',
+                  }"
+                  >랭킹</a
+                >
+              </li>
+              <li>
+                <a
                   href="/posts"
                   v-bind:style="{
                     'border-right': '1px solid rgb(211, 211, 211)',

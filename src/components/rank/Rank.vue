@@ -1,27 +1,17 @@
 <template>
-  <div>
-    <h3>랭킹 페이지입니다.</h3>
-    <div class="black-bg" v-if="openModal == true">
-      <div class="white-bg">
-        <h4>상세페이지</h4>
-        <p>상세페이지내용임</p>
-        <button class="close">닫기</button>
+  <div class="black-bg" v-if="modalOpen == true">
+    <button id="exit" v-on:click="modalOpen = false">X</button>
+    <div class="white-bg">
+      <h3>🥇이번주 아테네 학당</h3>
+      <div class="collection">
+        <div class="collection-item row" v-for="one in list" :key="one.id">
+          <span class="col s10">
+            <span>[{{ one.nickname }}]님이 &nbsp;&nbsp; </span>
+            <span>{{ one.count }}개의 지식력 획득</span>
+          </span>
+        </div>
       </div>
     </div>
-        <div class="collection">
-          <div
-            class="collection-item row"
-            v-for="one in list"
-            :key="one.id"
-            @click.prevent
-          >
-            <span class="col s6">
-              <span>[{{ one.nickname }}] </span>
-              <span>{{ one.count }}</span>
-            </span>
-          </div>
-        </div>
-        <div>
   </div>
 </template>
 
@@ -33,15 +23,15 @@ export default {
     this.loadPage();
   },
   data: () => ({
+    modalOpen: true,
     list: [],
-    openModal: false,
   }),
   methods: {
     async loadPage() {
       const res = await getRank();
       const result = res.data;
       console.log(result);
-      this.list = res.data.content;
+      this.list = res.data;
     },
   },
 };
@@ -50,35 +40,28 @@ export default {
 body {
   margin: 0;
 }
+
 div {
   box-sizing: border-box;
 }
+
 .black-bg {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  position: fixed;
+  width: 50%;
+  height: 47%;
+  right: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  position: center;
+  padding: 10px;
 }
+
 .white-bg {
-  width: 90%;
-  margin: 80px auto;
+  width: 85%;
   background: white;
-  border-radius: 5px;
-  padding: 20px 0;
+  border-radius: 15px;
+  padding: 20px;
 }
-.close {
-  cursor: pointer;
-  border: none;
-  background: #6667ab;
-  color: white;
-  font-weight: bold;
-  border-radius: 5px;
-  padding: 5px 15px;
-}
-.close:hover {
-  color: white;
-  font-weight: bold;
-  transform: scale(1.1);
-  transition: all 0.5s;
+
+.collection-item row {
+  color: #0dcaf0;
 }
 </style>
