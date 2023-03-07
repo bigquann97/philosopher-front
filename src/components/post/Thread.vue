@@ -1,6 +1,15 @@
 <template>
   <div class="container">
     <div class="section">
+      <div class="col s6">
+        <h5 class="board-name">
+          <b class="board-title">쓰레드</b>
+          <small
+            >일정 시간이 지나면 닫히는 토론장입니다. 다른 사람들과 의견을
+            나눠보세요!</small
+          >
+        </h5>
+      </div>
       <h5>
         <b>
           {{ detail.title }}
@@ -32,10 +41,10 @@
       <img :src="imageUrl" alt="" style="max-width: 300px; max-height: 300px" />
       <div>{{ detail.content }}</div>
     </div>
-    <div style="text-align: center; margin-bottom: 20px">
+    <div style="text-align: center; margin-bottom: 1px">
       <a>
         <img
-          src="@/image/like_blue.png"
+          src="@/image/like.png"
           alt=""
           style="width: 35px"
           @click="recommendThread"
@@ -541,3 +550,18 @@ export default {
   },
 };
 </script>
+<style>
+.board-name {
+  width: 160%;
+}
+.board-title {
+  color: #6aafe6;
+  text-shadow: 1px 1px gray;
+  font-size: 30px;
+}
+.board-name small {
+  color: gray;
+  font-size: 12px; /* 작은 글씨의 글자 크기 */
+  margin-left: 5px; /* 게시물과 작은 글씨 사이의 간격 */
+}
+</style>

@@ -4,7 +4,11 @@
       <div class="row valign-wrapper">
         <div class="col s3">
           <h5 class="board-name">
-            <b>게시물</b>
+            <b class="board-title">게시물</b>
+            <small
+              >추천 수 5 이상이면 의견을 나눌 수 있습니다. 여러분의 생각을
+              펼쳐보세요!</small
+            >
           </h5>
         </div>
         <div class="col s3 offset-s5">
@@ -186,8 +190,16 @@ export default {
 
 .board-name {
   width: 160%;
-  margin-left: 30px;
-  margin-top: 30px;
+}
+.board-title {
+  color: #6aafe6;
+  text-shadow: 1px 1px gray;
+  font-size: 30px;
+}
+.board-name small {
+  color: gray;
+  font-size: 12px; /* 작은 글씨의 글자 크기 */
+  margin-left: 5px; /* 게시물과 작은 글씨 사이의 간격 */
 }
 
 @media (max-width: 1640px) {
