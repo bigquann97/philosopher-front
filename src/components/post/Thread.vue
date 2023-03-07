@@ -21,34 +21,38 @@
       <div>
         닉네임 : <a>{{ detail.nickname }}</a>
       </div>
-      <span style="font-size: medium; float: right">
-        시작일 : {{ detail.createdDate }}
-      </span>
-      <div>추천수 : {{ detail.recommendCount }}</div>
-      <span style="font-size: medium; float: right">
-        종료일 : {{ detail.endDate }}
-      </span>
-      <div>카테고리 : {{ detail.category }}</div>
+      <div>
+        추천수 : {{ detail.recommendCount }}
+        <span style="font-size: medium; float: right"
+          >시작일 : {{ detail.createdDate }}</span
+        >
+      </div>
+      <div style="display: block">
+        카테고리 : {{ detail.category }}
+        <span style="font-size: medium; float: right"
+          >종료일 : {{ detail.endDate }}</span
+        >
+      </div>
     </div>
     <div class="divider"></div>
-    <div>
-      <div>의견 목록 :</div>
+    <div class="section">
       <div v-if="detail.opinions[0] !== ''">
-        <div>{{ detail.opinions[0] }}</div>
+        <span>의견1: {{ detail.opinions[0] }} </span>
       </div>
       <div v-if="detail.opinions[1] !== ''">
-        <div>{{ detail.opinions[1] }}</div>
+        <span>의견2: {{ detail.opinions[1] }} </span>
       </div>
       <div v-if="detail.opinions[2] !== ''">
-        <div>{{ detail.opinions[2] }}</div>
+        <span>의견3: {{ detail.opinions[2] }} </span>
       </div>
       <div v-if="detail.opinions[3] !== ''">
-        <div>{{ detail.opinions[3] }}</div>
+        <span>의견4: {{ detail.opinions[3] }} </span>
       </div>
       <div v-if="detail.opinions[4] !== ''">
-        <div>{{ detail.opinions[4] }}</div>
+        <span>의견5: {{ detail.opinions[4] }} </span>
       </div>
     </div>
+    <div class="divider"></div>
     <div class="section">
       <img :src="imageUrl" alt="" style="max-width: 300px; max-height: 300px" />
       <img
@@ -76,52 +80,29 @@
     </div>
     <div class="divider"></div>
     <div class="section">
-      <div v-if="commentWriteForm">
-        <select class="browser-default" name="opinions" v-model="opinions">
-          <option value=""> 의견을 선택해주세요.</option>
-          <option :value="detail.opinions[0]">
-            {{ detail.opinions[0] }}
-          </option>
-          <option :value="detail.opinions[1]">{{ detail.opinions[1] }}</option>
-          <option :value="detail.opinions[2]">{{ detail.opinions[2] }}</option>
-          <option :value="detail.opinions[3]">{{ detail.opinions[3] }}</option>
-          <option :value="detail.opinions[4]">{{ detail.opinions[4] }}</option>
-        </select>
-        <v-textarea
-          solo
-          auto-grow
-          v-model="content"
-          label="여기에 댓글을 입력하세요. #번호로 멘션을 할 수 있습니다."
-        ></v-textarea>
-        <a
-          @click="createComment"
-          class="btn col s2"
-          style="background-color: white; float: right"
-          >확인</a
-        >
-        <a
-          @click="closeCommentWriteForm"
-          class="btn col s2"
-          style="background-color: white; float:right;"
-          >취소</a
-        >
-      </div>
-    </div>
-    <div class="section">
-      <a
-        v-if="commentWriteButton"
-        @click="openCommentWriteForm"
-        class="btn col s2"
-        style="background-color: white; float: right;"
-        >댓글작성</a
-      >
-    </div>
-    <div class="section">
       <div class="row">
         <div class="collection">
           <h5>댓글 통계 📊</h5>
           <hr />
-
+          <div
+            tag="a"
+            :to="{ name: 'Ratio', params: { id: ratio.id } }"
+            class="collection-item row"
+            v-for="ratio in ratios"
+            :key="ratio.id"
+          >
+            <span>
+              의견
+              <span style="font-weight: bold; color:#3108a4;"
+                >"{{ ratio.opinion }}"</span
+              >
+              에 대한 토론 참여자의 비율은
+              <span style="font-weight: bold; color:#0f5132"
+                >{{ ratio.ratio }}%</span
+              >
+              입니다.
+            </span>
+          </div>
           <h5>Top 3 베스트 댓글 💡</h5>
           <hr />
           <div
@@ -164,6 +145,42 @@
       </div>
     </div>
     <div class="section">
+      <a
+        v-if="commentWriteButton"
+        @click="openCommentWriteForm"
+        class="btn col s2"
+        style="background-color: white; float: right;"
+        >댓글작성</a
+      >
+    </div>
+    <div class="section">
+      <div v-if="commentWriteForm">
+        <select class="browser-default" name="opinions" v-model="opinions">
+          <option value=""> 의견을 선택해주세요.</option>
+          <option :value="detail.opinions[0]">{{ detail.opinions[0] }}</option>
+          <option :value="detail.opinions[1]">{{ detail.opinions[1] }}</option>
+          <option :value="detail.opinions[2]">{{ detail.opinions[2] }}</option>
+        </select>
+        <v-textarea
+          solo
+          auto-grow
+          v-model="content"
+          label="여기에 댓글을 입력하세요. #번호로 멘션을 할 수 있습니다."
+        ></v-textarea>
+        <a
+          @click="createComment"
+          class="btn col s2"
+          style="background-color: white; float: right"
+          >확인</a
+        >
+        <a
+          @click="closeCommentWriteForm"
+          class="btn col s2"
+          style="background-color: white; float:right;"
+          >취소</a
+        >
+      </div>
+
       <div class="row">
         <div class="collection">
           <h5>댓글 목록</h5>
@@ -285,18 +302,12 @@
                   <option :value="detail.opinions[0]">
                     {{ detail.opinions[0] }}
                   </option>
-                  <option :value="detail.opinions[1]">{{
-                    detail.opinions[1]
-                  }}</option>
-                  <option :value="detail.opinions[2]">{{
-                    detail.opinions[2]
-                  }}</option>
-                  <option :value="detail.opinions[3]">{{
-                    detail.opinions[3]
-                  }}</option>
-                  <option :value="detail.opinions[4]">{{
-                    detail.opinions[4]
-                  }}</option>
+                  <option :value="detail.opinions[1]"
+                    >{{ detail.opinions[1] }}
+                  </option>
+                  <option :value="detail.opinions[2]"
+                    >{{ detail.opinions[2] }}
+                  </option>
                 </select>
                 <v-textarea
                   v-model="modifyContent"
@@ -367,12 +378,11 @@ import {
   fetchThreadComment,
   modifyComment,
   fetchFavComment,
+  fetchRatio,
 } from '@/api/comment';
 import _ from 'lodash';
 
 export default {
-  props: ['id'],
-
   async created() {
     this.beforeLoadPage();
     const threadId = this.$route.params.id;
@@ -423,6 +433,10 @@ export default {
       createDate: '',
       likeCount: '',
     },
+    ratios: {
+      opinion: '',
+      ratio: '',
+    },
   }),
   methods: {
     async commentEdit(commentId) {
@@ -442,7 +456,8 @@ export default {
     },
     async createComment() {
       try {
-        await createComment(this.id, {
+        const threadId = this.$route.params.id;
+        await createComment(threadId, {
           opinion: this.opinions,
           content: this.content,
         });
@@ -489,11 +504,13 @@ export default {
     },
     async recommendThread() {
       try {
-        const res = await createRecommendThread(this.id);
+        const threadId = this.$route.params.id;
+        const res = await createRecommendThread(threadId);
         console.log(res);
         this.$router.go(this.$router.currentRoute);
       } catch (error) {
-        const res = await deleteRecommendThread(this.id);
+        const threadId = this.$route.params.id;
+        const res = await deleteRecommendThread(threadId);
         console.log(res);
         this.$router.go(this.$router.currentRoute);
       }
@@ -520,6 +537,7 @@ export default {
           : 'page=1';
       const res = await fetchThreadComment(threadId, query);
       const favorite = await fetchFavComment(threadId);
+      const ratio = await fetchRatio(threadId);
       const result = res.data;
       console.log(result);
       this.list = res.data.content;
@@ -529,12 +547,12 @@ export default {
         isFirst: res.data.first,
         isLast: res.data.last,
         currentPage: res.data.number,
-        totalPages: res.data.totalPages - 1,
+        totalPages: res.data.totalPages,
         pageSize: res.data.size,
       };
       this.favs = favorite.data;
+      this.ratios = ratio.data;
     },
-
     fullPath(val) {
       const threadId = this.$route.params.id;
       const target = _.cloneDeep(this.query);

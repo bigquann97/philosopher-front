@@ -48,13 +48,6 @@
                   >랭킹</a
                 >
               </li>
-              <li v-if="isAdmin">
-                <router-link
-                  to="/admin/accounts"
-                  style="border-right: 1px solid rgb(211, 211, 211)"
-                  >어드민 페이지</router-link
-                >
-              </li>
               <v-dialog v-model="dialog" width="550px">
                 <v-card height="330">
                   <v-card-title>
@@ -91,6 +84,13 @@
                 </v-card>
               </v-dialog>
             </ul>
+          </li>
+          <li v-if="isAdmin">
+            <router-link
+              to="/admin/accounts"
+              style="border-right: 1px solid rgb(211, 211, 211)"
+              >어드민 페이지</router-link
+            >
           </li>
         </ul>
       </div>
