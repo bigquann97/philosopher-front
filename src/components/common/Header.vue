@@ -14,15 +14,6 @@
             <ul class="dropdown">
               <li>
                 <a
-                  href="/rank"
-                  v-bind:style="{
-                    'border-right': '1px solid rgb(211, 211, 211)',
-                  }"
-                  >랭킹</a
-                >
-              </li>
-              <li>
-                <a
                   href="/posts"
                   v-bind:style="{
                     'border-right': '1px solid rgb(211, 211, 211)',
@@ -48,6 +39,15 @@
                   >아카이브</a
                 >
               </li>
+              <li>
+                <a
+                  @click="report"
+                  v-bind:style="{
+                    'border-right': '1px solid rgb(211, 211, 211)',
+                  }"
+                  >랭킹</a
+                >
+              </li>
               <li v-if="isAdmin">
                 <router-link
                   to="/admin/accounts"
@@ -55,6 +55,41 @@
                   >어드민 페이지</router-link
                 >
               </li>
+              <v-dialog v-model="dialog" width="550px">
+                <v-card height="330">
+                  <v-card-title>
+                    🥇이번주의 학자들
+                    <a
+                      @click="closeReportForm"
+                      class="btn btn-outline-primary"
+                      style="background-color:sandybrown; width: 100px; border-radius: 10px;"
+                      >닫기</a
+                    >
+                  </v-card-title>
+                  <v-card-text>
+                    <div class="collection">
+                      <div
+                        class="collection-item row"
+                        v-for="one in list"
+                        :key="one.id"
+                      >
+                        <span class="font-weight-black"
+                          >금주의 {{ one.philosopher }}
+                        </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>사용자</span>
+                        <span class="font-weight-medium"
+                          >[{{ one.nickname }}]</span
+                        >
+                        <span>님이</span>
+                        <span class="font-weight-black">{{ one.count }}</span>
+                        <span>개의 쓰레드화 성공 </span>
+                      </div>
+                    </div>
+                    <p class="log">{{ logMessageSignup }}</p>
+                  </v-card-text>
+                </v-card>
+              </v-dialog>
             </ul>
           </li>
         </ul>
@@ -84,6 +119,8 @@
 
 <script>
 import { deleteCookie } from '@/utils/cookies';
+import { getRank } from '@/api/rank';
+import { reportPost } from '@/api/report';
 
 export default {
   name: 'AppBar',
@@ -96,7 +133,17 @@ export default {
       return this.$store.getters.isAdmin;
     },
   },
+  created() {
+    this.loadPage();
+  },
+  data: () => ({
+    dialog: false,
+    list: [],
+  }),
   methods: {
+    async report() {
+      this.dialog = true;
+    },
     logoutUser() {
       this.$store.commit('clearUsername');
       this.$store.commit('clearToken');
@@ -105,6 +152,27 @@ export default {
       deleteCookie('user');
       deleteCookie('userRole');
       this.$router.push('/main');
+    },
+    async loadPage() {
+      const res = await getRank();
+      const result = res.data;
+      console.log(result);
+      this.list = res.data;
+    },
+    async confirmReport() {
+      try {
+        await reportPost(this.id, {
+          content: this.reportContent,
+          category: this.reportCategory,
+        });
+        this.$router.go(this.$router.currentRoute);
+      } catch (error) {
+        console.log(error);
+        this.logMessageSignup = error.response.data.message;
+      }
+    },
+    async closeReportForm() {
+      this.dialog = false;
     },
   },
 };
