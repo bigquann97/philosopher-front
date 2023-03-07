@@ -1,6 +1,8 @@
 <template>
   <div class="user-info-contents">
-    <h1>내 정보</h1>
+    <h3>
+      <b>내 정보</b>
+    </h3>
     <div class="profile-image-container" @click="openFileInput">
       <img
         :src="user.imageUrl"

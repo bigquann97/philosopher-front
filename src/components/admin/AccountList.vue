@@ -4,7 +4,9 @@
     <div class="container">
       <div class="row valign-wrapper">
         <div class="col s6">
-          <h1>쓰레드</h1>
+          <h5 class="board">
+            <b>회원 관리</b>
+          </h5>
         </div>
         <div class="col s2"></div>
         <div class="col s3">
@@ -18,7 +20,7 @@
           />
         </div>
         <div class="col s1">
-          <a class="col s12 waves-effect btn teal lighten-2" @click="searching">
+          <a class="col s12 waves-effect btn blue lighten-5" @click="searching">
             <i class="material-icons center">search</i>
           </a>
         </div>
@@ -77,7 +79,9 @@
           </ul>
         </div>
         <div class="col s6 right-align">
-          <router-link to="/posts" class="waves-effect btn">글쓰기</router-link>
+          <router-link to="/posts" class="waves-effect btn blue lighten-5"
+            >글쓰기</router-link
+          >
         </div>
       </div>
     </div>
@@ -191,3 +195,13 @@ export default {
   },
 };
 </script>
+<style>
+* {
+  color: black;
+}
+
+.board {
+  margin-left: 30px;
+  margin-top: 30px;
+}
+</style>

@@ -1,9 +1,11 @@
 <template>
   <div class="container">
     <div class="section">
-      <h3>
-        {{ detail.title }}
-      </h3>
+      <h5>
+        <b>
+          {{ detail.title }}
+        </b>
+      </h5>
     </div>
     <div class="divider"></div>
     <div class="section">

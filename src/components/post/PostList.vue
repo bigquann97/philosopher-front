@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row valign-wrapper">
         <div class="col s3">
-          <h5>
+          <h5 class="board-name">
             <b>게시물</b>
           </h5>
         </div>
@@ -182,6 +182,11 @@ export default {
 <style>
 * {
   color: black;
+}
+
+.board-name {
+  margin-left: 30px;
+  margin-top: 30px;
 }
 
 @media (max-width: 1640px) {
