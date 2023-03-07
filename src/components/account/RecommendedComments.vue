@@ -48,11 +48,6 @@
             </li>
           </ul>
         </div>
-        <div class="col s6 right-align">
-          <router-link to="/post" class="waves-effect btn blue lighten-5"
-            >글쓰기</router-link
-          >
-        </div>
       </div>
     </div>
   </div>
@@ -99,7 +94,7 @@ export default {
         isFirst: result.first,
         isLast: result.last,
         currentPage: result.number,
-        totalPages: result.totalPages - 1,
+        totalPages: result.totalPages,
         pageSize: result.size,
       };
     },
@@ -136,7 +131,7 @@ export default {
 
       const startOfBlock = current - (current % blockSize);
       const endOfBlock = startOfBlock + blockSize;
-      const complimentedEOB = endOfBlock > total + 2 ? total + 2 : endOfBlock;
+      const complimentedEOB = endOfBlock > total + 1 ? total + 1 : endOfBlock;
       return _.range(startOfBlock, complimentedEOB);
     },
   },

@@ -99,7 +99,7 @@ export default {
         isFirst: result.first,
         isLast: result.last,
         currentPage: result.number,
-        totalPages: result.totalPages - 1,
+        totalPages: result.totalPages,
         pageSize: result.size,
       };
     },
@@ -136,7 +136,7 @@ export default {
 
       const startOfBlock = current - (current % blockSize);
       const endOfBlock = startOfBlock + blockSize;
-      const complimentedEOB = endOfBlock > total + 2 ? total + 2 : endOfBlock;
+      const complimentedEOB = endOfBlock > total + 1 ? total + 1 : endOfBlock;
       return _.range(startOfBlock, complimentedEOB);
     },
   },
