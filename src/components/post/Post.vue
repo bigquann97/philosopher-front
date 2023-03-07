@@ -99,10 +99,10 @@
       />
       <div>{{ detail.content }}</div>
     </div>
-    <div style="text-align: center; margin-bottom: 20px">
+    <div style="text-align: center; margin-bottom: 1px">
       <a>
         <img
-          src="@/image/like_blue.png"
+          src="@/image/like.png"
           alt=""
           style="width: 35px"
           @click="recommendPost"
