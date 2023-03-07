@@ -22,3 +22,5 @@ export const thread = createInstanceWithAuth('threads');
 export const account = createInstanceWithAuth('accounts');
 export const post = createInstanceWithAuth('posts');
 export const admin = createInstanceWithAuth('admin');
+export const archive = createInstanceWithAuth('threads/archived');
+export const notifications = createInstanceWithAuth('notifications');

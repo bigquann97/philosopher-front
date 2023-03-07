@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <div class="row">
-      <h4>게시물 작성</h4>
+      <h4>
+        <b>게시물 작성</b>
+      </h4>
       <h6 style="color: grey">
         Philosopher에서 다양한 주제의 토론을 나눠보세요.
       </h6>
@@ -98,7 +100,7 @@
       />
       <div class="col s1 offset-s11">
         <a
-          class="waves-effect btn teal lighten-5"
+          class="waves-effect btn blue lighten-5"
           @click="add"
           v-show="addButton"
         >
@@ -128,8 +130,8 @@
       <input type="file" id="input-file" style="display: none" />
     </div>
     <div class="row center">
-      <a class="btn" @click="write">작성 완료</a>&nbsp;&nbsp;
-      <a class="btn grey" @click="cancel">취소</a>
+      <a class="btn blue lighten-5" @click="write">작성 완료</a>&nbsp;&nbsp;
+      <a class="btn grey lighten-2" @click="cancel">취소</a>
     </div>
   </div>
 </template>

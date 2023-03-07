@@ -38,6 +38,18 @@ const router = new VueRouter({
       props: true,
     },
     {
+      path: '/threads/archived',
+      name: 'ArchiveList',
+      component: () => import('@/components/post/ArchiveList.vue'),
+      meta: { auth: true },
+    },
+    {
+      path: '/comments/archive/:id',
+      name: 'Archive',
+      component: () => import('@/components/post/Archive.vue'),
+      props: true,
+    },
+    {
       path: '/posts',
       name: 'PostList',
       component: () => import('@/components/post/PostList.vue'),
@@ -90,6 +102,47 @@ const router = new VueRouter({
       name: 'accountInfo',
       component: () => import('@/components/account/AccountInfo.vue'),
       props: true,
+    },
+    {
+      path: '/myPosts',
+      name: 'MyPosts',
+      component: () => import('@/components/account/MyPosts.vue'),
+    },
+    {
+      path: '/myComments',
+      name: 'MyComments',
+      component: () => import('@/components/account/MyComment.vue'),
+    },
+    {
+      path: '/recommendedPosts',
+      name: 'RecommendedPosts',
+      component: () => import('@/components/account/RecommendedPosts.vue'),
+    },
+    {
+      path: '/recommendedComments',
+      name: 'RecommendedComments',
+      component: () => import('@/components/account/RecommendedComments.vue'),
+    },
+    {
+      path: '/recommendedThreads',
+      name: 'RecommendedThreads',
+      component: () => import('@/components/account/RecommendedThreads.vue'),
+    },
+    {
+      path: '/updateNickname',
+      name: 'UpdateNickname',
+      component: () => import('@/components/account/UpdateNickname.vue'),
+      props: true,
+    },
+    {
+      path: '/updatePassword',
+      name: 'UpdatePassword',
+      component: () => import('@/components/account/UpdatePassword.vue'),
+    },
+    {
+      path: '/myNotification',
+      name: 'MyNotification',
+      component: () => import('@/components/account/MyNotification.vue'),
     },
     {
       path: '*',

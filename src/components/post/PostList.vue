@@ -1,9 +1,11 @@
 <template>
   <div>
     <div class="container">
-      <div class="row s1">
+      <div class="row valign-wrapper">
         <div class="col s3">
-          게시물
+          <h5>
+            <b>게시물</b>
+          </h5>
         </div>
         <div class="col s3 offset-s5">
           <input
@@ -16,7 +18,7 @@
           />
         </div>
         <div class="col s1">
-          <a class="col s12 waves-effect btn teal lighten-5" @click="searching">
+          <a class="col s12 waves-effect btn blue lighten-5" @click="searching">
             <i class="material-icons center">search</i>
           </a>
         </div>
@@ -67,7 +69,9 @@
           </ul>
         </div>
         <div class="col s6 right-align">
-          <router-link to="/post" class="waves-effect btn">글쓰기</router-link>
+          <router-link to="/post" class="waves-effect btn blue lighten-5"
+            >글쓰기</router-link
+          >
         </div>
       </div>
     </div>
@@ -175,4 +179,84 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+* {
+  color: black;
+}
+
+@media (max-width: 1640px) {
+  .navbar ul li span {
+    display: none;
+  }
+}
+
+@media (max-width: 1390px) {
+  body {
+    width: 90%;
+  }
+  header {
+    width: 90%;
+  }
+  .menu li a {
+    padding: 0 10px;
+  }
+  .navbar li a {
+    font-size: 1.1rem;
+    margin-right: 10px;
+    padding: 6px 6px;
+  }
+}
+
+@media (min-width: 931px) {
+  .menu ul li a.menu-icon {
+    display: none;
+  }
+  .dropdown li:not(:last-child) {
+    border-right: 1px solid rgb(211, 211, 211);
+  }
+}
+
+@media (max-width: 930px) {
+  .company-name a span {
+    display: none;
+  }
+  .first-row {
+    flex-direction: column;
+  }
+  .second-row {
+    flex-direction: column;
+  }
+  .board1 {
+    margin-bottom: 50px;
+  }
+  .board1,
+  .board2 {
+    padding: 0;
+  }
+  .menu ul li.dropdown li {
+    display: block;
+  }
+  .menu ul li ul.dropdown {
+    background-color: white;
+    position: absolute;
+    z-index: 999;
+    display: none;
+    padding: 0;
+    margin: 0;
+  }
+  .menu ul li a:hover {
+    background-color: white;
+    color: dodgerblue;
+  }
+  .menu ul li:hover ul.dropdown {
+    display: block;
+  }
+}
+
+@media (max-width: 420px) {
+  .menu ul {
+    margin-right: 100px;
+    width: 20%;
+  }
+}
+</style>

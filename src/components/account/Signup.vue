@@ -321,4 +321,10 @@ button:hover {
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 931px) {
+  .wrapper {
+    width: 90%;
+  }
+}
 </style>

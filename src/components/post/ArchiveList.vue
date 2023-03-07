@@ -3,9 +3,7 @@
     <div class="container">
       <div class="row valign-wrapper">
         <div class="col s6">
-          <h5>
-            <b>쓰레드</b>
-          </h5>
+          <h1>아카이브</h1>
         </div>
         <div class="col s2"></div>
         <div class="col s3">
@@ -19,7 +17,7 @@
           />
         </div>
         <div class="col s1">
-          <a class="col s12 waves-effect btn blue lighten-5" @click="searching">
+          <a class="col s12 waves-effect btn teal lighten-2" @click="searching">
             <i class="material-icons center">search</i>
           </a>
         </div>
@@ -27,7 +25,7 @@
       <div class="collection">
         <router-link
           tag="a"
-          :to="{ name: 'Thread', params: { id: one.id }, query: { page: 1 } }"
+          :to="{ name: 'Archive', params: { id: one.id }, query: { page: 1 } }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
@@ -66,11 +64,6 @@
             </li>
           </ul>
         </div>
-        <div class="col s6 right-align">
-          <router-link to="/posts" class="waves-effect btn blue lighten-5"
-            >글쓰기</router-link
-          >
-        </div>
       </div>
     </div>
   </div>
@@ -79,7 +72,7 @@
 <script>
 import _ from 'lodash';
 import qstr from 'query-string';
-import { fetchThreadList } from '@/api/thread';
+import { fetchArchiveList } from '@/api/archive';
 
 export default {
   created() {
@@ -98,7 +91,9 @@ export default {
     searching() {
       const keyword = this.search.word.trim();
       if (keyword !== '') {
-        this.$router.push(`/threads?page=1&${qstr.stringify(this.search)}`);
+        this.$router.push(
+          `/threads/archived?page=1&${qstr.stringify(this.search)}`,
+        );
       }
     },
 
@@ -108,7 +103,7 @@ export default {
         word: this.query.word !== undefined ? this.query.word : '',
       };
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/threads', query: { page: 1 } });
+        this.$router.push({ path: '/threads/archived', query: { page: 1 } });
       } else {
         this.loadPage();
       }
@@ -119,7 +114,7 @@ export default {
         this.$route.query.page !== undefined
           ? qstr.stringify(this.$route.query)
           : 'page=1';
-      const res = await fetchThreadList(query);
+      const res = await fetchArchiveList(query);
       const result = res.data;
       console.log(result);
       this.list = res.data.content;
@@ -137,7 +132,7 @@ export default {
     fullPath(val) {
       const target = _.cloneDeep(this.query);
       target.page = val;
-      return { path: '/threads', query: target };
+      return { path: '/threads/archived', query: target };
     },
 
     previous() {
@@ -178,10 +173,6 @@ export default {
 };
 </script>
 <style>
-* {
-  color: black;
-}
-
 @media (max-width: 1640px) {
   .navbar ul li span {
     display: none;
