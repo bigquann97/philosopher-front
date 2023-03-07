@@ -74,6 +74,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { myAccountInfo, profileImageUpdate } from '@/api/account';
 

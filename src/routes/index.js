@@ -114,6 +114,10 @@ const router = new VueRouter({
       path: '/privacy',
       component: () => import('@/components/common/Privacy.vue'),
     },
+    {
+      path: '/rank',
+      component: () => import('@/components/rank/Rank.vue'),
+    },
   ],
 });
 

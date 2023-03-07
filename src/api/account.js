@@ -4,10 +4,12 @@ import { account } from '@/api/index';
 function myAccountInfo() {
   return account.get();
 }
+
 // 프로필 사진 변경 API
 function profileImageUpdate(formData) {
   return account.patch('/image', formData);
 }
+
 // 닉네임 변경 API
 export function modifyAccountNickname(nickname) {
   const nicknameObj = { nickname: String(nickname) }; // String() 메소드를 사용하여 입력된 nickname 값을 문자열로 변환
@@ -20,6 +22,7 @@ export function modifyAccountNickname(nickname) {
       console.error(error);
     });
 }
+
 // 비밀번호 변경 API
 export function modifyAccountPassword(password) {
   const nicknameObj = { password: String(password) }; // String() 메소드를 사용하여 입력된 nickname 값을 문자열로 변환
