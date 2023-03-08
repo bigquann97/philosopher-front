@@ -496,13 +496,18 @@ export default {
   props: ['id'],
 
   async created() {
-    this.beforeLoadPage();
-    const threadId = this.$route.params.id;
-    const res = await fetchThread(threadId);
-    console.log(this.id);
-    this.detail = res.data;
-    this.imageUrl = res.data.images[0];
-    console.log(res);
+    try {
+      this.beforeLoadPage();
+      const threadId = this.$route.params.id;
+      const res = await fetchThread(threadId);
+      console.log(this.id);
+      this.detail = res.data;
+      this.imageUrl = res.data.images[0];
+      console.log(res);
+    } catch (error) {
+      alert(error.response.data.message);
+      await this.$router.push('/threads');
+    }
   },
   data: () => ({
     threadReportDialog: false,
