@@ -17,10 +17,15 @@ function fetchFavComment(threadId) {
   return comment.get(`/favorite/${threadId}`);
 }
 
+function fetchRatio(threadId) {
+  return comment.get(`/stat/${threadId}`);
+}
+
 export {
   fetchThreadComment,
   createComment,
   deleteComment,
   modifyComment,
   fetchFavComment,
+  fetchRatio,
 };

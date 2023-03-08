@@ -97,6 +97,7 @@
         <div>{{ detail.opinions[4] }}</div>
       </div>
     </div>
+    <div class="divider"></div>
     <div class="section">
       <img :src="imageUrl" alt="" style="max-width: 300px; max-height: 300px" />
       <img

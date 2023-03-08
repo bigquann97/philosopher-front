@@ -18,7 +18,6 @@
           @click.prevent
         >
           <span class="col s6">
-            <span>[{{ one.redirectUrl }}] </span>
             <span>{{ one.message }}</span>
           </span>
         </div>
