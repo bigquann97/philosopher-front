@@ -59,6 +59,7 @@
         <div>{{ detail.opinions[4] }}</div>
       </div>
     </div>
+    <div class="divider"></div>
     <div class="section">
       <img :src="imageUrl" alt="" style="max-width: 300px; max-height: 300px" />
       <img
@@ -172,7 +173,25 @@
         <div class="collection">
           <h5>댓글 통계 📊</h5>
           <hr />
-
+          <div
+            tag="a"
+            :to="{ name: 'Ratio', params: { id: ratio.id } }"
+            class="collection-item row"
+            v-for="ratio in ratios"
+            :key="ratio.id"
+          >
+            <span>
+              의견
+              <span style="font-weight: bold; color:#3108a4;"
+                >"{{ ratio.opinion }}"</span
+              >
+              에 대한 토론 참여자의 비율은
+              <span style="font-weight: bold; color:#0f5132"
+                >{{ ratio.ratio }}%</span
+              >
+              입니다.
+            </span>
+          </div>
           <h5>Top 3 베스트 댓글 💡</h5>
           <hr />
           <div
@@ -468,6 +487,7 @@ import {
   fetchThreadComment,
   modifyComment,
   fetchFavComment,
+  fetchRatio,
 } from '@/api/comment';
 import _ from 'lodash';
 import { reportThread, reportComment } from '@/api/report';
@@ -524,6 +544,10 @@ export default {
     search: {},
     blockSize: 5,
     query: {},
+    ratios: {
+      opinion: '',
+      ratio: '',
+    },
     favs: {
       id: '',
       nickname: '',
@@ -665,6 +689,7 @@ export default {
           : 'page=1';
       const res = await fetchThreadComment(threadId, query);
       const favorite = await fetchFavComment(threadId);
+      const ratio = await fetchRatio(threadId);
       const result = res.data;
       console.log(result);
       this.list = res.data.content;
@@ -674,10 +699,11 @@ export default {
         isFirst: res.data.first,
         isLast: res.data.last,
         currentPage: res.data.number,
-        totalPages: res.data.totalPages - 1,
+        totalPages: res.data.totalPages,
         pageSize: res.data.size,
       };
       this.favs = favorite.data;
+      this.ratios = ratio.data;
     },
 
     fullPath(val) {
