@@ -3,8 +3,7 @@
     <header>
       <div class="company-name">
         <a href="/main">
-          <img src="@/image/logo.png" alt="logo" />
-          <span>우리 모두 철학자</span>
+          <img src="@/image/logo2.png" alt="logo" />
         </a>
       </div>
       <div class="menu">
@@ -56,15 +55,9 @@
                 >
               </li>
               <v-dialog v-model="dialog" width="550px">
-                <v-card height="330">
+                <v-card height="385">
                   <v-card-title>
                     🥇이번주의 학자들
-                    <a
-                      @click="closeReportForm"
-                      class="btn btn-outline-primary"
-                      style="background-color:sandybrown; width: 100px; border-radius: 10px;"
-                      >닫기</a
-                    >
                   </v-card-title>
                   <v-card-text>
                     <div class="collection">
@@ -87,6 +80,14 @@
                       </div>
                     </div>
                     <p class="log">{{ logMessageSignup }}</p>
+                    <div class="row center" style="margin-top: 25px">
+                      <a
+                        @click="closeReportForm"
+                        class="btn btn-outline-primary"
+                        style="background-color:sandybrown; width: 100px; border-radius: 10px;"
+                        >닫기</a
+                      >
+                    </div>
                   </v-card-text>
                 </v-card>
               </v-dialog>
@@ -130,7 +131,7 @@ export default {
       return this.$store.getters.isLogin;
     },
     isAdmin() {
-      return this.$store.getters.isAdmin;
+      return this.$store.getters.isAdmin && this.isUserLogin;
     },
   },
   created() {
@@ -219,11 +220,6 @@ header .company-name a {
 
 header .company-name span {
   width: 100%;
-}
-
-header .company-name a img {
-  width: 50px;
-  border-radius: 50%;
 }
 
 header .menu {

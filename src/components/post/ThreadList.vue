@@ -50,13 +50,17 @@
               <span>{{ one.title }}</span>
               <span class="red-text"> [ {{ one.commentCount }} ] </span></span
             >
-            <small class="col s2 center-align">{{ one.nickname }}</small>
-            <small class="col s2 center-align">{{ one.recommendCount }}</small>
-            <small class="col s2 center-align">{{ one.createdDate }}</small>
+            <span class="col s2 center-align">{{ one.nickname }}</span>
+            <span class="col s2 center-align">
+              <img src="@/image/thumbs-up.png" alt="" style="width: 15px" />{{
+                one.recommendCount
+              }}</span
+            >
+            <span class="col s2 center-align">{{ one.createdDate }}</span>
           </div>
         </router-link>
       </div>
-      <div class="row valign-wrapper">
+      <div class="row valign-wrapper left-align">
         <div class="col s6">
           <ul class="pagination">
             <li class="waves-effect">
@@ -81,11 +85,7 @@
             </li>
           </ul>
         </div>
-        <div class="col s6 right-align">
-          <router-link to="/posts" class="waves-effect btn blue lighten-5"
-            >글쓰기</router-link
-          >
-        </div>
+        <div class="col s6 right-align"></div>
       </div>
     </div>
   </div>

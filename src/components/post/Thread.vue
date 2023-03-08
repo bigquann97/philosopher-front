@@ -18,17 +18,27 @@
     </div>
     <div class="divider"></div>
     <div class="section">
-      <div>
-        닉네임 : <a>{{ detail.nickname }}</a>
+      <div class="section">
+        <div style="float:left;">
+          닉네임 : <a>{{ detail.nickname }}</a>
+        </div>
+        <div style="font-size: medium; float: right">
+          시작일 : {{ detail.createdDate }}
+        </div>
       </div>
-      <span style="font-size: medium; float: right">
-        시작일 : {{ detail.createdDate }}
-      </span>
-      <div>추천수 : {{ detail.recommendCount }}</div>
-      <span style="font-size: medium; float: right">
-        종료일 : {{ detail.endDate }}
-      </span>
-      <div>카테고리 : {{ detail.category }}</div>
+      <div class="section">
+        <div style="float:left;">추천수 : {{ detail.recommendCount }}</div>
+        <div style="font-size: medium; float: right">
+          종료일 : {{ detail.endDate }}
+        </div>
+      </div>
+      <div class="section">
+        <span>카테고리 : {{ detail.category }}</span>
+        <div style="float:right;" @click="reportThread">
+          <i class="material-icons bottom">flag</i>
+          <span style="float: right">신고</span>
+        </div>
+      </div>
     </div>
     <div class="divider"></div>
     <div>
@@ -74,6 +84,47 @@
         <span style="font-size: xx-large"> {{ detail.recommendCount }}</span>
       </a>
     </div>
+    <v-dialog v-model="threadReportDialog" width="500px">
+      <v-card height="420">
+        <v-card-title>
+          신고하기
+        </v-card-title>
+        <v-card-text>
+          <select
+            class="browser-default"
+            name="reportCategory"
+            v-model="reportCategory"
+          >
+            <option value=""> 신고 카테고리를 선택해주세요.</option>
+            <option value="ABUSE">욕설</option>
+            <option value="IRRELEVANT">게시글 취지와 상관없는 게시글</option>
+            <option value="ADVERTISEMENT">광고</option>
+            <option value="SEXUAL_HARASSMENT"> 성희롱</option>
+            <option value="SPAMMER">도배</option>
+          </select>
+          <v-textarea
+            v-model="reportContent"
+            height="200"
+            solo
+            auto-grow
+            label="여기에 신고할 내용을 입력하세요."
+          ></v-textarea>
+          <a
+            @click="confirmReportThread"
+            class="btn col s2"
+            style="background-color: white; float: right"
+            >확인</a
+          >
+          <a
+            @click="closeReportForm"
+            class="btn col s2"
+            style="background-color: white; float:right;"
+            >취소</a
+          >
+          <p class="log">{{ logMessageSignup }}</p>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
     <div class="divider"></div>
     <div class="section">
       <div v-if="commentWriteForm">
@@ -188,6 +239,13 @@
                   {{ one.nickname }}
                 </span>
                 <span style="float: left">{{ one.createDate }}</span>
+                <span
+                  style="float:right;"
+                  @click="reportComment(one.commentId)"
+                >
+                  <i class="material-icons bottom">flag</i>
+                  <span style="float: right">신고</span>
+                </span>
                 <div v-for="three in one.mentionedComments" :key="three.id">
                   <v-tooltip top :close-delay="500" :open-delay="300">
                     <template v-slot:activator="{ on }" class="col s8">
@@ -273,6 +331,49 @@
               </div>
             </div>
           </div>
+          <v-dialog v-model="commentReportDialog" width="500px">
+            <v-card height="420">
+              <v-card-title>
+                신고하기
+              </v-card-title>
+              <v-card-text>
+                <select
+                  class="browser-default"
+                  name="reportCategory"
+                  v-model="reportCategory"
+                >
+                  <option value=""> 신고 카테고리를 선택해주세요.</option>
+                  <option value="ABUSE">욕설</option>
+                  <option value="IRRELEVANT"
+                    >게시글 취지와 상관없는 게시글</option
+                  >
+                  <option value="ADVERTISEMENT">광고</option>
+                  <option value="SEXUAL_HARASSMENT"> 성희롱</option>
+                  <option value="SPAMMER">도배</option>
+                </select>
+                <v-textarea
+                  v-model="reportContent"
+                  height="200"
+                  solo
+                  auto-grow
+                  label="여기에 신고할 내용을 입력하세요."
+                ></v-textarea>
+                <a
+                  @click="confirmReportComment"
+                  class="btn col s2"
+                  style="background-color: white; float: right"
+                  >확인</a
+                >
+                <a
+                  @click="closeReportForm"
+                  class="btn col s2"
+                  style="background-color: white; float:right;"
+                  >취소</a
+                >
+                <p class="log">{{ logMessageSignup }}</p>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
           <v-dialog v-model="commentEditForm" width="800">
             <v-card height="350">
               <div class="section">
@@ -369,6 +470,7 @@ import {
   fetchFavComment,
 } from '@/api/comment';
 import _ from 'lodash';
+import { reportThread, reportComment } from '@/api/report';
 
 export default {
   props: ['id'],
@@ -383,6 +485,8 @@ export default {
     console.log(res);
   },
   data: () => ({
+    threadReportDialog: false,
+    commentReportDialog: false,
     list: {
       commentId: '',
       nickname: '',
@@ -407,6 +511,11 @@ export default {
     dialog: false,
     dialog2: false,
     check: false,
+    reportCategory: '',
+    reportContent: '',
+    content: '',
+    category: '',
+    logMessageSignup: '',
     detail: {
       user: {},
     },
@@ -425,6 +534,42 @@ export default {
     },
   }),
   methods: {
+    async reportComment(commentId) {
+      this.reportCommentId = commentId;
+      this.commentReportDialog = true;
+    },
+    async reportThread() {
+      this.threadReportDialog = true;
+    },
+    async confirmReportComment() {
+      const commentId = this.reportCommentId;
+      try {
+        await reportComment(commentId, {
+          content: this.reportContent,
+          category: this.reportCategory,
+        });
+        this.$router.go(this.$router.currentRoute);
+      } catch (error) {
+        console.log(error);
+        this.logMessageSignup = error.response.data.message;
+      }
+    },
+    async confirmReportThread() {
+      try {
+        await reportThread(this.id, {
+          content: this.reportContent,
+          category: this.reportCategory,
+        });
+        this.$router.go(this.$router.currentRoute);
+      } catch (error) {
+        console.log(error);
+        this.logMessageSignup = error.response.data.message;
+      }
+    },
+    async closeReportForm() {
+      this.threadReportDialog = false;
+      this.commentReportDialog = false;
+    },
     async commentEdit(commentId) {
       this.editCommentId = commentId;
       this.commentEditForm = true;

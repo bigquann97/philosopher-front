@@ -18,17 +18,17 @@
     </div>
     <div class="divider"></div>
     <div class="section">
-      <div>
-        닉네임 : <a>{{ detail.nickname }}</a>
+      <div class="section">
+        <div style="float:left;">
+          닉네임 : <a>{{ detail.nickname }}</a>
+        </div>
       </div>
-      <span style="font-size: medium; float: right">
-        작성일 : {{ detail.modifiedDate }}
-      </span>
-      <div>추천수 : {{ detail.recommendCount }}</div>
-      <button style="float:right;" @click="report">
-        <i class="material-icons bottom">flag</i>
-        <span style="float: right">신고</span>
-      </button>
+      <div class="section">
+        <div style="font-size: medium; float: right">
+          작성일 : {{ detail.modifiedDate }}
+        </div>
+        <div style="float:left;">추천수 : {{ detail.recommendCount }}</div>
+      </div>
       <v-dialog v-model="dialog" width="500px">
         <v-card height="420">
           <v-card-title>
@@ -70,7 +70,13 @@
           </v-card-text>
         </v-card>
       </v-dialog>
-      <div>카테고리 : {{ detail.category }}</div>
+      <div class="section">
+        <span>카테고리 : {{ detail.category }}</span>
+        <div style="float:right;" @click="report">
+          <i class="material-icons bottom">flag</i>
+          <span style="float: right">신고</span>
+        </div>
+      </div>
     </div>
     <div class="divider"></div>
     <div>
@@ -220,7 +226,15 @@ import { reportPost } from '@/api/report';
 export default {
   props: ['id'],
   data: () => ({
-    detail: [],
+    detail: {
+      opinions: {
+        [0]: '',
+        [1]: '',
+        [2]: '',
+        [3]: '',
+        [4]: '',
+      },
+    },
     dialog: false,
     reportCategory: '',
     reportContent: '',

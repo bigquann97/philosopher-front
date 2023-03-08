@@ -48,12 +48,13 @@
               >
               <span>{{ one.title }}</span>
             </span>
-            <small class="col s2 center-align">{{ one.nickname }}</small>
-            <small class="col s2 center-align">
-              <i class="material-icons center">thumb_up</i
-              >{{ one.recommendCount }}</small
+            <span class="col s2 center-align">{{ one.nickname }}</span>
+            <span class="col s2 center-align">
+              <img src="@/image/thumbs-up.png" alt="" style="width: 15px" />{{
+                one.recommendCount
+              }}</span
             >
-            <small class="col s2 center-align">{{ one.createdDate }}</small>
+            <span class="col s2 center-align">{{ one.createdDate }}</span>
           </div>
         </router-link>
       </div>
