@@ -194,10 +194,9 @@ export default {
         const { data } = await registerUser(userData);
         await this.$router.push('/sign-in');
         console.log(data.data.nickname);
-        alert(data.data.nickname`님이 가입되었습니다. `);
+        alert(`회원가입 완료`);
         this.logMessage = `${data.data.nickname} 님이 가입되었습니다`;
       } catch (error) {
-        console.log(error.response.data);
         alert(error.response.data.message);
       }
     },

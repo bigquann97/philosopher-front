@@ -29,7 +29,6 @@ const router = new VueRouter({
       path: '/threads',
       name: 'ThreadList',
       component: () => import('@/components/post/ThreadList.vue'),
-      meta: { auth: true },
     },
     {
       path: '/comments/thread/:id',
@@ -41,7 +40,6 @@ const router = new VueRouter({
       path: '/threads/archived',
       name: 'ArchiveList',
       component: () => import('@/components/post/ArchiveList.vue'),
-      meta: { auth: true },
     },
     {
       path: '/comments/archive/:id',
