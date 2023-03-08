@@ -72,7 +72,7 @@
                         <span>개의 쓰레드화 성공 </span>
                       </div>
                     </div>
-                    <p class="log">{{ logMessageSignup }}</p>
+                    <p class="log">{{ logMessage }}</p>
                     <div class="row center" style="margin-top: 25px">
                       <a
                         @click="closeReportForm"
@@ -140,6 +140,7 @@ export default {
   data: () => ({
     dialog: false,
     list: [],
+    logMessage: '',
   }),
   methods: {
     async report() {
@@ -169,7 +170,7 @@ export default {
         this.$router.go(this.$router.currentRoute);
       } catch (error) {
         console.log(error);
-        this.logMessageSignup = error.response.data.message;
+        this.logMessage = error.response.data.message;
       }
     },
     async closeReportForm() {

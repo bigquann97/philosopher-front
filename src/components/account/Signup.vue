@@ -115,7 +115,7 @@
             <option value="MALE">남자</option>
             <option value="FEMALE">여자</option>
           </select>
-          <p class="log">{{ logMessageSignup }}</p>
+          <p class="log">{{ logMessage }}</p>
           <div class="buttons">
             <v-btn color="grey-lighten-2" class="button_error" href="/main">
               뒤로가기
@@ -124,7 +124,6 @@
             <v-btn
               color="blue lighten-3"
               class="button_success"
-              type="submit"
               @click="submitForm"
             >
               회원가입
@@ -155,8 +154,8 @@ export default {
       gender: '',
       age: '',
       logMessage: '',
-      logMessageSignup: '',
       isLoading: false,
+      verificationCode: '',
     };
   },
   methods: {
@@ -175,7 +174,7 @@ export default {
     async verifyEmail() {
       try {
         await axios.post(
-          `/api/auth/mail/${this.verificationCode}?email=${this.email}`,
+          `/auth/mail/${this.verificationCode}?email=${this.email}`,
         );
         this.dialog = false;
       } catch (error) {
@@ -194,12 +193,12 @@ export default {
         };
         const { data } = await registerUser(userData);
         await this.$router.push('/sign-in');
-        console.log(data);
-        this.logMessageSignup = `${data} 님이 가입되었습니다`;
+        console.log(data.data.nickname);
+        alert(data.data.nickname`님이 가입되었습니다. `);
+        this.logMessage = `${data.data.nickname} 님이 가입되었습니다`;
       } catch (error) {
-        // https://yamoo9.github.io/axios/guide/error-handling.html
         console.log(error.response.data);
-        this.logMessageSignup = error.response.data.message;
+        alert(error.response.data.message);
       }
     },
   },
