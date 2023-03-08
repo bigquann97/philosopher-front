@@ -73,7 +73,7 @@ export default {
     beforeLoadPage() {
       this.query = this.$route.query;
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/myNotification', query: { page: 1 } });
+        this.$router.replace({ path: '/myNotification', query: { page: 1 } });
       } else {
         this.loadPage();
       }
