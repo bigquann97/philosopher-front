@@ -72,7 +72,7 @@
       </v-dialog>
       <div class="section">
         <span>카테고리 : {{ detail.category }}</span>
-        <div style="float:right;" @click="report">
+        <div v-if="isUserLogin" style="float:right;" @click="report">
           <i class="material-icons bottom">flag</i>
           <span style="float: right">신고</span>
         </div>
@@ -226,6 +226,11 @@ import { reportPost } from '@/api/report';
 
 export default {
   props: ['id'],
+  computed: {
+    isUserLogin() {
+      return this.$store.getters.isLogin;
+    },
+  },
   data: () => ({
     detail: {
       opinions: {

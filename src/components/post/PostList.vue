@@ -83,7 +83,7 @@
             </li>
           </ul>
         </div>
-        <div class="col s6 right-align">
+        <div v-if="isUserLogin" class="col s6 right-align">
           <router-link to="/post" class="waves-effect btn blue lighten-5"
             >글쓰기</router-link
           >
@@ -175,6 +175,9 @@ export default {
   },
 
   computed: {
+    isUserLogin() {
+      return this.$store.getters.isLogin;
+    },
     presentedPages() {
       const current = this.pagination.currentPage;
       const blockSize = this.blockSize;

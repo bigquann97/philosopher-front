@@ -161,7 +161,7 @@
     </div>
     <div class="section">
       <a
-        v-if="commentWriteButton"
+        v-if="commentWriteButton && isUserLogin"
         @click="openCommentWriteForm"
         class="btn col s2"
         style="background-color: white; float: right;"
@@ -259,6 +259,7 @@
                 </span>
                 <span style="float: left">{{ one.createDate }}</span>
                 <span
+                  v-if="isUserLogin"
                   style="float:right;"
                   @click="reportComment(one.commentId)"
                 >
@@ -737,6 +738,9 @@ export default {
   },
 
   computed: {
+    isUserLogin() {
+      return this.$store.getters.isLogin;
+    },
     presentedPages() {
       const current = this.pagination.currentPage;
       const blockSize = this.blockSize;
