@@ -163,7 +163,7 @@ export default {
     async sendVerificationMail() {
       this.isLoading = true;
       try {
-        await axios.post(`/api/auth/mail?email=${this.email}`);
+        await axios.post(`/auth/mail?email=${this.email}`);
         this.dialog = true;
         this.Loading = false;
         this.isLoading = false;

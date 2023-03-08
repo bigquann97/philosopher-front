@@ -8,6 +8,7 @@ import {
   saveUserRoleToCookie,
   saveUserToCookie,
 } from '@/utils/cookies';
+
 import { loginUser } from '@/api/auth';
 
 Vue.use(Vuex);
