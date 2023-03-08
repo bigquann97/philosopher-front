@@ -76,7 +76,7 @@ export default {
     beforeLoadPage() {
       this.query = this.$route.query;
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/myPosts', query: { page: 1 } });
+        this.$router.replace({ path: '/myPosts', query: { page: 1 } });
       } else {
         this.loadPage();
       }

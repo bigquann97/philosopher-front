@@ -74,7 +74,10 @@ export default {
     beforeLoadPage() {
       this.query = this.$route.query;
       if (this.query.page === undefined) {
-        this.$router.push({ path: '/recommendedComments', query: { page: 1 } });
+        this.$router.replace({
+          path: '/recommendedComments',
+          query: { page: 1 },
+        });
       } else {
         this.loadPage();
       }
