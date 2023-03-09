@@ -3,7 +3,7 @@
     <header>
       <div class="company-name">
         <a href="/main">
-          <img src="@/image/logo2.png" alt="logo" />
+          <img src="@/image/logo2.png" alt="logo" style="width: 135px;" />
         </a>
       </div>
       <div class="menu">
@@ -47,6 +47,13 @@
                   >랭킹</a
                 >
               </li>
+              <li v-if="isAdmin">
+                <router-link
+                  to="/admin/accounts"
+                  style="border-right: 1px solid rgb(211, 211, 211)"
+                  >어드민 페이지</router-link
+                >
+              </li>
               <v-dialog v-model="dialog" width="550px">
                 <v-card height="385">
                   <v-card-title>
@@ -85,13 +92,6 @@
                 </v-card>
               </v-dialog>
             </ul>
-          </li>
-          <li v-if="isAdmin">
-            <router-link
-              to="/admin/accounts"
-              style="border-right: 1px solid rgb(211, 211, 211)"
-              >어드민 페이지</router-link
-            >
           </li>
         </ul>
       </div>
@@ -225,8 +225,6 @@ header .company-name span {
 
 header .menu {
   width: 30%;
-  margin-right: 50px;
-  margin-left: 50px;
 }
 
 header .menu ul {
