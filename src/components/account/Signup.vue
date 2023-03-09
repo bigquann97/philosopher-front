@@ -19,6 +19,7 @@
             v-model="email"
             placeholder="email@email.com"
           />
+          <p class="log">{{ emailMessage }}</p>
           <div style="text-align: center">
             <v-btn
               color="blue lighten-4"
@@ -96,8 +97,18 @@
             type="password"
             class="validate"
             v-model="password"
-            placeholder="비밀번호"
+            placeholder="비밀번호는 8자 이상 15자 이하입니다."
           />
+          <label>비밀번호 확인</label>
+          <input
+            id="passwordConfirm"
+            name="passwordConfirm"
+            type="password"
+            class="validate"
+            v-model="passwordConfirm"
+            placeholder="위의 비밀번호와 동일하게 입력해주세요."
+          />
+          <p class="log">{{ passwordMessage }}</p>
           <label>닉네임</label>
           <input
             id="nickname"
@@ -105,8 +116,9 @@
             type="text"
             class="validate"
             v-model="nickname"
-            placeholder="nickname"
+            placeholder="닉네임은 2자 이상 10자 이하입니다."
           />
+          <p class="log">{{ nicknameMessage }}</p>
           <label>나이</label>
           <input v-model="age" placeholder="나이" />
           <label>성별</label>
@@ -150,12 +162,16 @@ export default {
       Loading: false,
       email: '',
       password: '',
+      passwordConfirm: '',
       nickname: '',
       gender: '',
       age: '',
       logMessage: '',
       isLoading: false,
       verificationCode: '',
+      passwordMessage: '',
+      nicknameMessage: '',
+      emailMessage: '',
     };
   },
   methods: {
@@ -184,6 +200,24 @@ export default {
     },
     async submitForm() {
       try {
+        if (this.password !== this.passwordConfirm) {
+          this.passwordMessage = '비밀번호가 일치하지 않습니다.';
+          return;
+        }
+        if (this.nickname.length < 2 || this.nickname.length > 10) {
+          this.nicknameMessage = '닉네임은 2자 이상 10자 이하입니다.';
+          return;
+        }
+        if (this.password.length < 8 || this.password.length > 15) {
+          this.passwordMessage = '비밀번호는 8자 이상 15자 이하입니다.';
+          return;
+        }
+        if (
+          !this.email.match(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)
+        ) {
+          this.emailMessage = '이메일 형식이 올바르지 않습니다.';
+          return;
+        }
         const userData = {
           email: this.email,
           password: this.password,
@@ -194,7 +228,7 @@ export default {
         const { data } = await registerUser(userData);
         await this.$router.push('/sign-in');
         console.log(data.data.nickname);
-        alert(`회원가입 완료`);
+        alert('회원가입 완료');
         this.logMessage = `${data.data.nickname} 님이 가입되었습니다`;
       } catch (error) {
         alert(error.response.data.message);
