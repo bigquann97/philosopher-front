@@ -13,6 +13,7 @@
         class="validate"
         v-model="email"
         placeholder="아이디(이메일 형식)를 입력해주세요. email@email.com"
+        @keydown.enter="submitForm"
       />
       <input
         id="password"
@@ -21,9 +22,9 @@
         class="validate"
         v-model="password"
         placeholder="비밀번호를 입력해주세요."
+        @keydown.enter="submitForm"
       />
 
-      <p class="log">{{ logMessage }}</p>
       <div style="text-align: center">
         <v-btn
           color="blue lighten-4"
@@ -33,6 +34,7 @@
         >
           로그인
         </v-btn>
+        <div class="log">{{ logMessage }}</div>
       </div>
     </div>
   </div>

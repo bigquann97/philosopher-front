@@ -504,6 +504,8 @@ export default {
       console.log(this.id);
       this.detail = res.data;
       this.imageUrl = res.data.images[0];
+      this.imageUrl1 = res.data.images[1];
+      this.imageUrl2 = res.data.images[2];
       console.log(res);
     } catch (error) {
       alert(error.response.data.message);

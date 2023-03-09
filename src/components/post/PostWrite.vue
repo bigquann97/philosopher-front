@@ -180,7 +180,7 @@ export default {
     },
     handleFileChange() {
       const files = this.$refs.file.files;
-      this.files = files;
+      this.files = files || [];
       this.fileName = '';
       for (let i = 0; i < files.length; i++) {
         this.fileName += files[i].name + ' ';
@@ -188,6 +188,7 @@ export default {
     },
     async write() {
       try {
+        this.files = this.$refs.file.files || [];
         const formData = new FormData();
         const postData = {
           title: this.article.title,
@@ -195,8 +196,12 @@ export default {
           category: this.article.category,
           opinions: this.article.opinions,
         };
-        for (let i = 0; i < this.files.length; i++) {
-          formData.append('image', this.files[i]);
+        if (this.files.length > 0) {
+          for (let i = 0; i < this.files.length; i++) {
+            formData.append('image', this.files[i]);
+          }
+        } else {
+          formData.append('image', new Blob(), '');
         }
         const json = JSON.stringify(postData);
         const blob = new Blob([json], { type: 'application/json' });
