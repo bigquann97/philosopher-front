@@ -21,6 +21,7 @@
         class="validate"
         v-model="password"
         placeholder="비밀번호를 입력해주세요."
+        v-on:keyup.enter="submitForm()"
       />
 
       <p class="log">{{ logMessage }}</p>
