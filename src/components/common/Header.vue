@@ -229,7 +229,8 @@ header .menu {
 
 header .menu ul {
   display: flex;
-  justify-content: center;
+  text-align: center;
+  margin-left: 20px;
   list-style-type: none;
 }
 

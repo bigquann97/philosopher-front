@@ -17,14 +17,16 @@
               v-for="post in list1.slice(0, 6)"
               :key="post.id"
             >
-              <div class="main_title">
-                <span
-                  ><span>[{{ post.category }}]</span>
-                  {{ post.title }}
-                </span>
-                <div class="comment">
-                  <img src="@/image/thumbs-up.png" alt="" />
-                  <span>{{ post.recommendCount }}</span>
+              <div v-if="post.status === 'ACTIVE'">
+                <div class="main_title">
+                  <span
+                    ><span>[{{ post.category }}]</span>
+                    {{ post.title }}
+                  </span>
+                  <div class="comment">
+                    <img src="@/image/thumbs-up.png" alt="" />
+                    <span>{{ post.recommendCount }}</span>
+                  </div>
                 </div>
               </div>
             </router-link>
@@ -45,17 +47,19 @@
               v-for="thread in list2.slice(0, 6)"
               :key="thread.id"
             >
-              <div class="main_title">
-                <span
-                  ><span>[{{ thread.category }}]</span>
-                  {{ thread.title }}
-                  <span class="red-text">
-                    [ {{ thread.commentCount }} ]
-                  </span></span
-                >
-                <div class="comment">
-                  <img src="@/image/thumbs-up.png" alt="" />
-                  <span>{{ thread.recommendCount }}</span>
+              <div v-if="thread.status === 'ACTIVE'">
+                <div class="main_title">
+                  <span
+                    ><span>[{{ thread.category }}]</span>
+                    {{ thread.title }}
+                    <span class="red-text">
+                      [ {{ thread.commentCount }} ]
+                    </span></span
+                  >
+                  <div class="comment">
+                    <img src="@/image/thumbs-up.png" alt="" />
+                    <span>{{ thread.recommendCount }}</span>
+                  </div>
                 </div>
               </div>
             </router-link>
@@ -77,17 +81,19 @@
               v-for="threadRcmnd in list3.slice(0, 6)"
               :key="threadRcmnd.id"
             >
-              <div class="main_title">
-                <span
-                  ><span>[{{ threadRcmnd.category }}]</span>
-                  {{ threadRcmnd.title }}
-                  <span class="red-text">
-                    [ {{ threadRcmnd.commentCount }} ]
-                  </span></span
-                >
-                <div class="comment">
-                  <img src="@/image/thumbs-up.png" alt="" />
-                  <span>{{ threadRcmnd.recommendCount }}</span>
+              <div v-if="threadRcmnd.status === 'ACTIVE'">
+                <div class="main_title">
+                  <span
+                    ><span>[{{ threadRcmnd.category }}]</span>
+                    {{ threadRcmnd.title }}
+                    <span class="red-text">
+                      [ {{ threadRcmnd.commentCount }} ]
+                    </span></span
+                  >
+                  <div class="comment">
+                    <img src="@/image/thumbs-up.png" alt="" />
+                    <span>{{ threadRcmnd.recommendCount }}</span>
+                  </div>
                 </div>
               </div>
             </router-link>
