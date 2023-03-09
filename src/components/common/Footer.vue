@@ -17,9 +17,8 @@
 </template>
 
 <style>
-@import '/css/reset.css';
-@import '/css/common.css';
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import '../../css/reset.css';
+@import '../../css/common.css';
 
 footer *,
 footer *:before,

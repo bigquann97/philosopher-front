@@ -72,7 +72,7 @@
         alt=""
         style="max-width: 300px; max-height: 300px"
       />
-      <div>{{ detail.content }}</div>
+      <div v-html="detail.content"></div>
     </div>
     <div style="text-align: center; margin-bottom: 1px">
       <a>
@@ -224,9 +224,7 @@
               </div>
               <div style="float:left; width: 100%" class="col s4">
                 <span style="color: #0f5132; font-weight: bold">내용: </span>
-                <span>
-                  {{ fav.content }}
-                </span>
+                <div v-html="fav.content"></div>
               </div>
             </div>
           </div>
@@ -278,9 +276,10 @@
                       </span>
                     </template>
                     <template v-slot:default>
-                      <div style="max-width: 500px">
-                        {{ three.content }}
-                      </div>
+                      <div
+                        v-html="three.content"
+                        style="max-width: 500px"
+                      ></div>
                     </template>
                   </v-tooltip>
                 </div>
@@ -301,16 +300,15 @@
                       </span>
                     </template>
                     <template v-slot:default>
-                      <div style="max-width: 500px">
-                        {{ three.content }}
-                      </div>
+                      <div
+                        v-html="three.content"
+                        style="max-width: 500px"
+                      ></div>
                     </template>
                   </v-tooltip>
                 </div>
                 <div style="float:left; width: 100%" class="col s4">
-                  <span>
-                    {{ one.content }}
-                  </span>
+                  <div v-html="one.content"></div>
                 </div>
                 <div
                   class="col s5"
@@ -621,7 +619,7 @@ export default {
       try {
         await createComment(this.id, {
           opinion: this.opinions,
-          content: this.content,
+          content: this.content.replaceAll(/(\n|\r\n)/g, '<br>'),
         });
         this.dialog = false;
         this.$router.go(this.$router.currentRoute);
@@ -644,7 +642,7 @@ export default {
         const commentId = this.editCommentId;
         await modifyComment(commentId, {
           opinion: this.modifyOpinions,
-          content: this.modifyContent,
+          content: this.modifyContent.replaceAll(/(\n|\r\n)/g, '<br>'),
         });
         this.$router.go(this.$router.currentRoute);
         this.dialog = false;

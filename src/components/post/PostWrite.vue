@@ -192,7 +192,7 @@ export default {
         const formData = new FormData();
         const postData = {
           title: this.article.title,
-          content: this.article.content,
+          content: this.article.content.replaceAll(/(\n|\r\n)/g, '<br>'),
           category: this.article.category,
           opinions: this.article.opinions,
         };

@@ -110,7 +110,7 @@
         alt=""
         style="max-width: 300px; max-height: 300px"
       />
-      <div>{{ detail.content }}</div>
+      <div v-html="detail.content"></div>
     </div>
     <div style="text-align: center; margin-bottom: 1px">
       <a>
@@ -297,7 +297,7 @@ export default {
         const formData = new FormData();
         const postData = {
           title: this.article.title,
-          content: this.article.content,
+          content: this.article.content.replaceAll(/(\n|\r\n)/g, '<br>'),
           categoryId: this.article.category,
         };
         if (this.files.length > 0) {
