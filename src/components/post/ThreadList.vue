@@ -144,7 +144,7 @@ export default {
         isFirst: res.data.first,
         isLast: res.data.last,
         currentPage: res.data.number,
-        totalPages: res.data.totalPages - 1,
+        totalPages: res.data.totalPages,
         pageSize: res.data.size,
       };
     },
@@ -181,7 +181,7 @@ export default {
 
       const startOfBlock = current - (current % blockSize);
       const endOfBlock = startOfBlock + blockSize;
-      const complimentedEOB = endOfBlock > total + 2 ? total + 2 : endOfBlock;
+      const complimentedEOB = endOfBlock > total + 1 ? total + 1 : endOfBlock;
       return _.range(startOfBlock, complimentedEOB);
     },
   },
