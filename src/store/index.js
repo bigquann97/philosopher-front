@@ -59,5 +59,9 @@ export default new Vuex.Store({
       saveUserRoleToCookie(data.userRole);
       return data;
     },
+    async UPDATENICKNAME({ commit }, newNickname) {
+      commit('setUsername', newNickname);
+      saveUserToCookie(newNickname);
+    },
   },
 });
