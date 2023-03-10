@@ -2,13 +2,10 @@
   <div class="container">
     <div class="section">
       <div class="col s6">
-        <h5 class="board-name">
-          <b class="board-title">쓰레드</b>
-          <small
-            >일정 시간이 지나면 닫히는 토론장입니다. 다른 사람들과 의견을
-            나눠보세요!</small
-          >
-        </h5>
+        <b class="board-title">쓰레드</b>
+        <br />
+        <small>일정 시간이 지나면 닫히는 토론장입니다.<br /></small
+        ><small> 다른 사람들과 의견을 나눠보세요!</small>
       </div>
       <h5>
         <b>
@@ -760,10 +757,7 @@ export default {
   },
 };
 </script>
-<style>
-.board-name {
-  width: 160%;
-}
+<style scoped>
 .board-title {
   color: #6aafe6;
   text-shadow: 1px 1px gray;

@@ -2,13 +2,10 @@
   <div class="container">
     <div class="section">
       <div class="col s6">
-        <h5 class="board-name">
-          <b class="board-title">게시물</b>
-          <small
-            >추천 수 5 이상이면 의견을 나눌 수 있습니다. 여러분의 생각을
-            펼쳐보세요!</small
-          >
-        </h5>
+        <b class="board-title">게시물</b>
+        <br />
+        <small>추천 수 5 이상이면 의견을 나눌 수 있습니다.<br /></small
+        ><small>여러분의 생각을 펼쳐보세요!</small>
       </div>
       <h5>
         <b>
@@ -388,17 +385,25 @@ export default {
   overflow: hidden;
   border: 0;
 }
-.board-name {
-  width: 160%;
-}
 .board-title {
   color: #6aafe6;
   text-shadow: 1px 1px gray;
   font-size: 30px;
 }
-.board-name small {
-  color: gray;
-  font-size: 12px; /* 작은 글씨의 글자 크기 */
-  margin-left: 5px; /* 게시물과 작은 글씨 사이의 간격 */
+@media (max-width: 375px) {
+  body {
+    font-size: 14px;
+  }
+  h1 {
+    font-size: 28px;
+  }
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 </style>
