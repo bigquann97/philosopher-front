@@ -2,10 +2,9 @@
   <div class="container">
     <div class="section">
       <div class="col s6">
-        <h5 class="board-name">
-          <b>아카이브</b>
-          <small>토론이 끝난 쓰레드를 저장해놓는 아카이브입니다.</small>
-        </h5>
+        <b class="board-title">아카이브</b>
+        <br />
+        <small>토론이 끝난 쓰레드를 저장해놓는 아카이브입니다.</small>
       </div>
       <h5>
         <b>
@@ -488,9 +487,6 @@ export default {
 };
 </script>
 <style>
-.board-name {
-  width: 160%;
-}
 .board-title {
   color: #6aafe6;
   text-shadow: 1px 1px gray;
