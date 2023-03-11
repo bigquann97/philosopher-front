@@ -215,7 +215,8 @@ export default {
           return;
         }
         if (this.password.length < 8 || this.password.length > 15) {
-          this.passwordMessage = '비밀번호는 8자 이상 15자 이하입니다.';
+          this.passwordMessage =
+            '비밀번호는 8자 이상 15자 이하, 특수문자를 포함해야합니다.';
           return;
         }
         if (
