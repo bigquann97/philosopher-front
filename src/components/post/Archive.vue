@@ -327,7 +327,7 @@ export default {
       console.log(res);
     } catch (error) {
       alert(error.response.data.message);
-      await this.$router.push('/threads');
+      await this.$router.push('/threads/archived');
     }
   },
   data: () => ({
@@ -405,7 +405,7 @@ export default {
       if (query.page === undefined) {
         query.page = 1;
         this.$router.push({
-          path: `/comments/thread/${threadId}`,
+          path: `/comments/archive/${threadId}`,
           query,
         });
       } else {
@@ -443,7 +443,7 @@ export default {
       const target = _.cloneDeep(this.query);
       target.page = val;
       console.log();
-      return { path: `/comments/thread/${threadId}`, query: target };
+      return { path: `/comments/archive/${threadId}`, query: target };
     },
 
     previous() {
