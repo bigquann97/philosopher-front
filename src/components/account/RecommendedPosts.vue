@@ -12,7 +12,7 @@
       </div>
       <div class="collection">
         <router-link
-          tag="a"
+          tag="div"
           :to="{ name: 'Post', params: { id: one.id }, query: { page: 1 } }"
           class="collection-item row"
           v-for="one in list"

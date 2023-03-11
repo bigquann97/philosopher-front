@@ -12,14 +12,13 @@
       </div>
       <div class="collection">
         <router-link
-          tag="a"
+          tag="div"
           :to="{ name: 'Thread', params: { id: one.id }, query: { page: 1 } }"
           class="collection-item row"
           v-for="one in list"
           :key="one.id"
         >
           <span class="col s6">
-            <span>[{{ one.category }}]</span>
             <span>{{ one.title }}</span>
           </span>
           <small class="col s2 center-align">{{ one.nickname }}</small>
