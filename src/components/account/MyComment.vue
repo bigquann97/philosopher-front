@@ -18,8 +18,8 @@
           @click.prevent
         >
           <span class="col s6">
-            <span>[{{ one.title }}] </span>
-            <span>{{ one.content }}</span>
+            <span>[{{ one.title }}] </span><br />
+            <div v-html="one.content"></div>
           </span>
         </div>
       </div>
@@ -47,11 +47,6 @@
               </a>
             </li>
           </ul>
-        </div>
-        <div class="col s6 right-align">
-          <router-link to="/post" class="waves-effect btn blue lighten-5"
-            >글쓰기</router-link
-          >
         </div>
       </div>
     </div>
