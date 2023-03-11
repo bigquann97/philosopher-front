@@ -45,6 +45,12 @@
                         {{ email }} (으)로 보내드린 인증코드를 확인해 주세요.
                       </p>
                       <p style="text-align: center">
+                        메일이 오지 않았다면 스팸 메일함을 확인해주세요.
+                      </p>
+                      <p style="text-align: center">
+                        가장 최근에 보내진 인증 코드를 입력해주세요.
+                      </p>
+                      <p style="text-align: center">
                         개인정보 보호를 위해 인증코드는 3분 간 유효합니다.
                       </p>
                       <p style="text-align: center">
