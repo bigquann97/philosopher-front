@@ -129,44 +129,58 @@ export default {
       const category = this.category;
       const sort = this.sort;
       if (category !== '' && keyword === '' && sort === '') {
-        this.$router.push(`/threads?page=1&${qstr.stringify({ category })}`);
+        this.$router.push(
+          `/threads/archived?page=1&${qstr.stringify({ category })}`,
+        );
       }
       if (sort !== '' && keyword === '' && category === '') {
-        this.$router.push(`/threads?page=1&${qstr.stringify({ sort })}`);
+        this.$router.push(
+          `/threads/archived?page=1&${qstr.stringify({ sort })}`,
+        );
       }
       if (keyword !== '' && keyword === '' && sort === '') {
-        this.$router.push(`/threads?page=1&${qstr.stringify(this.search)}`);
+        this.$router.push(
+          `/threads/archived?page=1&${qstr.stringify(this.search)}`,
+        );
       }
       if (keyword !== '' && category !== '' && sort === '') {
         this.$router.push(
-          `/threads?page=1&${qstr.stringify(this.search)}&${qstr.stringify({
+          `/threads/archived?page=1&${qstr.stringify(
+            this.search,
+          )}&${qstr.stringify({
             category,
           })}`,
         );
       }
       if (keyword !== '' && sort !== '' && category === '') {
         this.$router.push(
-          `/threads?page=1&${qstr.stringify(this.search)}&${qstr.stringify({
+          `/threads/archived?page=1&${qstr.stringify(
+            this.search,
+          )}&${qstr.stringify({
             sort,
           })}`,
         );
       }
       if (category !== '' && sort !== '' && keyword === '') {
         this.$router.push(
-          `/threads?page=1&${qstr.stringify({ category })}&${qstr.stringify({
+          `/threads/archived?page=1&${qstr.stringify({
+            category,
+          })}&${qstr.stringify({
             sort,
           })}`,
         );
       }
       if (keyword !== '' && category !== '' && sort !== '') {
         this.$router.push(
-          `/threads?page=1&${qstr.stringify(this.search)}&${qstr.stringify({
+          `/threads/archived?page=1&${qstr.stringify(
+            this.search,
+          )}&${qstr.stringify({
             category,
           })}&${qstr.stringify({ sort })}`,
         );
       }
       if (keyword === '' && category === '' && sort === '') {
-        this.$router.push(`/threads`);
+        this.$router.push(`/threads/archived`);
       }
     },
 
