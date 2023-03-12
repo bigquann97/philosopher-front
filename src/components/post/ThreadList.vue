@@ -148,7 +148,7 @@ export default {
       if (sort !== '' && keyword === '' && category === '') {
         this.$router.push(`/threads?page=1&${qstr.stringify({ sort })}`);
       }
-      if (keyword !== '' && keyword === '' && sort === '') {
+      if (keyword !== '' && category === '' && sort === '') {
         this.$router.push(`/threads?page=1&${qstr.stringify(this.search)}`);
       }
       if (keyword !== '' && category !== '' && sort === '') {

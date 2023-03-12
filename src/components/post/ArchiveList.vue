@@ -138,7 +138,7 @@ export default {
           `/threads/archived?page=1&${qstr.stringify({ sort })}`,
         );
       }
-      if (keyword !== '' && keyword === '' && sort === '') {
+      if (keyword !== '' && category === '' && sort === '') {
         this.$router.push(
           `/threads/archived?page=1&${qstr.stringify(this.search)}`,
         );
