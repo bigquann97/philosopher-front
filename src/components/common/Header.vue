@@ -268,23 +268,24 @@ header .navbar li a {
 header .navbar li a:hover {
   color: rgb(0, 17, 168);
 }
-
+/* 스크린 너비가 1640px 이하일 때 */
 @media (max-width: 1640px) {
   .navbar ul li span {
     display: none;
   }
 }
 
+/* 스크린 너비가 1390px 이하일 때 */
 @media (max-width: 1390px) {
-  body {
-    width: 90%;
-  }
+  body,
   header {
     width: 90%;
   }
+
   .menu li a {
     padding: 0 10px;
   }
+
   .navbar li a {
     font-size: 1.1rem;
     margin-right: 10px;
@@ -292,35 +293,41 @@ header .navbar li a:hover {
   }
 }
 
+/* 스크린 너비가 931px 이상일 때 */
 @media (min-width: 931px) {
   .menu ul li a.menu-icon {
     display: none;
   }
+
   .dropdown li:not(:last-child) {
     border-right: 1px solid rgb(211, 211, 211);
   }
 }
 
+/* 스크린 너비가 930px 이하일 때 */
 @media (max-width: 930px) {
   .company-name a span {
     display: none;
   }
-  .first-row {
-    flex-direction: column;
-  }
+
+  .first-row,
   .second-row {
     flex-direction: column;
   }
+
   .board1 {
     margin-bottom: 50px;
+    padding: 0;
   }
-  .board1,
+
   .board2 {
     padding: 0;
   }
+
   .menu ul li.dropdown li {
     display: block;
   }
+
   .menu ul li ul.dropdown {
     background-color: white;
     position: absolute;
@@ -329,12 +336,51 @@ header .navbar li a:hover {
     padding: 0;
     margin: 0;
   }
+
   .menu ul li a:hover {
     background-color: white;
     color: dodgerblue;
   }
+
   .menu ul li:hover ul.dropdown {
     display: block;
+  }
+}
+
+/* 스크린 너비가 420px 이하일 때 */
+@media (max-width: 420px) {
+  .navbar li a {
+    font-size: 1rem;
+    margin-right: 5px;
+    padding: 10px 5px;
+  }
+
+  .menu ul {
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .menu ul li a.menu-icon {
+    display: block;
+  }
+
+  .dropdown li:not(:last-child) {
+    border-right: none;
+  }
+
+  .dropdown li {
+    border-bottom: 1px solid rgb(211, 211, 211);
+  }
+
+  .menu ul li ul.dropdown {
+    position: static;
+    display: block;
+    padding: 10px 0;
+    margin: 0;
+  }
+
+  .menu ul li:hover ul.dropdown {
+    display: none;
   }
 }
 </style>

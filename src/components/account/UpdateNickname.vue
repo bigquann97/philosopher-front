@@ -48,6 +48,7 @@ export default {
         this.nicknameChanged = true;
         alert('닉네임이 변경되었습니다.');
         await this.$router.push({ name: 'accountInfo' }); // accounts 페이지로 이동
+        this.$store.dispatch('UPDATENICKNAME', nickname);
       } catch (error) {
         console.error(error);
         this.errorMessage = '공백이거나 이미 존재하는 닉네임입니다.';

@@ -20,7 +20,7 @@
     <div class="section">
       <div class="section">
         <div style="float:left;">
-          닉네임 : <a>{{ detail.nickname }}</a>
+          닉네임 : <span>{{ detail.nickname }}</span>
         </div>
         <div style="font-size: medium; float: right">
           시작일 : {{ detail.createdDate }}
