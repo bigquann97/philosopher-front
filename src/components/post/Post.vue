@@ -16,9 +16,7 @@
     <div class="divider"></div>
     <div class="section">
       <div class="section">
-        <div style="float:left;">
-          닉네임 : <a>{{ detail.nickname }}</a>
-        </div>
+        <div style="float:left;">닉네임 : {{ detail.nickname }}</div>
       </div>
       <div class="section">
         <div style="font-size: medium; float: right">
@@ -340,6 +338,7 @@ export default {
           category: this.reportCategory,
         });
         this.$router.go(this.$router.currentRoute);
+        alert('신고가 정상적으로 처리되었습니다!');
       } catch (error) {
         console.log(error);
         this.logMessageSignup = error.response.data.message;

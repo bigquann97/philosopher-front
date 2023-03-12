@@ -125,11 +125,17 @@
             placeholder="닉네임은 2자 이상 10자 이하입니다."
           />
           <p class="log">{{ nicknameMessage }}</p>
-          <label>나이</label>
-          <input v-model="age" placeholder="나이" />
+          <label>나이</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <input v-model="age" placeholder="나이" style="width: 40px" />
+          <br />
           <label>성별</label>
-          <select class="browser-default" name="gender" v-model="gender">
-            <option value=""> ===========성별 선택===========</option>
+          <select
+            class="browser-default"
+            name="gender"
+            v-model="gender"
+            style="width:200px; text-align: center"
+          >
+            <option value=""> ===성별 선택===</option>
             <option value="MALE">남자</option>
             <option value="FEMALE">여자</option>
           </select>

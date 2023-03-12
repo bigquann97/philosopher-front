@@ -16,9 +16,7 @@
     <div class="divider"></div>
     <div class="section">
       <div class="section">
-        <div style="float:left;">
-          닉네임 : <a>{{ detail.nickname }}</a>
-        </div>
+        <div style="float:left;">닉네임 : {{ detail.nickname }}</div>
         <div style="font-size: medium; float: right">
           시작일 : {{ detail.createdDate }}
         </div>
@@ -576,6 +574,7 @@ export default {
           category: this.reportCategory,
         });
         this.$router.go(this.$router.currentRoute);
+        alert('신고가 정상적으로 처리되었습니다!');
       } catch (error) {
         console.log(error);
         this.logMessageSignup = error.response.data.message;
@@ -588,6 +587,7 @@ export default {
           category: this.reportCategory,
         });
         this.$router.go(this.$router.currentRoute);
+        alert('신고가 정상적으로 처리되었습니다!');
       } catch (error) {
         console.log(error);
         this.logMessageSignup = error.response.data.message;
@@ -622,6 +622,7 @@ export default {
         this.$router.go(this.$router.currentRoute);
       } catch (error) {
         console.log(error.response);
+        alert('의견선택과 내용 모두 작성해주세요.');
       }
     },
     async deleteComment(commentId) {
@@ -646,6 +647,7 @@ export default {
         console.log();
       } catch (error) {
         console.log(error.response);
+        alert('의견선택과 내용 모두 작성해주세요.');
       }
     },
     async recommendComment(commentId) {

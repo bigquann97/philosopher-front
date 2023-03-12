@@ -96,6 +96,9 @@ export default {
       user: {},
     };
   },
+  replaceImg(e) {
+    e.target.src = require('@/image/default_image.jpeg');
+  },
   created() {
     this.loadPage();
   },
