@@ -2,10 +2,9 @@
   <div class="container">
     <div class="section">
       <div class="col s6">
-        <h5 class="board-name">
-          <b>아카이브</b>
-          <small>토론이 끝난 쓰레드를 저장해놓는 아카이브입니다.</small>
-        </h5>
+        <b class="board-title">아카이브</b>
+        <br />
+        <small>토론이 끝난 쓰레드를 저장해놓는 아카이브입니다.</small>
       </div>
       <h5>
         <b>
@@ -29,14 +28,36 @@
     </div>
     <div class="divider"></div>
     <div>
-      <span
-        >1. {{ detail.opinions[0] }} 2.{{ detail.opinions[1] }} 3.
-        {{ detail.opinions[2] }}</span
-      >
+      <div>의견 목록 :</div>
+      <div v-if="detail.opinions[0] !== ''">
+        <div>{{ detail.opinions[0] }}</div>
+      </div>
+      <div v-if="detail.opinions[1] !== ''">
+        <div>{{ detail.opinions[1] }}</div>
+      </div>
+      <div v-if="detail.opinions[2] !== ''">
+        <div>{{ detail.opinions[2] }}</div>
+      </div>
+      <div v-if="detail.opinions[3] !== ''">
+        <div>{{ detail.opinions[3] }}</div>
+      </div>
+      <div v-if="detail.opinions[4] !== ''">
+        <div>{{ detail.opinions[4] }}</div>
+      </div>
     </div>
     <div class="section">
       <img :src="imageUrl" alt="" style="max-width: 300px; max-height: 300px" />
-      <div>{{ detail.content }}</div>
+      <img
+        :src="imageUrl1"
+        alt=""
+        style="max-width: 300px; max-height: 300px"
+      />
+      <img
+        :src="imageUrl2"
+        alt=""
+        style="max-width: 300px; max-height: 300px"
+      />
+      <div v-html="detail.content"></div>
     </div>
     <div style="text-align: center; margin-bottom: 20px">
       <a>
@@ -49,7 +70,111 @@
         <span style="font-size: xx-large"> {{ detail.recommendCount }}</span>
       </a>
     </div>
+    <v-dialog v-model="threadReportDialog" width="500px">
+      <v-card height="420">
+        <v-card-title>
+          신고하기
+        </v-card-title>
+        <v-card-text>
+          <select
+            class="browser-default"
+            name="reportCategory"
+            v-model="reportCategory"
+          >
+            <option value=""> 신고 카테고리를 선택해주세요.</option>
+            <option value="ABUSE">욕설</option>
+            <option value="IRRELEVANT">게시글 취지와 상관없는 게시글</option>
+            <option value="ADVERTISEMENT">광고</option>
+            <option value="SEXUAL_HARASSMENT"> 성희롱</option>
+            <option value="SPAMMER">도배</option>
+          </select>
+          <v-textarea
+            v-model="reportContent"
+            height="200"
+            solo
+            auto-grow
+            label="여기에 신고할 내용을 입력하세요."
+          ></v-textarea>
+          <a
+            @click="confirmReportThread"
+            class="btn col s2"
+            style="background-color: white; float: right"
+            >확인</a
+          >
+          <a
+            @click="closeReportForm"
+            class="btn col s2"
+            style="background-color: white; float:right;"
+            >취소</a
+          >
+          <p class="log">{{ logMessageSignup }}</p>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
     <div class="divider"></div>
+    <div class="section">
+      <div class="row">
+        <div class="collection">
+          <h5>댓글 통계 📊</h5>
+          <hr />
+          <div
+            tag="a"
+            :to="{ name: 'Ratio', params: { id: ratio.id } }"
+            class="collection-item row"
+            v-for="ratio in ratios"
+            :key="ratio.id"
+          >
+            <span>
+              의견
+              <span style="font-weight: bold; color:#3108a4;"
+                >"{{ ratio.opinion }}"</span
+              >
+              에 대한 토론 참여자의 비율은
+              <span style="font-weight: bold; color:#0f5132"
+                >{{ ratio.ratio }}%</span
+              >
+              입니다.
+            </span>
+          </div>
+          <h5>Top 3 베스트 댓글 💡</h5>
+          <hr />
+          <div
+            tag="a"
+            :to="{ name: 'Favorite', params: { id: fav.id } }"
+            class="collection-item row"
+            v-for="fav in favs"
+            :key="fav.id"
+          >
+            <div class="col s1" style="width: 100%">
+              <span style="float: left"
+                ><img src="@/image/best.png" alt="" style="width: 30px"
+              /></span>
+              <span style="float: left; margin: auto 10px"># {{ fav.id }}</span>
+              <span style="float: left; margin: auto 20px">
+                {{ fav.nickname }}
+              </span>
+              <span style="float: left; margin: auto 20px">{{
+                fav.createDate
+              }}</span>
+              <span style="float: left; font-size: medium">
+                <img src="@/image/like_blue.png" alt="" style="width: 15px" />
+                {{ fav.likeCount }}
+              </span>
+            </div>
+            <div>
+              <div class="col s2" style="width: 100%">
+                <span style="color: #0f5132; font-weight: bold">의견: </span>
+                <span>{{ fav.opinion }}</span>
+              </div>
+              <div style="float:left; width: 100%" class="col s4">
+                <span style="color: #0f5132; font-weight: bold">내용: </span>
+                <div v-html="fav.content"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="section">
       <div class="row">
         <div class="collection">
@@ -85,9 +210,10 @@
                       </span>
                     </template>
                     <template v-slot:default>
-                      <div style="max-width: 500px">
-                        {{ three.content }}
-                      </div>
+                      <div
+                        v-html="three.content"
+                        style="max-width: 500px"
+                      ></div>
                     </template>
                   </v-tooltip>
                 </div>
@@ -108,16 +234,15 @@
                       </span>
                     </template>
                     <template v-slot:default>
-                      <div style="max-width: 500px">
-                        {{ three.content }}
-                      </div>
+                      <div
+                        v-html="three.content"
+                        style="max-width: 500px"
+                      ></div>
                     </template>
                   </v-tooltip>
                 </div>
                 <div style="float:left; width: 100%" class="col s4">
-                  <span>
-                    {{ one.content }}
-                  </span>
+                  <div v-html="one.content"></div>
                 </div>
                 <div
                   class="col s5"
@@ -181,22 +306,29 @@ import {
   deleteRecommendComment,
   deleteRecommendThread,
 } from '@/api/recommendation';
-import { fetchArchive } from '@/api/archive';
 import qstr from 'query-string';
-import { fetchThreadComment } from '@/api/comment';
+import { fetchThreadComment, fetchFavComment, fetchRatio } from '@/api/comment';
 import _ from 'lodash';
+import { fetchThread } from '@/api/thread';
 
 export default {
   props: ['id'],
 
   async created() {
-    this.beforeLoadPage();
-    const threadId = this.$route.params.id;
-    const res = await fetchArchive(threadId);
-    console.log(this.id);
-    this.detail = res.data;
-    this.imageUrl = res.data.images[0];
-    console.log(res);
+    try {
+      this.beforeLoadPage();
+      const threadId = this.$route.params.id;
+      const res = await fetchThread(threadId);
+      console.log(this.id);
+      this.detail = res.data;
+      this.imageUrl = res.data.images[0];
+      this.imageUrl1 = res.data.images[1];
+      this.imageUrl2 = res.data.images[2];
+      console.log(res);
+    } catch (error) {
+      alert(error.response.data.message);
+      await this.$router.push('/threads/archived');
+    }
   },
   data: () => ({
     list: {
@@ -231,6 +363,18 @@ export default {
     search: {},
     blockSize: 5,
     query: {},
+    ratios: {
+      opinion: '',
+      ratio: '',
+    },
+    favs: {
+      id: '',
+      nickname: '',
+      opinion: '',
+      content: '',
+      createDate: '',
+      likeCount: '',
+    },
   }),
   methods: {
     async recommendComment(commentId) {
@@ -261,7 +405,7 @@ export default {
       if (query.page === undefined) {
         query.page = 1;
         this.$router.push({
-          path: `/comments/thread/${threadId}`,
+          path: `/comments/archive/${threadId}`,
           query,
         });
       } else {
@@ -276,6 +420,8 @@ export default {
           ? qstr.stringify(this.$route.query)
           : 'page=1';
       const res = await fetchThreadComment(threadId, query);
+      const favorite = await fetchFavComment(threadId);
+      const ratio = await fetchRatio(threadId);
       const result = res.data;
       console.log(result);
       this.list = res.data.content;
@@ -285,9 +431,11 @@ export default {
         isFirst: res.data.first,
         isLast: res.data.last,
         currentPage: res.data.number,
-        totalPages: res.data.totalPages - 1,
+        totalPages: res.data.totalPages,
         pageSize: res.data.size,
       };
+      this.favs = favorite.data;
+      this.ratios = ratio.data;
     },
 
     fullPath(val) {
@@ -295,7 +443,7 @@ export default {
       const target = _.cloneDeep(this.query);
       target.page = val;
       console.log();
-      return { path: `/comments/thread/${threadId}`, query: target };
+      return { path: `/comments/archive/${threadId}`, query: target };
     },
 
     previous() {
@@ -316,6 +464,9 @@ export default {
   },
 
   computed: {
+    isUserLogin() {
+      return this.$store.getters.isLogin;
+    },
     presentedPages() {
       const current = this.pagination.currentPage;
       const blockSize = this.blockSize;
@@ -336,9 +487,6 @@ export default {
 };
 </script>
 <style>
-.board-name {
-  width: 160%;
-}
 .board-title {
   color: #6aafe6;
   text-shadow: 1px 1px gray;

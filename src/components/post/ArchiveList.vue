@@ -5,6 +5,7 @@
         <div class="col s6">
           <h5 class="board-name">
             <b class="board-title">아카이브</b>
+            <br />
             <small>토론이 끝난 쓰레드를 저장해놓는 아카이브입니다.</small>
           </h5>
         </div>
@@ -127,7 +128,7 @@ export default {
         isFirst: res.data.first,
         isLast: res.data.last,
         currentPage: res.data.number,
-        totalPages: res.data.totalPages - 1,
+        totalPages: res.data.totalPages,
         pageSize: res.data.size,
       };
     },
@@ -164,7 +165,7 @@ export default {
 
       const startOfBlock = current - (current % blockSize);
       const endOfBlock = startOfBlock + blockSize;
-      const complimentedEOB = endOfBlock > total + 2 ? total + 2 : endOfBlock;
+      const complimentedEOB = endOfBlock > total + 1 ? total + 1 : endOfBlock;
       return _.range(startOfBlock, complimentedEOB);
     },
   },
@@ -267,6 +268,31 @@ export default {
   .menu ul {
     margin-right: 100px;
     width: 20%;
+  }
+}
+@media (max-width: 375px) {
+  /* 모든 요소의 폰트 크기를 조정 */
+  body {
+    font-size: 14px;
+  }
+
+  /* 네비게이션 바와 푸터의 높이를 조정 */
+  nav,
+  footer {
+    height: auto;
+  }
+
+  /* 이미지와 동영상의 크기를 조정 */
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* 그 외 요소들의 너비를 조정 */
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }
 </style>

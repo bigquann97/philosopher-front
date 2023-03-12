@@ -3,7 +3,9 @@
     <v-app>
       <Header />
       <div class="divider"></div>
-      <router-view />
+      <div class="router-view">
+        <router-view />
+      </div>
       <Footer />
     </v-app>
   </div>
@@ -33,9 +35,5 @@ export default {
  {
   font-size: 1em;
   font-family: 'Nanum Square';
-}
-
-.bold {
-  font-weight: bold;
 }
 </style>

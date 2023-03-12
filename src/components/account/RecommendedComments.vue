@@ -18,8 +18,7 @@
           @click.prevent
         >
           <span class="col s6">
-            <span>[{{ one.title }}] </span>
-            <span>{{ one.content }}</span>
+            <div v-html="one.content"></div>
           </span>
         </div>
       </div>
