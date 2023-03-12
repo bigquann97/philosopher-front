@@ -575,6 +575,7 @@ export default {
           content: this.reportContent,
           category: this.reportCategory,
         });
+        alert('신고가 완료되었습니다.');
         this.$router.go(this.$router.currentRoute);
       } catch (error) {
         console.log(error);
@@ -587,6 +588,7 @@ export default {
           content: this.reportContent,
           category: this.reportCategory,
         });
+        alert('신고가 완료되었습니다.');
         this.$router.go(this.$router.currentRoute);
       } catch (error) {
         console.log(error);
@@ -622,6 +624,7 @@ export default {
         this.$router.go(this.$router.currentRoute);
       } catch (error) {
         console.log(error.response);
+        alert('의견선택과 내용 모두 작성해주세요.');
       }
     },
     async deleteComment(commentId) {
@@ -646,6 +649,7 @@ export default {
         console.log();
       } catch (error) {
         console.log(error.response);
+        alert('의견선택과 내용 모두 작성해주세요.');
       }
     },
     async recommendComment(commentId) {
