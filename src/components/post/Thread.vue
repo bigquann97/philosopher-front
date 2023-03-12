@@ -16,9 +16,7 @@
     <div class="divider"></div>
     <div class="section">
       <div class="section">
-        <div style="float:left;">
-          닉네임 : <span>{{ detail.nickname }}</span>
-        </div>
+        <div style="float:left;">닉네임 : {{ detail.nickname }}</div>
         <div style="font-size: medium; float: right">
           시작일 : {{ detail.createdDate }}
         </div>
@@ -575,8 +573,8 @@ export default {
           content: this.reportContent,
           category: this.reportCategory,
         });
-        alert('신고가 완료되었습니다.');
         this.$router.go(this.$router.currentRoute);
+        alert('신고가 정상적으로 처리되었습니다!');
       } catch (error) {
         console.log(error);
         this.logMessageSignup = error.response.data.message;
@@ -588,8 +586,8 @@ export default {
           content: this.reportContent,
           category: this.reportCategory,
         });
-        alert('신고가 완료되었습니다.');
         this.$router.go(this.$router.currentRoute);
+        alert('신고가 정상적으로 처리되었습니다!');
       } catch (error) {
         console.log(error);
         this.logMessageSignup = error.response.data.message;

@@ -129,7 +129,6 @@ export default {
       const blockSize = this.blockSize;
       const total =
         this.pagination.totalPages === 0 ? 0 : this.pagination.totalPages - 1;
-
       const startOfBlock = current - (current % blockSize);
       const endOfBlock = startOfBlock + blockSize;
       const complimentedEOB = endOfBlock > total + 1 ? total + 1 : endOfBlock;
