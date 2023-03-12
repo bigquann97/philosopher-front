@@ -230,7 +230,7 @@ header .menu {
 header .menu ul {
   display: flex;
   text-align: center;
-  margin-left: 20px;
+  margin-left: 10px;
   list-style-type: none;
 }
 
@@ -239,7 +239,7 @@ header .menu li a {
   font-size: 16px;
   text-decoration: none;
   color: #111111;
-  padding: 0 20px;
+  padding: 0 10px;
 }
 
 header .menu li a:hover {
