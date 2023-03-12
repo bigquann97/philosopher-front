@@ -35,6 +35,9 @@
           :key="one.id"
         >
           <span class="col s7">
+            <span style="color: deepskyblue; margin-right: 5px"
+              >[{{ one.category }}]</span
+            >
             <span>{{ one.title }}</span>
             <span class="red-text"> [ {{ one.commentCount }} ] </span></span
           >
