@@ -13,7 +13,11 @@
 “**이러한 문제점을 완화하고 새로운 방식의 커뮤니티의 제작”**
 
 ["우리 모두 철학자" 사이트 접속하기](http://the-gladiators.s3-website.ap-northeast-2.amazonaws.com/main) <br>
-["우리 모두 철학자" 백엔드 코드 확인하기](https://github.com/bigquann97/philosopher-back)
+["우리 모두 철학자" 백엔드 코드 확인하기](https://github.com/bigquann97/philosopher-back) <br>
+["우리 모두 철학자" 원페이지 노션 확인하기](https://radical-route-999.notion.site/8cc586e7170343c8806c312f3da97131) <br>
+["우리 모두 철학자" 회의록 노션 확인하기](https://puzzled-bee-d4c.notion.site/847736be8f8a4775866b67b6dc484d4b?v=3736681424c34f6983dc166ff533347f) <br>
+["우리 모두 철학자" 그라운드룰 확인하기](https://coherent-eclipse-711.notion.site/Ground-Rule-57dbbe48c09242edb2c263bf6a55e257) <br>
+["우리 모두 철학자" Wiki(구현 명세서) 확인하기](https://github.com/bigquann97/philosopher-back/wiki) <br>
 
 <details>
 <summary> 프로젝트에 대한 더 자세한 소개가 보고싶다면? 😀</summary>
@@ -72,7 +76,6 @@
 |:---:|:---:|:---:|:---:|:----------------------------------------------------------------------------:|
 |<img src="https://github.com/bigquann97/philosopher-back/blob/develop/image/jipang.jpg"  width="135" height="160">|<img src="https://velog.velcdn.com/images/bigquann97/profile/bc0264b5-b0d6-4436-8572-e2e13daf2676/image.png"  width="135" height="160">|<img src="https://github.com/bigquann97/philosopher-back/blob/develop/image/miran.png"  width="135" height="160">|<img src="https://github.com/bigquann97/philosopher-back/blob/develop/image/dohwa.jpg"  width="135" height="160">|<img src="https://github.com/bigquann97/philosopher-back/blob/develop/image/sylee.jpeg?raw=true"  width="135" height="160">|
 |김지환|김관호|김미란|박도화|                                     이승윤                                      |
-|역할|역할|역할|역할|                                      역할                                      |
 |[Github](https://github.com/jipang9)<br>[Blog](https://jipang9-greedy-pot.tistory.com/)|[Github](https://github.com/bigquann97)<br>[Blog](https://velog.io/@bigquann97)|[Github](https://github.com/h7359841)<br>[Blog](https://velog.io/@h7359841)|[Github](https://github.com/dohwapark)<br>[Blog](https://dzzzdee.tistory.com/)| [Github](https://github.com/lssy32)<br>[Blog](https://yuniday2.tistory.com/) |
 
 ## 03. 기술 스택 🛠️
