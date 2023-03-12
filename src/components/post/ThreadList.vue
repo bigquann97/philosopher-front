@@ -27,6 +27,33 @@
           </a>
         </div>
       </div>
+      <div class="row">
+        <select
+          class="browser-default"
+          v-model="sort"
+          @change="searching"
+          style="width: 80px; float: right"
+        >
+          <option value="">-정렬순서-</option>
+          <option value="NEW">--최신순--</option>
+          <option value="RCMND">--추천순--</option>
+        </select>
+        <select
+          class="browser-default"
+          v-model="category"
+          @change="searching"
+          style="width: 80px; float: left"
+        >
+          <option value="">-카테고리-</option>
+          <option :value="1">---철학---</option>
+          <option :value="2">---논쟁---</option>
+          <option :value="3">---예술---</option>
+          <option :value="4">---공상---</option>
+          <option :value="5">---사회---</option>
+          <option :value="6">---경제---</option>
+          <option :value="7">---연애---</option>
+        </select>
+      </div>
       <div class="collection">
         <router-link
           tag="a"
@@ -106,13 +133,54 @@ export default {
     list: [],
     blockSize: 5,
     query: {},
+    sort: '',
+    category: '',
   }),
 
   methods: {
     searching() {
       const keyword = this.search.word.trim();
-      if (keyword !== '') {
+      const category = this.category;
+      const sort = this.sort;
+      if (category !== '' && keyword === '' && sort === '') {
+        this.$router.push(`/threads?page=1&${qstr.stringify({ category })}`);
+      }
+      if (sort !== '' && keyword === '' && category === '') {
+        this.$router.push(`/threads?page=1&${qstr.stringify({ sort })}`);
+      }
+      if (keyword !== '' && keyword === '' && sort === '') {
         this.$router.push(`/threads?page=1&${qstr.stringify(this.search)}`);
+      }
+      if (keyword !== '' && category !== '' && sort === '') {
+        this.$router.push(
+          `/threads?page=1&${qstr.stringify(this.search)}&${qstr.stringify({
+            category,
+          })}`,
+        );
+      }
+      if (keyword !== '' && sort !== '' && category === '') {
+        this.$router.push(
+          `/threads?page=1&${qstr.stringify(this.search)}&${qstr.stringify({
+            sort,
+          })}`,
+        );
+      }
+      if (category !== '' && sort !== '' && keyword === '') {
+        this.$router.push(
+          `/threads?page=1&${qstr.stringify({ category })}&${qstr.stringify({
+            sort,
+          })}`,
+        );
+      }
+      if (keyword !== '' && category !== '' && sort !== '') {
+        this.$router.push(
+          `/threads?page=1&${qstr.stringify(this.search)}&${qstr.stringify({
+            category,
+          })}&${qstr.stringify({ sort })}`,
+        );
+      }
+      if (keyword === '' && category === '' && sort === '') {
+        this.$router.push(`/threads`);
       }
     },
 
