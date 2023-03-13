@@ -18,7 +18,7 @@
           @click.prevent
         >
           <span class="col s6">
-            <div v-html="one.content"></div>
+            <div v-dompurify-html="one.content"></div>
           </span>
         </div>
       </div>

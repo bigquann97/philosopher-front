@@ -57,7 +57,7 @@
         alt=""
         style="max-width: 300px; max-height: 300px"
       />
-      <div v-html="detail.content"></div>
+      <div v-dompurify-html="detail.content"></div>
     </div>
     <div style="text-align: center; margin-bottom: 20px">
       <a>
@@ -168,7 +168,7 @@
               </div>
               <div style="float:left; width: 100%" class="col s4">
                 <span style="color: #0f5132; font-weight: bold">내용: </span>
-                <div v-html="fav.content"></div>
+                <div v-dompurify-html="fav.content"></div>
               </div>
             </div>
           </div>
@@ -211,7 +211,7 @@
                     </template>
                     <template v-slot:default>
                       <div
-                        v-html="three.content"
+                        v-dompurify-html="three.content"
                         style="max-width: 500px"
                       ></div>
                     </template>
@@ -235,14 +235,14 @@
                     </template>
                     <template v-slot:default>
                       <div
-                        v-html="three.content"
+                        v-dompurify-html="three.content"
                         style="max-width: 500px"
                       ></div>
                     </template>
                   </v-tooltip>
                 </div>
                 <div style="float:left; width: 100%" class="col s4">
-                  <div v-html="one.content"></div>
+                  <div v-dompurify-html="one.content"></div>
                 </div>
                 <div
                   class="col s5"

@@ -19,7 +19,7 @@
         >
           <span class="col s6">
             <span>[{{ one.title }}] </span><br />
-            <div v-html="one.content"></div>
+            <div v-dompurify-html="one.content"></div>
           </span>
         </div>
       </div>

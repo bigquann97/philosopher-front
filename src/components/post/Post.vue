@@ -105,7 +105,7 @@
         alt=""
         style="max-width: 300px; max-height: 300px"
       />
-      <div v-html="detail.content"></div>
+      <div v-dompurify-html="detail.content"></div>
     </div>
     <div style="text-align: center; margin-bottom: 1px">
       <a>
